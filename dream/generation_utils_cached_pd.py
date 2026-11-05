@@ -716,7 +716,7 @@ class DreamGenerationMixinWithCache:
 
             
             outputs = self(input_ids=curr_input_ids, 
-                            attention_mask=curr_attention_mask, 
+                            attention_mask=curr_attention_mask,
                             use_cache=True,
                             dual_cache=True,
                             replace_position=replace_mask,

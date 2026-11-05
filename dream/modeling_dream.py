@@ -760,15 +760,16 @@ class DreamBaseModel(DreamPreTrainedModel):
         #             print("cache_position 3", cache_position)
         
         past_seen_tokens = past_key_values[0][0].shape[1] if past_key_values is not None else 0
-        if not dual_cache:
-            position_ids = torch.arange(past_seen_tokens + inputs_embeds.shape[1], device=inputs_embeds.device).unsqueeze(0)
 
-        else:
-            if past_key_values is not None:
-                position_ids = torch.arange(past_seen_tokens, device=inputs_embeds.device).unsqueeze(0)
+        if position_ids is None:
+            if not dual_cache:
+                position_ids = torch.arange(past_seen_tokens + inputs_embeds.shape[1], device=inputs_embeds.device).unsqueeze(0)
+
             else:
-                position_ids = torch.arange(inputs_embeds.shape[1], device=inputs_embeds.device).unsqueeze(0)
-
+                if past_key_values is not None:
+                    position_ids = torch.arange(past_seen_tokens, device=inputs_embeds.device).unsqueeze(0)
+                else:
+                    position_ids = torch.arange(inputs_embeds.shape[1], device=inputs_embeds.device).unsqueeze(0)
         hidden_states = inputs_embeds
         attn_key_values: Optional[List[Tuple[torch.Tensor, torch.Tensor]]] = [] if use_cache else None
 

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import math
+import json
 from collections.abc import Callable, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from time import sleep
-
+from pathlib import Path
 from semantic_parallel.distributed import (StageExecution, run_local_static_stage)
 from semantic_parallel.scheduler import WorkerAssignment
 from semantic_parallel.stage import ChunkTask
@@ -60,3 +61,21 @@ def run_scheduler_simulation(tasks: Sequence[ChunkTask], worker_count: int, sche
         measured_speedup=measured_speedup,
         stage_execution=stage_execution
     )
+
+
+def simulation_result_to_dict(result: SimulationResult):
+    return asdict(result)
+
+def write_simulation_json(result: SimulationResult, output_path: str | Path):
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with output_path.open("w", encoding="utf-8") as output_file:
+        json.dump(
+            simulation_result_to_dict(result),
+            output_file,
+            indent=2,
+            allow_nan=False
+        )
+
+    return output_path

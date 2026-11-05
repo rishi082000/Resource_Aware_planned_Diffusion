@@ -224,6 +224,9 @@ asynchronous.
 
 ### Checkpoint 2 - C++ scheduler and local thread runtime
 
+- Use static scheduling for the main implementation: every task is assigned to
+  a worker before stage execution begins. Round robin and LPT are the required
+  checkpoint 2 policies.
 - Implement standalone C++ round-robin and LPT policies plus estimated worker
   loads; expose them with pybind11 or a small PyTorch extension.
 - Unit-test empty inputs, workers greater than tasks, ties, invalid costs, and
@@ -237,6 +240,10 @@ asynchronous.
   replaces local threads and ordinary return values with `torchrun` ranks and
   distributed collectives while retaining the task, assignment, validation,
   reconstruction, and metrics contracts.
+- Defer dynamic worker-pull dispatch until after the static multi-GPU path and
+  core experiments are complete. That optional extension can later compare
+  FIFO/chunk-order and longest-estimated-cost-first queues with the static
+  policies using the same runtime records and metrics.
 
 ### Checkpoint 3 - isolated single-GPU oracle
 
@@ -244,7 +251,7 @@ asynchronous.
 - Execute each chunk independently on one GPU and reconstruct the stage.
 - Compare combined and isolated per-iteration logits/tokens with sparse
   attention, the same global step count, and controlled RNG. This is the
-  go/no-go gate for multi-GPU execution.
+  go/no-go gate for multi-GPU execution.Do
 
 ### Checkpoint 4 - one-stage multi-GPU path
 
@@ -271,6 +278,9 @@ asynchronous.
 - Fit a simple measured cost model only after enough observations exist; compare
   round robin, LPT length-aware, measured-cost-aware, and the combined PDSA
   baseline.
+- Here, adaptive scheduling means updating cost estimates or policy choices from
+  measured executions across stages or requests. Dynamic worker-pull dispatch,
+  if time permits, remains a separate final extension.
 
 ## Recommended first test matrix
 
@@ -458,6 +468,14 @@ Worker 0: 120 = 120
 Worker 1: 80 + 35 + 20 = 135
 Estimated completion time:
 max(120, 135) = 135
+
+Checkpoint 2 is complete when the native static policies, local stage runtime,
+1/2/4-worker simulations, reconstruction, timing, idle metrics, and JSON output
+pass. Dynamic dispatch is deferred until after the static multi-GPU path and
+core experiments. If implemented, idle workers will pull unstarted tasks from a
+FIFO or longest-estimated-cost-first queue; running tasks will not migrate, be
+preempted, or be split.
+
 The scheduler must also handle:
 - zero tasks;
 - more workers than tasks;
@@ -477,5 +495,6 @@ Checkpoint 1
 Convert token-embedded plans into explicit stages and tasks
         ↓
 Checkpoint 2
-Schedule those tasks using a local thread runtime with an injected simulated executor
+Validate static round-robin and LPT assignments using a local thread runtime
+with an injected simulated executor
 After these three checkpoints, we still have not executed separate chunks on separate GPUs. That begins only after Checkpoint 3 proves that isolated chunk execution produces the same result as combined single-GPU execution.

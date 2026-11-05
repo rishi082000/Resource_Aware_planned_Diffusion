@@ -511,6 +511,12 @@ class DreamGenerationMixin:
                 terminator_token_id=final_planning_input_id.item(),
             )
 
+            run_isolated_oracle = kwargs.get(
+                "run_isolated_oracle",
+                False,
+            )
+
+            
             stage_metadata.append({
                 "stage_id": stage.stage_id,
                 "planning_token_ids": stage.prefix[0].detach().cpu().tolist(),
@@ -535,7 +541,7 @@ class DreamGenerationMixin:
             
             # 6. Run diffusion over async blocks
             result = self._diff_sample(
-                stage.full_sequence,
+                stage.full_sequence.clone(),
                 attention_mask=stage.attention_mask,
                 generation_config=generation_config,
                 generation_tokens_hook_func=generation_tokens_hook_func,
@@ -547,6 +553,123 @@ class DreamGenerationMixin:
                     for task in stage.tasks
                 ]
             )
+
+
+            if run_isolated_oracle:
+                oracle_config = copy.deepcopy(generation_config)
+                oracle_config.temperature = 0.0
+                oracle_config.alg_temp = 0.0
+                oracle_config.return_dict_in_generate = True
+
+                identity_token_hook = (
+                    lambda step, tokens, logits: tokens
+                )
+
+                identity_logits_hook = (
+                    lambda step, tokens, logits: logits
+                )
+
+                combined_oracle_result = self._diff_sample(
+                    stage.full_sequence.clone(),
+                    attention_mask=stage.attention_mask,
+                    generation_config=oracle_config,
+                    generation_tokens_hook_func=identity_token_hook,
+                    generation_logits_hook_func=identity_logits_hook,
+                    format_inputs=False,
+                    threshold=kwargs.get("threshold", None),
+                    block_info=[
+                        (
+                            task.start,
+                            task.end_exclusive,
+                            task.content_length
+                        )
+                        for task in stage.tasks
+                    ],
+                )
+
+                combined_oracle_sequence = (
+                    combined_oracle_result.sequences
+                    if hasattr(combined_oracle_result, "sequences")
+                    else combined_oracle_result
+                )
+
+                reconstructed_sequence = stage.full_sequence.clone()
+                chunk_comparisons = []
+
+                for task in stage.tasks:
+                    isolated_result = self._execute_isolated_chunk(
+                        stage=stage,
+                        task=task,
+                        generation_config=oracle_config,
+                        generation_tokens_hook_func=identity_token_hook,
+                        generation_logits_hook_func=identity_logits_hook,
+                        threshold=kwargs.get("threshold", None),
+                    )
+
+                    isolated_sequence = (
+                        isolated_result.sequences
+                        if hasattr(isolated_result, "sequences")
+                        else isolated_result
+                    )
+
+                    prefix_length = stage.prefix.shape[1]
+                    chunk_length = (
+                        task.end_exclusive - task.start
+                    )
+
+                    isolated_chunk = isolated_sequence[
+                        :,
+                        prefix_length:prefix_length + chunk_length
+                    ]
+
+                    reconstructed_sequence[
+                        :,
+                        task.start: task.end_exclusive
+                    ] = isolated_chunk
+
+                    combined_chunk = combined_oracle_sequence[
+                        :,
+                        task.start: task.end_exclusive
+                    ]
+
+                    chunk_matches = torch.equal(
+                        isolated_chunk,
+                        combined_chunk
+                    )
+
+                    mismatch_count = (
+                        isolated_chunk != combined_chunk
+                    ).sum().item()
+
+                    chunk_comparisons.append({
+                        "chunk_id": task.chunk_id,
+                        "matches": chunk_matches,
+                        "mismatch_count": mismatch_count
+                    })
+
+                stage_matches = torch.equal(
+                    reconstructed_sequence,
+                    combined_oracle_sequence
+                )
+
+                stage_metadata[-1]["isolated_oracle"] = {
+                    "matches": stage_matches,
+                    "mismatch_count": (
+                        reconstructed_sequence != combined_oracle_sequence
+                    ).sum().item(),
+                    "chunks": chunk_comparisons
+                }
+
+                if not stage_matches:
+                    failed_chunks = [
+                        comparison["chunk_id"]
+                        for comparison in chunk_comparisons
+                        if not comparison["matches"]
+                    ]
+
+                    raise AssertionError("Isolated chunk execution did not match the combined oracle")
+
+
             
             if final_planning_input_id.item() == SYNC_TOKEN_ID:
                 end_of_generation = False
@@ -655,7 +778,8 @@ class DreamGenerationMixin:
         generation_logits_hook_func,
         threshold: Optional[float] = 0.9,
         format_inputs: bool = True,
-        block_info: Optional[List[Tuple[int, int, int]]] = None
+        block_info: Optional[List[Tuple[int, int, int]]] = None,
+        position_ids: Optional[torch.LongTensor] = None,
     ) -> Union[DreamModelOutput, torch.LongTensor]:
         # init values
         output_history = generation_config.output_history
@@ -677,17 +801,37 @@ class DreamGenerationMixin:
         else:
             x = input_ids
 
+        model_position_ids = position_ids
+        if model_position_ids is not None:
+            model_position_ids = model_position_ids.to(
+                device=x.device,
+                dtype=torch.long
+            )
+
         if attention_mask is not None:
             
             if attention_mask.dim() == 2:
-                # [batch_size, seq_len] -> [batch_size, 1, 1, seq_len]
-                attention_mask = attention_mask.unsqueeze(1).unsqueeze(2)
                 # we do not mask the [MASK] tokens so value = 1.0
                 attention_mask = F.pad(attention_mask, (0, max_length - attention_mask.shape[-1]), value=1.0)
-                tok_idx = attention_mask.long().cumsum(-1) - 1
-                tok_idx.masked_fill_(attention_mask == 0, 1)
+
+                if model_position_ids is None:
+                    model_position_ids = (
+                        attention_mask.long().cumsum(-1) - 1
+                    )
+
+                    model_position_ids.masked_fill_(
+                        attention_mask == 0,
+                        1,
+                    )
+                
+                # tok_idx = attention_mask.long().cumsum(-1) - 1
+                # tok_idx.masked_fill_(attention_mask == 0, 1)
                 # attention_mask is of shape [B, 1, 1, N]
                 # broadcast to [B, 1, N, N]
+
+                # [batch_size, seq_len] -> [batch_size, 1, 1, seq_len]
+                attention_mask = attention_mask.unsqueeze(1).unsqueeze(2)
+                
                 attention_mask = torch.logical_and(
                     attention_mask.unsqueeze(-2),
                     attention_mask.unsqueeze(-1),
@@ -695,13 +839,13 @@ class DreamGenerationMixin:
             elif attention_mask.dim() == 3:
                 # [batch_size, num_heads, seq_len, seq_len] - already in correct format
                 # Assume attention_mask is correctly formatted if it is 4D
-                tok_idx = None
+                # tok_idx = None
                 attention_mask = invert_and_expand_attention_mask(attention_mask, self.dtype)
             else:
                 raise ValueError(f"Unexpected attention mask dimension: {attention_mask.dim()}")
             
         else:
-            tok_idx = None
+            # tok_idx = None
             attention_mask = "full"
 
         
@@ -735,7 +879,7 @@ class DreamGenerationMixin:
         while i < steps:
             mask_index = (x == mask_token_id)
             
-            logits = self(input_ids=x, attention_mask=attention_mask, position_ids=tok_idx).logits
+            logits = self(input_ids=x, attention_mask=attention_mask, position_ids=model_position_ids).logits
             logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1) # Shift logits
             
             # this allows user-defined logits control of the intermediate steps
@@ -849,3 +993,81 @@ class DreamGenerationMixin:
             )
         else:
             return x
+
+    def _execute_isolated_chunk(
+        self,
+        stage: PlannedStage,
+        task: ChunkTask,
+        generation_config: DreamGenerationConfig,
+        generation_tokens_hook_func,
+        generation_logits_hook_func,
+        threshold: Optional[float] = None
+    ):
+        input_ids, attention_mask, position_ids, block_info = build_isolated_chunk_inputs(stage, task)
+
+        isolated_generation_config = copy.deepcopy(generation_config)
+        isolated_generation_config.steps = stage.diffusion_steps
+
+        return self._diff_sample(
+            input_ids,
+            attention_mask=attention_mask,
+            position_ids=position_ids,
+            generation_config=isolated_generation_config,
+            generation_tokens_hook_func=generation_tokens_hook_func,
+            generation_logits_hook_func=generation_logits_hook_func,
+            format_inputs=False,
+            threshold=threshold,
+            block_info=block_info
+        )
+
+
+def build_isolated_chunk_inputs(stage: PlannedStage, task: ChunkTask):
+    prefix_length = stage.prefix.shape[1]
+
+    prefix_indices = torch.arange(
+        prefix_length,
+        device=stage.full_sequence.device
+    )
+
+    chunk_indices = torch.arange(
+        task.start,
+        task.end_exclusive,
+        device=stage.full_sequence.device
+    )
+
+    selected_indices = torch.cat([
+        prefix_indices,
+        chunk_indices
+    ])
+
+    input_ids = stage.full_sequence.index_select(
+        1, selected_indices
+    )
+
+    position_ids = selected_indices.unsqueeze(0).expand(
+        input_ids.shape[0],
+        -1
+    )
+
+    mask_indices = selected_indices.to(
+        stage.attention_mask.device
+    )
+
+    attention_mask = (
+        stage.attention_mask
+        .index_select(-2, mask_indices)
+        .index_select(-1, mask_indices)
+    )
+
+    isolated_block_info = [(
+        prefix_length,
+        input_ids.shape[1],
+        task.content_length
+    )]
+
+    return (
+        input_ids,
+        attention_mask,
+        position_ids,
+        isolated_block_info
+    )

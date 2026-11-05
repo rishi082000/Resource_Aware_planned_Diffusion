@@ -30,6 +30,7 @@ def main():
     parser.add_argument("--length_scale", type=float, default=None, help="Scale factor for async block lengths (None to use default 10).")
     parser.add_argument("--disable_block_sparsity", action="store_true", help="Disable block sparsity; use dense attention within generated blocks.")
     # parser.add_argument("--quiet_steps", action="store_true", help="Do not print intermediate generation steps.")
+    parser.add_argument("--run_isolated_oracle", action="store_true", help="Run the isolated oracle generation algorithm.")
     parser.add_argument("--metrics_json", type=str,default=None, help="Optional path for structured JSON metrics.")
     args = parser.parse_args()
     
@@ -104,7 +105,8 @@ def main():
             temperature=args.temperature,
             alg_temp=0.,
             length_scale=args.length_scale,
-            generation_tokens_hook_func=generation_tokens_hook_func
+            generation_tokens_hook_func=generation_tokens_hook_func,
+            run_isolated_oracle=args.run_isolated_oracle
         )
 
     if device == "cuda":
@@ -154,7 +156,8 @@ def main():
         "memory_before_bytes": memory_before,
         "peak_memory_allocated_bytes": peak_memory,
         "peak_memory_allocated_gib": peak_memory / (1024 ** 3),
-        "stages": structured_stages
+        "stages": structured_stages,
+        "run_isolated_oracle": args.run_isolated_oracle,
     }
     output_ids = output.sequences
     
