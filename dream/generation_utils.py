@@ -680,6 +680,7 @@ class DreamGenerationMixin:
                 curr_attention_mask = update_attention_mask(curr_attention_mask, torch.ones(1, 1, 1))
                 
             elif final_planning_input_id.item() == EOS_TOKEN_ID:
+                curr_input_ids = result.sequences
                 end_of_generation = True
             else:
                 raise ValueError(f"Unknown final input id: {final_planning_input_id.item()}")
@@ -831,7 +832,7 @@ class DreamGenerationMixin:
 
                 # [batch_size, seq_len] -> [batch_size, 1, 1, seq_len]
                 attention_mask = attention_mask.unsqueeze(1).unsqueeze(2)
-                
+
                 attention_mask = torch.logical_and(
                     attention_mask.unsqueeze(-2),
                     attention_mask.unsqueeze(-1),
