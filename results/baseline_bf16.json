@@ -1,0 +1,49 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "What is the capital of France?",
+  "device": "cuda",
+  "dtype": "torch.bfloat16",
+  "random_seed": 42,
+  "max_length": 256,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 26,
+  "tokens_generated": 124,
+  "latency_seconds": 8.44189560401719,
+  "tokens_per_second": 14.68864409327603,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15973899776,
+  "peak_memory_allocated_gib": 14.876853466033936,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 3,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 44,
+          "end_exclusive": 66,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 1,
+          "start": 66,
+          "end_exclusive": 88,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 2,
+          "start": 88,
+          "end_exclusive": 150,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>capital name 2</topic><promise>-<topic>location 2</topic><promise>-<topic>france description 6</topic>"
+    }
+  ]
+}

@@ -36,11 +36,25 @@ models/
 
 # Experiment output
 outputs/
-results/
 logs/
 wandb/
 slurm-*.out
 slurm-*.err
+
+# Keep compact, reviewable experiment summaries in Git. Large/raw artifacts
+# remain ignored even when they are placed under results/.
+results/*
+!results/**/
+!results/**/*.json
+!results/**/*.jsonl
+!results/**/*.csv
+!results/**/*.tsv
+!results/**/*.md
+results/**/*.pt
+results/**/*.pth
+results/**/*.bin
+results/**/*.safetensors
+results/**/*.log
 
 # Editors and operating systems
 .vscode/
