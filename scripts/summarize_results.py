@@ -31,6 +31,9 @@ COLUMNS = [
     "mean_idle_fraction",
     "load_imbalance",
     "verify_mismatches",
+    "verify_tokens_compared",
+    "verify_mismatch_rate",
+    "verify_exact_match",
     "file",
 ]
 
@@ -64,6 +67,33 @@ def summarize_run(path: Path, workload_classes):
     ]
 
     gpus = distributed["world_size"] if distributed else 1
+    verification_enabled = bool(distributed and distributed.get("verify"))
+    verify_mismatches = (
+        sum(record["verify_mismatch_count"] for record in stage_records)
+        if verification_enabled
+        else None
+    )
+    verify_tokens_compared = (
+        sum(
+            record.get(
+                "verify_tokens_compared",
+                sum(
+                    length
+                    for worker in record["workers"]
+                    for length in worker["chunk_lengths"]
+                ),
+            )
+            for record in stage_records
+        )
+        if verification_enabled
+        else None
+    )
+    verify_mismatch_rate = (
+        verify_mismatches / verify_tokens_compared
+        if verification_enabled and verify_tokens_compared
+        else 0.0 if verification_enabled
+        else None
+    )
 
     return {
         "mode": mode,
@@ -93,11 +123,10 @@ def summarize_run(path: Path, workload_classes):
         "diffusion_seconds": sum(record["stage_seconds"] for record in stage_records) if stage_records else None,
         "mean_idle_fraction": statistics.mean(idle_fractions) if idle_fractions else None,
         "load_imbalance": statistics.mean(imbalances) if imbalances else None,
-        "verify_mismatches": (
-            sum(record["verify_mismatch_count"] for record in stage_records)
-            if distributed and distributed.get("verify")
-            else None
-        ),
+        "verify_mismatches": verify_mismatches,
+        "verify_tokens_compared": verify_tokens_compared,
+        "verify_mismatch_rate": verify_mismatch_rate,
+        "verify_exact_match": verify_mismatches == 0 if verification_enabled else None,
         "file": path.name,
     }
 
@@ -171,7 +200,26 @@ def main():
         mismatched = [row for row in verify_rows if row["verify_mismatches"]]
         print(f"\nCorrectness: {len(verify_rows) - len(mismatched)}/{len(verify_rows)} verified runs match the single-GPU output")
         for row in mismatched:
-            print(f"  {row['file']}: {row['verify_mismatches']} tokens differ")
+            print(
+                f"  {row['file']}: {row['verify_mismatches']}/"
+                f"{row['verify_tokens_compared']} tokens differ "
+                f"({row['verify_mismatch_rate']:.2%})"
+            )
+
+        print(f"\n{'verification class':<24}{'exact runs':>12}{'tokens different':>20}")
+        verify_groups = defaultdict(list)
+        for row in verify_rows:
+            verify_groups[row["workload_class"]].append(row)
+
+        for workload_class, group in sorted(verify_groups.items()):
+            exact = sum(row["verify_exact_match"] for row in group)
+            mismatches = sum(row["verify_mismatches"] for row in group)
+            compared = sum(row["verify_tokens_compared"] for row in group)
+            rate = mismatches / compared if compared else 0.0
+            print(
+                f"{workload_class:<24}{f'{exact}/{len(group)}':>12}"
+                f"{f'{mismatches}/{compared} ({rate:.2%})':>20}"
+            )
 
 
 if __name__ == "__main__":

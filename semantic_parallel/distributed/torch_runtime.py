@@ -175,6 +175,9 @@ class DistributedStageExecutor:
             record["verify_mismatch_count"] = self._count_mismatches_against_combined(
                 stage, sequence, generation_config, threshold
             )
+            record["verify_tokens_compared"] = sum(
+                task.content_length for task in stage.tasks
+            )
 
         self.stage_records.append(record)
         return sequence
