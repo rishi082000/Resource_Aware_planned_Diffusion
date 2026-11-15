@@ -115,12 +115,12 @@ def main():
     print(inputs)
 
     
-    def generation_tokens_hook_func(step, x, logits):
-        # print(f"############ Step {step} ############")
-        # print(f"Generated tokens: {x}")
-        # print(f"Generated text: {tokenizer.decode(x[0].tolist())}")
-        # print(tokenizer.decode(x[0].tolist()).split(tokenizer.eos_token)[0].replace(tokenizer.mask_token, "[M]"))
-        return x
+    # def generation_tokens_hook_func(step, x, logits):
+    #     # print(f"############ Step {step} ############")
+    #     # print(f"Generated tokens: {x}")
+    #     # print(f"Generated text: {tokenizer.decode(x[0].tolist())}")
+    #     # print(tokenizer.decode(x[0].tolist()).split(tokenizer.eos_token)[0].replace(tokenizer.mask_token, "[M]"))
+    #     return x
 
     stage_executor = (
         DistributedStageExecutor(model, device, policy=args.scheduler, verify=args.verify_distributed)
@@ -151,7 +151,6 @@ def main():
                 temperature=args.temperature,
                 alg_temp=0.,
                 length_scale=args.length_scale,
-                generation_tokens_hook_func=generation_tokens_hook_func,
                 run_isolated_oracle=args.run_isolated_oracle,
                 stage_executor=stage_executor
             )

@@ -541,7 +541,7 @@ class DreamGenerationMixin:
             
             # 6. Run diffusion over async blocks
             stage_executor = kwargs.get("stage_executor", None)
-
+            
             if stage_executor is not None:
                 result = DreamModelOutput(
                     sequences=stage_executor(

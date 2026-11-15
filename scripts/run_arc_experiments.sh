@@ -150,9 +150,11 @@ run() {
 echo "Results: $OUT_DIR   (${#PROMPTS[@]} prompts, $AVAILABLE_GPUS GPUs visible, multi-GPU counts:${MULTI_GPU_COUNTS:- none})"
 
 echo "== 1/3 correctness: multi-GPU output vs single-GPU output (first $VERIFY_PROMPTS prompts)"
+EXPECTED_VERIFY_RUNS=0
 for gpus in $MULTI_GPU_COUNTS; do
     (( gpus > 1 )) || continue
     for (( i = 0; i < ${#PROMPTS[@]} && i < VERIFY_PROMPTS; i++ )); do
+        EXPECTED_VERIFY_RUNS=$(( EXPECTED_VERIFY_RUNS + 1 ))
         prompt_id=$(printf "p%02d" $(( i + 1 )))
         run "$OUT_DIR/verify_${prompt_id}_g${gpus}_lpt.json" \
             "${MULTI_GPU[@]}" --nproc_per_node="$gpus" -m eval.pd_generate "${COMMON_ARGS[@]}" \
@@ -160,22 +162,34 @@ for gpus in $MULTI_GPU_COUNTS; do
     done
 done
 
-python - "$OUT_DIR" <<'EOF'
+if ! python - "$OUT_DIR" "$EXPECTED_VERIFY_RUNS" <<'EOF'
 import glob, json, sys
 
+expected = int(sys.argv[2])
+paths = sorted(glob.glob(f"{sys.argv[1]}/verify_*.json"))
 problems = []
-for path in sorted(glob.glob(f"{sys.argv[1]}/verify_*.json")):
+for path in paths:
     stages = json.load(open(path))["distributed"]["stages"]
     mismatches = sum(stage["verify_mismatch_count"] for stage in stages)
     if mismatches:
         problems.append(f"  {path}: {mismatches} tokens differ")
 
-if problems:
-    print("WARNING: multi-GPU output differs from single-GPU output; timing comparisons are not valid until this is fixed")
+if len(paths) != expected:
+    print(f"ERROR: expected {expected} verification results, but found {len(paths)}")
+    sys.exit(1)
+elif problems:
+    print("ERROR: multi-GPU output differs from single-GPU output; timing comparisons are not valid")
     print("\n".join(problems))
+    sys.exit(1)
+elif expected == 0:
+    print("  no multi-GPU correctness checks requested")
 else:
     print("  all checked stages match the single-GPU output")
 EOF
+then
+    echo "Stopping before timing experiments because correctness verification failed"
+    exit 1
+fi
 
 for (( repeat = 1; repeat <= REPEATS; repeat++ )); do
     echo "== 2/3 single-GPU baseline (repeat $repeat/$REPEATS)"
