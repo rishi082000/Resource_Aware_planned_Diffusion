@@ -540,19 +540,32 @@ class DreamGenerationMixin:
             ar_template = stage.full_sequence.clone()
             
             # 6. Run diffusion over async blocks
-            result = self._diff_sample(
-                stage.full_sequence.clone(),
-                attention_mask=stage.attention_mask,
-                generation_config=generation_config,
-                generation_tokens_hook_func=generation_tokens_hook_func,
-                generation_logits_hook_func=generation_logits_hook_func,
-                format_inputs=False,
-                threshold=kwargs.get("threshold", None),
-                block_info=[
-                    (task.start, task.end_exclusive, task.content_length)
-                    for task in stage.tasks
-                ]
-            )
+            stage_executor = kwargs.get("stage_executor", None)
+
+            if stage_executor is not None:
+                result = DreamModelOutput(
+                    sequences=stage_executor(
+                        stage,
+                        generation_config,
+                        threshold=kwargs.get("threshold", None)
+                    ),
+                    history=None
+                )
+
+            else:
+                result = self._diff_sample(
+                    stage.full_sequence.clone(),
+                    attention_mask=stage.attention_mask,
+                    generation_config=generation_config,
+                    generation_tokens_hook_func=generation_tokens_hook_func,
+                    generation_logits_hook_func=generation_logits_hook_func,
+                    format_inputs=False,
+                    threshold=kwargs.get("threshold", None),
+                    block_info=[
+                        (task.start, task.end_exclusive, task.content_length)
+                        for task in stage.tasks
+                    ]
+                )
 
 
             if run_isolated_oracle:
@@ -1021,29 +1034,99 @@ class DreamGenerationMixin:
             block_info=block_info
         )
 
+    def _execute_chunks(
+            self,
+            stage: PlannedStage,
+            chunk_ids: List[int],
+            generation_config: DreamGenerationConfig,
+            generation_tokens_hook_func,
+            generation_logits_hook_func,
+            threshold: Optional[float] = None
+    ) -> Dict[int, torch.Tensor]:
+        if not chunk_ids:
+            return {}
+
+        if len(set(chunk_ids)) != len(chunk_ids):
+            raise ValueError("chunk ids must be unique")
+
+        tasks_by_id = {task.chunk_id: task for task in stage.tasks}
+
+        unknown_chunk_ids = set(chunk_ids) - set(tasks_by_id)
+
+        if unknown_chunk_ids:
+            raise ValueError(f"unknown chunk ids: {sorted(unknown_chunk_ids)}")
+        
+        tasks = sorted(
+            (tasks_by_id[chunk_id] for chunk_id in chunk_ids),
+            key = lambda task : task.start
+        )
+
+        input_ids, attention_mask, position_ids, block_info = build_chunk_subset_inputs(stage, tasks)
+
+        subset_generation_config = copy.deepcopy(generation_config)
+        subset_generation_config.steps = stage.diffusion_steps
+
+        result = self._diff_sample(
+            input_ids,
+            attention_mask=attention_mask,
+            position_ids=position_ids,
+            generation_config=subset_generation_config,
+            generation_tokens_hook_func=generation_tokens_hook_func,
+            generation_logits_hook_func=generation_logits_hook_func,
+            format_inputs=False,
+            threshold=threshold,
+            block_info=block_info
+        )
+
+        sequences = (
+            result.sequences
+            if hasattr(result, "sequences")
+            else result
+        )
+
+        return {
+            task.chunk_id: sequences[:, local_start:local_end]
+            for task, (local_start, local_end, _) in zip(tasks, block_info)
+        }
 
 def build_isolated_chunk_inputs(stage: PlannedStage, task: ChunkTask):
+    return build_chunk_subset_inputs(stage, [task])
+
+def build_chunk_subset_inputs(stage: PlannedStage, tasks: List[ChunkTask]):
     prefix_length = stage.prefix.shape[1]
+    device = stage.full_sequence.device
 
-    prefix_indices = torch.arange(
-        prefix_length,
-        device=stage.full_sequence.device
-    )
+    index_parts = [
+        torch.arange(
+            prefix_length,
+            device = device
+        )
+    ]
+    subset_block_info = []
+    local_start = prefix_length
 
-    chunk_indices = torch.arange(
-        task.start,
-        task.end_exclusive,
-        device=stage.full_sequence.device
-    )
+    for task in tasks:
+        chunk_length = task.end_exclusive - task.start
 
-    selected_indices = torch.cat([
-        prefix_indices,
-        chunk_indices
-    ])
+        index_parts.append(
+            torch.arange(
+                task.start,
+                task.end_exclusive,
+                device = device
+            )
+        )
 
-    input_ids = stage.full_sequence.index_select(
-        1, selected_indices
-    )
+        subset_block_info.append((
+            local_start,
+            local_start + chunk_length,
+            task.content_length
+        ))
+
+        local_start += chunk_length
+
+    selected_indices = torch.cat(index_parts)
+
+    input_ids = stage.full_sequence.index_select(1, selected_indices)
 
     position_ids = selected_indices.unsqueeze(0).expand(
         input_ids.shape[0],
@@ -1060,15 +1143,9 @@ def build_isolated_chunk_inputs(stage: PlannedStage, task: ChunkTask):
         .index_select(-1, mask_indices)
     )
 
-    isolated_block_info = [(
-        prefix_length,
-        input_ids.shape[1],
-        task.content_length
-    )]
-
     return (
         input_ids,
         attention_mask,
         position_ids,
-        isolated_block_info
+        subset_block_info
     )
