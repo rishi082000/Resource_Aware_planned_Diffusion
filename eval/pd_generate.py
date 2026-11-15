@@ -6,7 +6,11 @@ from dream.control_tags import *
 import time
 import re
 import json
+import os
+from datetime import timedelta
 from pathlib import Path
+import torch.distributed as dist
+from semantic_parallel.distributed import DistributedStageExecutor, serve_stages
 
 def main():
     """
@@ -15,6 +19,11 @@ def main():
     python -m eval.pd_generate \\
         --model_path path/to/model \\
         --prompt "What is Aurora Borealis? Please be concise." \\
+    
+     Multi-GPU (one rank per GPU):
+     torchrun --nproc_per_node=4 -m eval.pd_generate \\
+         --prompt "What is Aurora Borealis? Please be concise." \\
+         --distributed --scheduler lpt --temperature 0
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_path", type=str, default="dmisrael/planned-diffusion-dream7b-sft-16ep", help="Path to the base model.")
@@ -32,8 +41,16 @@ def main():
     # parser.add_argument("--quiet_steps", action="store_true", help="Do not print intermediate generation steps.")
     parser.add_argument("--run_isolated_oracle", action="store_true", help="Run the isolated oracle generation algorithm.")
     parser.add_argument("--metrics_json", type=str,default=None, help="Optional path for structured JSON metrics.")
+    parser.add_argument("--distributed", action="store_true", help="Spread each stage's chunks across GPUs; launch with torchrun.")
+    parser.add_argument("--scheduler", type=str, default="lpt", choices=["lpt", "round_robin"], help="Chunk placement policy for --distributed.")
+    parser.add_argument("--verify_distributed", action="store_true", help="Also run each stage combined on rank 0 and count token mismatches (use --temperature 0; slows the run).")
     args = parser.parse_args()
-    
+
+    if args.distributed and args.use_cache:
+        parser.error("--distributed supports the non-cached path only; drop --use_cache")
+
+    if args.distributed and args.disable_block_sparsity:
+        parser.error("--distributed needs block sparsity: dense blocks are not independent")
     
     # set random seed
     torch.manual_seed(args.random_seed)
@@ -42,6 +59,23 @@ def main():
     torch.backends.cudnn.deterministic = True
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    rank = 0
+
+    if args.distributed:
+        dist.init_process_group(backend="nccl" if device == "cuda" else "gloo", timeout=timedelta(minutes=30))
+        rank = dist.get_rank()
+
+        if device == "cuda":
+            local_rank = int(os.environ.get("LOCAL_RANK", 0))
+
+            if local_rank >= torch.cuda.device_count():
+                raise RuntimeError(
+                    f"rank {rank} needs GPU {local_rank} but only {torch.cuda.device_count()} are visible; "
+                    "set --nproc_per_node to at most the number of GPUs"
+                )
+
+            torch.cuda.set_device(local_rank)
+            device = f"cuda:{local_rank}"
 
     if device == "cpu":
         dtype = torch.float32
@@ -59,6 +93,12 @@ def main():
     )
 
     model = model.to(device).eval()
+
+    if rank != 0:
+        # Worker ranks only run the chunks rank 0 sends them
+        serve_stages(model, device)
+        dist.destroy_process_group()
+        return
 
     messages = [
         {"role": "system", "content": "You are a helpful assistant."},
@@ -82,7 +122,13 @@ def main():
         # print(tokenizer.decode(x[0].tolist()).split(tokenizer.eos_token)[0].replace(tokenizer.mask_token, "[M]"))
         return x
 
-    if device == "cuda":
+    stage_executor = (
+        DistributedStageExecutor(model, device, policy=args.scheduler, verify=args.verify_distributed)
+        if args.distributed
+        else None
+    )
+
+    if device.startswith("cuda"):
         torch.cuda.synchronize()
         torch.cuda.reset_peak_memory_stats()
 
@@ -93,28 +139,33 @@ def main():
     # start_time = time.time()
     start_time = time.perf_counter()
     with torch.no_grad():
-        
-        output = model.planned_diffusion_generate(
-            inputs,
-            max_length=args.max_length,
-            steps_ratio=args.steps_ratio,
-            return_dict_in_generate=True,
-            alg="pd_confidence_threshold" if args.confidence_threshold is not None else "pd_entropy",
-            threshold=args.confidence_threshold,
-            top_p=args.top_p,
-            temperature=args.temperature,
-            alg_temp=0.,
-            length_scale=args.length_scale,
-            generation_tokens_hook_func=generation_tokens_hook_func,
-            run_isolated_oracle=args.run_isolated_oracle
-        )
+        try:
+            output = model.planned_diffusion_generate(
+                inputs,
+                max_length=args.max_length,
+                steps_ratio=args.steps_ratio,
+                return_dict_in_generate=True,
+                alg="pd_confidence_threshold" if args.confidence_threshold is not None else "pd_entropy",
+                threshold=args.confidence_threshold,
+                top_p=args.top_p,
+                temperature=args.temperature,
+                alg_temp=0.,
+                length_scale=args.length_scale,
+                generation_tokens_hook_func=generation_tokens_hook_func,
+                run_isolated_oracle=args.run_isolated_oracle,
+                stage_executor=stage_executor
+            )
+        finally:
+            # Release the worker ranks even if generation failed
+            if stage_executor is not None:
+                stage_executor.shutdown()
 
-    if device == "cuda":
+    if device.startswith("cuda"):
         torch.cuda.synchronize()
-        
+
     end_time = time.perf_counter()
 
-    if device == "cuda":
+    if device.startswith("cuda"):
         peak_memory = torch.cuda.max_memory_allocated()
     else:
         peak_memory = 0
@@ -159,6 +210,14 @@ def main():
         "stages": structured_stages,
         "run_isolated_oracle": args.run_isolated_oracle,
     }
+
+    if stage_executor is not None:
+        metrics["distributed"] = {
+            "world_size": stage_executor.world_size,
+            "scheduler": args.scheduler,
+            "verify": args.verify_distributed,
+            "stages": stage_executor.stage_records,
+        }
     output_ids = output.sequences
     
     generated_text = tokenizer.decode(
@@ -185,7 +244,7 @@ def main():
     print(f"Tokens generated: {tokens_generated}")
     print(f"Tokens per second: {tokens_generated / (end_time - start_time)}")
 
-    if device == "cuda":
+    if device.startswith("cuda"):
         print(f"Peak memory allocated: {peak_memory / (1024 ** 3)} GiB")
 
     if args.metrics_json:
@@ -196,7 +255,9 @@ def main():
             json.dump(metrics, f, indent=2)
 
         print(f"Metrics saved to {metrics_path}")
-    
+
+    if args.distributed:
+        dist.destroy_process_group()
 
 
 if __name__ == "__main__":

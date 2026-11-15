@@ -1,0 +1,11 @@
+# One prompt per line; blank lines and lines starting with # are ignored.
+# Prompt IDs (p01, p02, ...) follow line order, so append new prompts at the end to keep old IDs stable.
+# The mix aims for different chunk counts and lengths: short factual answers through multi-part explanations.
+What is the capital of France?
+Name France's capital and describe its geographic location.
+What is Aurora Borealis? Please be concise.
+Explain the difference between TCP and UDP, with one example use case for each.
+Give three tips for staying productive while working from home, and explain why each one works.
+Describe the water cycle, covering evaporation, condensation, precipitation, and collection.
+Compare Python and C++ in terms of performance, ease of use, and typical applications.
+Write a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.
