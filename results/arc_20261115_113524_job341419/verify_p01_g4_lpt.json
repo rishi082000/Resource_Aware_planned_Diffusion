@@ -1,0 +1,114 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "What is the capital of France?",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 26,
+  "tokens_generated": 96,
+  "latency_seconds": 3.824919156730175,
+  "tokens_per_second": 25.098569686389904,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15751431168,
+  "peak_memory_allocated_gib": 14.669663429260254,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 3,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 46,
+          "end_exclusive": 58,
+          "predicted_content_length": 10
+        },
+        {
+          "chunk_id": 1,
+          "start": 58,
+          "end_exclusive": 90,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 2,
+          "start": 90,
+          "end_exclusive": 122,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>capital name 1</topic><promise>-<topic>location & purpose 3</topic><promise>-<topic>international orgs 3</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 4,
+    "scheduler": "lpt",
+    "verify": true,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 30,
+        "prefix_length": 46,
+        "schedule_seconds": 0.0006058481521904469,
+        "broadcast_seconds": 0.16000270191580057,
+        "stage_seconds": 1.9290805361233652,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.0658020991832018,
+            "idle_seconds": 0.8632784369401634
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              2
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.1929451543837786,
+            "idle_seconds": 0.7361353817395866
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              10
+            ],
+            "predicted_load": 10.0,
+            "compute_seconds": 0.5410668319091201,
+            "idle_seconds": 1.388013704214245
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.9878225177526474e-05,
+            "idle_seconds": 1.9290506578981876
+          }
+        ],
+        "verify_mismatch_count": 0
+      }
+    ]
+  }
+}

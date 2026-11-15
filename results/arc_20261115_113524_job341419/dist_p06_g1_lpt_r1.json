@@ -1,0 +1,181 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Describe the water cycle, covering evaporation, condensation, precipitation, and collection.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 36,
+  "tokens_generated": 426,
+  "latency_seconds": 19.12118027964607,
+  "tokens_per_second": 22.278959445482787,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16593795584,
+  "peak_memory_allocated_gib": 15.454176425933838,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 47,
+          "end_exclusive": 79,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 1,
+          "start": 79,
+          "end_exclusive": 101,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe the water cycle, covering evaporation, condensation, precipitation, and collection.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>overview 3</topic><promise>-<topic>introduction 2</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 4,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 126,
+          "end_exclusive": 188,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 1,
+          "start": 188,
+          "end_exclusive": 260,
+          "predicted_content_length": 70
+        },
+        {
+          "chunk_id": 2,
+          "start": 260,
+          "end_exclusive": 322,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 3,
+          "start": 322,
+          "end_exclusive": 394,
+          "predicted_content_length": 70
+        }
+      ],
+      "max_block_size": 70,
+      "diffusion_steps": 70,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe the water cycle, covering evaporation, condensation, precipitation, and collection.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>overview 3</topic><promise>-<topic>introduction 2</topic><async>The water cycle is a big, round, water game that keeps our Earth's water in a constant flow. It has four main parts:[PAD][PAD]</async><async>It's like a big water game of catch, and it happens over and over again.[PAD][PAD]</async><sync/><promise>-<topic>evaporation 6</topic><promise>-<topic>condensation 7</topic><promise>-<topic>precipitation 6</topic><promise>-<topic>collection 7</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 400,
+          "end_exclusive": 462,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe the water cycle, covering evaporation, condensation, precipitation, and collection.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>overview 3</topic><promise>-<topic>introduction 2</topic><async>The water cycle is a big, round, water game that keeps our Earth's water in a constant flow. It has four main parts:[PAD][PAD]</async><async>It's like a big water game of catch, and it happens over and over again.[PAD][PAD]</async><sync/><promise>-<topic>evaporation 6</topic><promise>-<topic>condensation 7</topic><promise>-<topic>precipitation 6</topic><promise>-<topic>collection 7</topic><async>1. Evaporation: When the sun makes the water in the Earth's surface turn into tiny water vapor, it's called evaporation. This happens when the sun is shining and the water in the soil or on the surface of the Earth turns into a gas.[PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><async>2. Condensation: When the water in the atmosphere comes into contact with the cold air near the Earth, it cools down and condenses into tiny droplets. These droplets then come together to form clouds. Imagine clouds as big cotton balls of water droplets that are floating in the sky.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><async>3. Precipitation: When the water droplets in the cloud get too big, they fall from the sky as rain, snow, or other types of water. This is called precipitation. The water then returns to the Earth, where it can be used again.[PAD][PAD][PAD][PAD][PAD][PAD]</async><async>4. Collection: Once the water has fallen to the ground, it is collected by the Earth's surface, like a giant water net. This collected water can then be used for various purposes, like drinking, washing, and irrigation. It can also be stored in lakes, rivers, and reservoirs for future use.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>summary 6</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 1,
+    "scheduler": "lpt",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 1,
+        "diffusion_steps": 30,
+        "prefix_length": 47,
+        "schedule_seconds": 0.0005723130889236927,
+        "broadcast_seconds": 0.10077297501266003,
+        "stage_seconds": 1.168294568080455,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              1
+            ],
+            "chunk_lengths": [
+              30,
+              20
+            ],
+            "predicted_load": 50.0,
+            "compute_seconds": 1.0641294536180794,
+            "idle_seconds": 0.10416511446237564
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 1,
+        "diffusion_steps": 70,
+        "prefix_length": 126,
+        "schedule_seconds": 4.500569775700569e-05,
+        "broadcast_seconds": 0.0012484872713685036,
+        "stage_seconds": 8.469965370837599,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              1,
+              3,
+              0,
+              2
+            ],
+            "chunk_lengths": [
+              70,
+              70,
+              60,
+              60
+            ],
+            "predicted_load": 260.0,
+            "compute_seconds": 8.467374728061259,
+            "idle_seconds": 0.002590642776340246
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "lpt",
+        "world_size": 1,
+        "diffusion_steps": 60,
+        "prefix_length": 400,
+        "schedule_seconds": 3.960588946938515e-05,
+        "broadcast_seconds": 0.001323441043496132,
+        "stage_seconds": 7.381960247177631,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 7.3797229449264705,
+            "idle_seconds": 0.002237302251160145
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "hostname": "c31",
+  "slurm_job_id": "341419",
+  "git_commit": "7683b2da59bf764818936534484edcd129f71347",
+  "git_uncommitted_changes": true,
+  "torch": "2.7.1+cu126",
+  "cuda": "12.6",
+  "gpus": [
+    "NVIDIA RTX A6000",
+    "NVIDIA RTX A6000",
+    "NVIDIA RTX A6000",
+    "NVIDIA RTX A6000"
+  ],
+  "settings": {
+    "MODEL_PATH": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+    "GPU_COUNTS": "1 2 4",
+    "SCHEDULERS": "lpt round_robin",
+    "VERIFY_PROMPTS": "3",
+    "REPEATS": "1",
+    "MAX_LENGTH": "512",
+    "USE_FP16": "1",
+    "RUN_TIMEOUT": "20m"
+  },
+  "prompts": {
+    "p01": "What is the capital of France?",
+    "p02": "Name France's capital and describe its geographic location.",
+    "p03": "What is Aurora Borealis? Please be concise.",
+    "p04": "Explain the difference between TCP and UDP, with one example use case for each.",
+    "p05": "Give three tips for staying productive while working from home, and explain why each one works.",
+    "p06": "Describe the water cycle, covering evaporation, condensation, precipitation, and collection.",
+    "p07": "Compare Python and C++ in terms of performance, ease of use, and typical applications.",
+    "p08": "Write a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing."
+  }
+}

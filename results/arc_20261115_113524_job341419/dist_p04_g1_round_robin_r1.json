@@ -1,0 +1,117 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain the difference between TCP and UDP, with one example use case for each.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 36,
+  "tokens_generated": 166,
+  "latency_seconds": 5.835889569949359,
+  "tokens_per_second": 28.444678058128588,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15833552384,
+  "peak_memory_allocated_gib": 14.746144771575928,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 43,
+          "end_exclusive": 105,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain the difference between TCP and UDP, with one example use case for each.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>analogy introduction 6</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 118,
+          "end_exclusive": 150,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 1,
+          "start": 150,
+          "end_exclusive": 202,
+          "predicted_content_length": 50
+        }
+      ],
+      "max_block_size": 50,
+      "diffusion_steps": 50,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain the difference between TCP and UDP, with one example use case for each.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>analogy introduction 6</topic><async>Imagine you have two friends, TCP and UDP. TCP is like a friend who makes sure everything is delivered safely, like checking if your toys are all there before you play with them. UDP is like a friend who delivers things quickly, like running fast to get your toys to your friend's house.</async><sync/><promise>-<topic>analogy conclusion 3</topic><promise>-<topic>usage 5</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 1,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 60,
+        "prefix_length": 43,
+        "schedule_seconds": 0.0006198943592607975,
+        "broadcast_seconds": 0.10001086164265871,
+        "stage_seconds": 2.2343717361800373,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 2.1304696178995073,
+            "idle_seconds": 0.10390211828052998
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 50,
+        "prefix_length": 118,
+        "schedule_seconds": 3.86042520403862e-05,
+        "broadcast_seconds": 0.0010754819959402084,
+        "stage_seconds": 2.7292981590144336,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              1
+            ],
+            "chunk_lengths": [
+              30,
+              50
+            ],
+            "predicted_load": 80.0,
+            "compute_seconds": 2.7271975837647915,
+            "idle_seconds": 0.0021005752496421337
+          }
+        ]
+      }
+    ]
+  }
+}

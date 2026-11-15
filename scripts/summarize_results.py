@@ -12,6 +12,7 @@ from pathlib import Path
 COLUMNS = [
     "mode",
     "prompt_id",
+    "workload_class",
     "repeat",
     "gpus",
     "scheduler",
@@ -21,6 +22,10 @@ COLUMNS = [
     "tokens_generated",
     "peak_memory_gib_rank0",
     "stages",
+    "total_chunks",
+    "mean_chunk_length",
+    "max_chunk_length",
+    "chunk_length_cv",
     "chunk_lengths",
     "diffusion_seconds",
     "mean_idle_fraction",
@@ -30,7 +35,7 @@ COLUMNS = [
 ]
 
 
-def summarize_run(path: Path):
+def summarize_run(path: Path, workload_classes):
     # File names: baseline_p01_r1, dist_p01_g2_lpt_r1, verify_p01_g2_lpt
     parts = path.stem.split("_")
     mode, prompt_id = parts[0], parts[1]
@@ -39,6 +44,11 @@ def summarize_run(path: Path):
     metrics = json.loads(path.read_text())
     distributed = metrics.get("distributed")
     stage_records = distributed["stages"] if distributed else []
+    chunk_lengths = [
+        block["predicted_content_length"]
+        for stage in metrics["stages"]
+        for block in stage["blocks"]
+    ]
 
     idle_fractions = [
         worker["idle_seconds"] / record["stage_seconds"]
@@ -58,6 +68,7 @@ def summarize_run(path: Path):
     return {
         "mode": mode,
         "prompt_id": prompt_id,
+        "workload_class": workload_classes.get(prompt_id, "unknown"),
         "repeat": repeat,
         "gpus": gpus,
         "scheduler": distributed["scheduler"] if distributed else "combined",
@@ -67,6 +78,14 @@ def summarize_run(path: Path):
         "tokens_generated": metrics["tokens_generated"],
         "peak_memory_gib_rank0": metrics["peak_memory_allocated_gib"],
         "stages": len(metrics["stages"]),
+        "total_chunks": len(chunk_lengths),
+        "mean_chunk_length": statistics.mean(chunk_lengths) if chunk_lengths else None,
+        "max_chunk_length": max(chunk_lengths) if chunk_lengths else None,
+        "chunk_length_cv": (
+            statistics.pstdev(chunk_lengths) / statistics.mean(chunk_lengths)
+            if chunk_lengths and statistics.mean(chunk_lengths) > 0
+            else None
+        ),
         "chunk_lengths": " | ".join(
             ",".join(str(block["predicted_content_length"]) for block in stage["blocks"])
             for stage in metrics["stages"]
@@ -88,8 +107,12 @@ def main():
     parser.add_argument("results_dir", type=Path)
     args = parser.parse_args()
 
+    run_info_path = args.results_dir / "run_info.json"
+    run_info = json.loads(run_info_path.read_text()) if run_info_path.exists() else {}
+    workload_classes = run_info.get("prompt_workload_classes", {})
+
     rows = [
-        summarize_run(path)
+        summarize_run(path, workload_classes)
         for path in sorted(args.results_dir.glob("*.json"))
         if path.stem.split("_")[0] in ("baseline", "dist", "verify")
     ]
@@ -128,6 +151,20 @@ def main():
             f"{(f'{statistics.geometric_mean(speedups):.2f}x' if speedups else '-'):>20}"
             f"{(f'{statistics.mean(idles):.0%}' if idles else '-'):>11}"
         )
+
+    class_groups = defaultdict(list)
+    for row in rows:
+        if row["mode"] == "dist":
+            class_groups[(row["workload_class"], row["gpus"], row["scheduler"])].append(row)
+
+    if class_groups:
+        print(f"\n{'workload class':<24}{'GPUs':>6}{'scheduler':>14}{'runs':>7}{'speedup (geo-mean)':>20}")
+        for (workload_class, gpus, scheduler), group in sorted(class_groups.items()):
+            speedups = [row["speedup_vs_baseline"] for row in group if row["speedup_vs_baseline"]]
+            print(
+                f"{workload_class:<24}{gpus:>6}{scheduler:>14}{len(group):>7}"
+                f"{(f'{statistics.geometric_mean(speedups):.2f}x' if speedups else '-'):>20}"
+            )
 
     verify_rows = [row for row in rows if row["mode"] == "verify"]
     if verify_rows:

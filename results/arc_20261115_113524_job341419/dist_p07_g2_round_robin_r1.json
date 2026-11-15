@@ -1,0 +1,191 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Compare Python and C++ in terms of performance, ease of use, and typical applications.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 37,
+  "tokens_generated": 475,
+  "latency_seconds": 24.865070454310626,
+  "tokens_per_second": 19.10310291992974,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16485585408,
+  "peak_memory_allocated_gib": 15.353397846221924,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 43,
+          "end_exclusive": 75,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCompare Python and C++ in terms of performance, ease of use, and typical applications.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 3,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 98,
+          "end_exclusive": 220,
+          "predicted_content_length": 120
+        },
+        {
+          "chunk_id": 1,
+          "start": 220,
+          "end_exclusive": 352,
+          "predicted_content_length": 130
+        },
+        {
+          "chunk_id": 2,
+          "start": 352,
+          "end_exclusive": 474,
+          "predicted_content_length": 120
+        }
+      ],
+      "max_block_size": 130,
+      "diffusion_steps": 130,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCompare Python and C++ in terms of performance, ease of use, and typical applications.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic><async>To compare Python and C++, let's break down the factors mentioned: performance, ease of use, and typical applications.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>performance 12</topic><promise>-<topic>ease of use 13</topic><promise>-<topic>typical applications 12</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 481,
+          "end_exclusive": 553,
+          "predicted_content_length": 70
+        }
+      ],
+      "max_block_size": 70,
+      "diffusion_steps": 70,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCompare Python and C++ in terms of performance, ease of use, and typical applications.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic><async>To compare Python and C++, let's break down the factors mentioned: performance, ease of use, and typical applications.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>performance 12</topic><promise>-<topic>ease of use 13</topic><promise>-<topic>typical applications 12</topic><async>1. Performance:\n- Python: Python is generally slower than C++, especially in terms of time and space complexity. This is due to its dynamic nature and the need for a virtual machine to interpret the code. However, Python can be faster in some cases, such as for data processing and machine learning tasks, due to its high-level data structures and extensive standard library.\n- C++: C++ is generally faster than Python in terms of performance, especially for low-level tasks. It allows for better control over resources and offers more efficient code execution.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><async>2. Ease of use:\n- Python: Python is known for its simplicity and ease of use. It has a simple and straightforward syntax, making it accessible to beginners. Python also has a vast and active community, which means there are many resources, libraries, and tools available to help with development.\n- C++: C++ is a more complex language, with a more intricate syntax and a larger language family. It is generally harder to learn and use compared to Python. However, C++ is widely used in the tech industry and has a strong foundation in system programming, making it a viable choice for many applications.[PAD][PAD][PAD][PAD][PAD][PAD]</async><async>3. Typical applications:\nBoth Python and C++ are used for a wide range of applications, but C++ is more common in high-performance settings, such as game development, scientific computing, and system development. Python, on the other hand, is more popular for its ease of use and is commonly used for web development, data analysis, and artificial intelligence. C++ is also used in some industries, like finance and engineering, for its robustness and control. However, Python is becoming increasingly popular in these sectors as well, especially for its simplicity and ease of use.[PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>conclusion 7</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 30,
+        "prefix_length": 43,
+        "schedule_seconds": 0.0006181010976433754,
+        "broadcast_seconds": 0.12763334717601538,
+        "stage_seconds": 1.1674253763630986,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.0255686989985406,
+            "idle_seconds": 0.14185667736455798
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.447616472840309e-05,
+            "idle_seconds": 1.1673909001983702
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 130,
+        "prefix_length": 98,
+        "schedule_seconds": 4.2922794818878174e-05,
+        "broadcast_seconds": 0.0013909400440752506,
+        "stage_seconds": 11.845094754826277,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              2
+            ],
+            "chunk_lengths": [
+              120,
+              120
+            ],
+            "predicted_load": 240.0,
+            "compute_seconds": 11.842372861225158,
+            "idle_seconds": 0.0027218936011195183
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              130
+            ],
+            "predicted_load": 130.0,
+            "compute_seconds": 7.535114646889269,
+            "idle_seconds": 4.309980107937008
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 70,
+        "prefix_length": 481,
+        "schedule_seconds": 4.203105345368385e-05,
+        "broadcast_seconds": 0.0014848308637738228,
+        "stage_seconds": 9.864690221846104,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              70
+            ],
+            "predicted_load": 70.0,
+            "compute_seconds": 9.86210017092526,
+            "idle_seconds": 0.002590050920844078
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.9085669666528702e-05,
+            "idle_seconds": 9.864661136176437
+          }
+        ]
+      }
+    ]
+  }
+}

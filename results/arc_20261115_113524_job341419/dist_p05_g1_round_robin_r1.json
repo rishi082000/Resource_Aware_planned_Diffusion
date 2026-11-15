@@ -1,0 +1,245 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Give three tips for staying productive while working from home, and explain why each one works.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 37,
+  "tokens_generated": 277,
+  "latency_seconds": 13.479815457947552,
+  "tokens_per_second": 20.549242744765014,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15963223552,
+  "peak_memory_allocated_gib": 14.866910457611084,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 42,
+          "end_exclusive": 74,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nGive three tips for staying productive while working from home, and explain why each one works.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 90,
+          "end_exclusive": 102,
+          "predicted_content_length": 10
+        },
+        {
+          "chunk_id": 1,
+          "start": 102,
+          "end_exclusive": 114,
+          "predicted_content_length": 10
+        }
+      ],
+      "max_block_size": 10,
+      "diffusion_steps": 10,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nGive three tips for staying productive while working from home, and explain why each one works.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic><async>While working from home, staying productive is crucial for maintaining efficiency and productivity. Here are three tips to help you stay productive while working from home:[PAD]</async><sync/><promise>-<topic>tip 1 5</topic><promise>-<topic>explanation 1 6</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 121,
+          "end_exclusive": 223,
+          "predicted_content_length": 100
+        }
+      ],
+      "max_block_size": 100,
+      "diffusion_steps": 100,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nGive three tips for staying productive while working from home, and explain why each one works.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic><async>While working from home, staying productive is crucial for maintaining efficiency and productivity. Here are three tips to help you stay productive while working from home:[PAD]</async><sync/><promise>-<topic>tip 1 5</topic><promise>-<topic>explanation 1 6</topic><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><sync/><promise>-<topic>steps 10</topic>"
+    },
+    {
+      "stage_id": 3,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 239,
+          "end_exclusive": 261,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 1,
+          "start": 261,
+          "end_exclusive": 283,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nGive three tips for staying productive while working from home, and explain why each one works.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic><async>While working from home, staying productive is crucial for maintaining efficiency and productivity. Here are three tips to help you stay productive while working from home:[PAD]</async><sync/><promise>-<topic>tip 1 5</topic><promise>-<topic>explanation 1 6</topic><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><sync/><promise>-<topic>steps 10</topic><async>Steps  \n   a. Choose a space in your home that is comfortable and suitable for work.\n   b. Organize your workspace with a comfortable chair, a desk or counter, and a monitor or computer.\n   c. Clear any distractions, such as clutter, noise, or distractions from nearby family members.\n   d. Create a comfortable lighting and sound environment.\n   e. Set a routine for your designated workspace, ensuring that it is always ready for work.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>tip 2 4</topic><promise>-<topic>steps 2 11</topic>"
+    },
+    {
+      "stage_id": 4,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 292,
+          "end_exclusive": 314,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nGive three tips for staying productive while working from home, and explain why each one works.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic><async>While working from home, staying productive is crucial for maintaining efficiency and productivity. Here are three tips to help you stay productive while working from home:[PAD]</async><sync/><promise>-<topic>tip 1 5</topic><promise>-<topic>explanation 1 6</topic><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><sync/><promise>-<topic>steps 10</topic><async>Steps  \n   a. Choose a space in your home that is comfortable and suitable for work.\n   b. Organize your workspace with a comfortable chair, a desk or counter, and a monitor or computer.\n   c. Clear any distractions, such as clutter, noise, or distractions from nearby family members.\n   d. Create a comfortable lighting and sound environment.\n   e. Set a routine for your designated workspace, ensuring that it is always ready for work.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>tip 2 4</topic><promise>-<topic>steps 2 11</topic><async>2. Set clear goals and establish a schedule:[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><async>Steps  \n   a. Create a to-do list of tasks and their respective deadlines.[PAD][PAD]</async><sync/><promise>-<topic>explanation 2 7</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 1,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 30,
+        "prefix_length": 42,
+        "schedule_seconds": 0.0006166482344269753,
+        "broadcast_seconds": 0.10084784403443336,
+        "stage_seconds": 1.1095331842079759,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.005728465039283,
+            "idle_seconds": 0.10380471916869283
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 10,
+        "prefix_length": 90,
+        "schedule_seconds": 4.182988777756691e-05,
+        "broadcast_seconds": 0.0010522869415581226,
+        "stage_seconds": 0.35205926978960633,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              1
+            ],
+            "chunk_lengths": [
+              10,
+              10
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.35016739601269364,
+            "idle_seconds": 0.0018918737769126892
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 100,
+        "prefix_length": 121,
+        "schedule_seconds": 2.513779327273369e-05,
+        "broadcast_seconds": 0.0011470899917185307,
+        "stage_seconds": 5.692380719818175,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              100
+            ],
+            "predicted_load": 100.0,
+            "compute_seconds": 5.690332714933902,
+            "idle_seconds": 0.002048004884272814
+          }
+        ]
+      },
+      {
+        "stage_id": 3,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 20,
+        "prefix_length": 239,
+        "schedule_seconds": 4.3143052607774734e-05,
+        "broadcast_seconds": 0.0011827177368104458,
+        "stage_seconds": 1.679526827763766,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              1
+            ],
+            "chunk_lengths": [
+              20,
+              20
+            ],
+            "predicted_load": 40.0,
+            "compute_seconds": 1.6773841702379286,
+            "idle_seconds": 0.0021426575258374214
+          }
+        ]
+      },
+      {
+        "stage_id": 4,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 20,
+        "prefix_length": 292,
+        "schedule_seconds": 3.6460813134908676e-05,
+        "broadcast_seconds": 0.0011599441058933735,
+        "stage_seconds": 1.844855953939259,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 1.8428729036822915,
+            "idle_seconds": 0.0019830502569675446
+          }
+        ]
+      }
+    ]
+  }
+}

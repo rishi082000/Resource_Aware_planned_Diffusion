@@ -1,11 +1,31 @@
-# One prompt per line; blank lines and lines starting with # are ignored.
-# Prompt IDs (p01, p02, ...) follow line order, so append new prompts at the end to keep old IDs stable.
-# The mix aims for different chunk counts and lengths: short factual answers through multi-part explanations.
-What is the capital of France?
-Name France's capital and describe its geographic location.
-What is Aurora Borealis? Please be concise.
-Explain the difference between TCP and UDP, with one example use case for each.
-Give three tips for staying productive while working from home, and explain why each one works.
-Describe the water cycle, covering evaporation, condensation, precipitation, and collection.
-Compare Python and C++ in terms of performance, ease of use, and typical applications.
-Write a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.
+# Tab-separated prompt manifest: prompt_id, workload_class, prompt.
+# Keep IDs stable once results have been published. Blank lines and comment lines are ignored.
+# These are candidate workload classes; use the generated stage metadata to confirm their actual shapes.
+
+# Short/control (3)
+p01	short_control	What is the capital of France?
+p02	short_control	What is Aurora Borealis? Answer in two concise sentences.
+p03	short_control	Explain the difference between TCP and UDP, with one brief example use case for each.
+
+# Many approximately equal chunks (4)
+p04	many_equal	Describe six major components of a modern computer in separate sections, using exactly two sentences for each component.
+p05	many_equal	Explain solar, wind, hydroelectric, geothermal, biomass, and tidal energy in separate sections of approximately equal length.
+p06	many_equal	Compare Python, C++, Java, Rust, Go, and JavaScript in six separate sections, giving three sentences to each language.
+p07	many_equal	Explain processes, threads, scheduling, virtual memory, file systems, synchronization, networking, and security as eight independent operating-system topics, using exactly two sentences per topic.
+
+# Many deliberately uneven chunks (4)
+p08	many_uneven	Explain cloud computing in separate sections: define virtualization briefly, explain containers in detail, summarize distributed storage in two sentences, discuss cloud networking in depth, give a short note on monitoring, and provide a detailed security section.
+p09	many_uneven	Plan a week-long trip to Japan with separate sections: a short budget overview, detailed transportation guidance, a brief lodging note, an extensive food guide, a detailed Tokyo itinerary, a short Kyoto itinerary, and a moderate section on cultural etiquette.
+p10	many_uneven	Explain internet infrastructure in separate sections: describe DNS briefly, TCP in detail, HTTP in moderate detail, TLS in detail, load balancing briefly, and content-delivery networks in moderate detail.
+p11	many_uneven	Describe a machine-learning production pipeline with a short problem-definition section, a detailed data-engineering section, a moderate training section, an extensive evaluation section, a brief deployment section, and a detailed monitoring section.
+
+# Multi-stage analysis followed by dependent synthesis (3)
+p12	multi_stage	Analyze PostgreSQL, MongoDB, Redis, and Cassandra independently for consistency, scalability, and operational complexity. After those analyses, synthesize them into a recommendation for an online marketplace.
+p13	multi_stage	Evaluate solar, wind, hydroelectric, geothermal, and nuclear power independently. Then use those evaluations to design and justify a balanced electricity plan for a growing coastal city.
+p14	multi_stage	Analyze phishing, ransomware, credential theft, supply-chain attacks, denial-of-service attacks, and insider threats independently. Then produce a prioritized mitigation roadmap based on the preceding risk analyses.
+
+# Long, high-parallelism responses (4)
+p15	long_high_parallelism	Write a comprehensive remote-work handbook with separate sections on workspace design, scheduling, communication, documentation, meetings, focus, cybersecurity, and wellbeing. Give each section approximately forty to fifty words.
+p16	long_high_parallelism	Create a comparative travel guide to Japan, Italy, Iceland, Thailand, Peru, Morocco, New Zealand, and Greece. Give each destination its own forty-to-fifty-word section covering cost, transportation, food, and one major attraction.
+p17	long_high_parallelism	Explain eight distributed-systems topics in independent forty-to-fifty-word sections: replication, partitioning, consensus, fault tolerance, caching, load balancing, observability, and consistency models.
+p18	long_high_parallelism	Write an introductory artificial-intelligence study guide with independent forty-to-fifty-word sections on supervised learning, unsupervised learning, reinforcement learning, neural networks, transformers, generative models, evaluation, and responsible AI.

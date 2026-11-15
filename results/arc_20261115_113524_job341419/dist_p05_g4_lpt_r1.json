@@ -1,0 +1,369 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Give three tips for staying productive while working from home, and explain why each one works.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 37,
+  "tokens_generated": 277,
+  "latency_seconds": 13.63002664130181,
+  "tokens_per_second": 20.322777591691015,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15962179072,
+  "peak_memory_allocated_gib": 14.86593770980835,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 42,
+          "end_exclusive": 74,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nGive three tips for staying productive while working from home, and explain why each one works.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 90,
+          "end_exclusive": 102,
+          "predicted_content_length": 10
+        },
+        {
+          "chunk_id": 1,
+          "start": 102,
+          "end_exclusive": 114,
+          "predicted_content_length": 10
+        }
+      ],
+      "max_block_size": 10,
+      "diffusion_steps": 10,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nGive three tips for staying productive while working from home, and explain why each one works.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic><async>While working from home, staying productive is crucial for maintaining efficiency and productivity. Here are three tips to help you stay productive while working from home:[PAD]</async><sync/><promise>-<topic>tip 1 5</topic><promise>-<topic>explanation 1 6</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 121,
+          "end_exclusive": 223,
+          "predicted_content_length": 100
+        }
+      ],
+      "max_block_size": 100,
+      "diffusion_steps": 100,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nGive three tips for staying productive while working from home, and explain why each one works.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic><async>While working from home, staying productive is crucial for maintaining efficiency and productivity. Here are three tips to help you stay productive while working from home:[PAD]</async><sync/><promise>-<topic>tip 1 5</topic><promise>-<topic>explanation 1 6</topic><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><sync/><promise>-<topic>steps 10</topic>"
+    },
+    {
+      "stage_id": 3,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 239,
+          "end_exclusive": 261,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 1,
+          "start": 261,
+          "end_exclusive": 283,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nGive three tips for staying productive while working from home, and explain why each one works.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic><async>While working from home, staying productive is crucial for maintaining efficiency and productivity. Here are three tips to help you stay productive while working from home:[PAD]</async><sync/><promise>-<topic>tip 1 5</topic><promise>-<topic>explanation 1 6</topic><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><sync/><promise>-<topic>steps 10</topic><async>Steps  \n   a. Choose a space in your home that is comfortable and suitable for work.\n   b. Organize your workspace with a comfortable chair, a desk or counter, and a monitor or computer.\n   c. Clear any distractions, such as clutter, noise, or distractions from nearby family members.\n   d. Create a comfortable lighting and sound environment.\n   e. Set a routine for your designated workspace, ensuring that it is always ready for work.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>tip 2 4</topic><promise>-<topic>steps 2 11</topic>"
+    },
+    {
+      "stage_id": 4,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 292,
+          "end_exclusive": 314,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nGive three tips for staying productive while working from home, and explain why each one works.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic><async>While working from home, staying productive is crucial for maintaining efficiency and productivity. Here are three tips to help you stay productive while working from home:[PAD]</async><sync/><promise>-<topic>tip 1 5</topic><promise>-<topic>explanation 1 6</topic><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><async>1. Set a designated workspace:[PAD][PAD][PAD]</async><sync/><promise>-<topic>steps 10</topic><async>Steps  \n   a. Choose a space in your home that is comfortable and suitable for work.\n   b. Organize your workspace with a comfortable chair, a desk or counter, and a monitor or computer.\n   c. Clear any distractions, such as clutter, noise, or distractions from nearby family members.\n   d. Create a comfortable lighting and sound environment.\n   e. Set a routine for your designated workspace, ensuring that it is always ready for work.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>tip 2 4</topic><promise>-<topic>steps 2 11</topic><async>2. Set clear goals and establish a schedule:[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><async>Steps  \n   a. Create a to-do list of tasks and their respective deadlines.[PAD][PAD]</async><sync/><promise>-<topic>explanation 2 7</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 4,
+    "scheduler": "lpt",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 30,
+        "prefix_length": 42,
+        "schedule_seconds": 0.0006216578185558319,
+        "broadcast_seconds": 0.16581103298813105,
+        "stage_seconds": 1.2722459640353918,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.0697899460792542,
+            "idle_seconds": 0.20245601795613766
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.9416754841804504e-05,
+            "idle_seconds": 1.27221654728055
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.1732022762298584e-05,
+            "idle_seconds": 1.2722142320126295
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.193086013197899e-05,
+            "idle_seconds": 1.2722140331752598
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 10,
+        "prefix_length": 90,
+        "schedule_seconds": 4.571815952658653e-05,
+        "broadcast_seconds": 0.0010777967981994152,
+        "stage_seconds": 0.5863628480583429,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              10
+            ],
+            "predicted_load": 10.0,
+            "compute_seconds": 0.3356283060275018,
+            "idle_seconds": 0.2507345420308411
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              10
+            ],
+            "predicted_load": 10.0,
+            "compute_seconds": 0.5625008749775589,
+            "idle_seconds": 0.023861973080784082
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.9937364161014557e-05,
+            "idle_seconds": 0.5863329106941819
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.08486633002758e-05,
+            "idle_seconds": 0.5863319993950427
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 100,
+        "prefix_length": 121,
+        "schedule_seconds": 2.938695251941681e-05,
+        "broadcast_seconds": 0.0011660871095955372,
+        "stage_seconds": 5.614776013884693,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              100
+            ],
+            "predicted_load": 100.0,
+            "compute_seconds": 5.61233964888379,
+            "idle_seconds": 0.0024363650009036064
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 1.8625985831022263e-05,
+            "idle_seconds": 5.614757387898862
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.1521002054214478e-05,
+            "idle_seconds": 5.614754492882639
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.109026536345482e-05,
+            "idle_seconds": 5.61475492361933
+          }
+        ]
+      },
+      {
+        "stage_id": 3,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 20,
+        "prefix_length": 239,
+        "schedule_seconds": 4.506716504693031e-05,
+        "broadcast_seconds": 0.00117583479732275,
+        "stage_seconds": 1.6088441777974367,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 1.6064967256970704,
+            "idle_seconds": 0.002347452100366354
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 1.5372248361818492,
+            "idle_seconds": 0.07161934161558747
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.240210935473442e-05,
+            "idle_seconds": 1.608811775688082
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.083003684878349e-05,
+            "idle_seconds": 1.608813347760588
+          }
+        ]
+      },
+      {
+        "stage_id": 4,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 20,
+        "prefix_length": 292,
+        "schedule_seconds": 3.7632882595062256e-05,
+        "broadcast_seconds": 0.001249588094651699,
+        "stage_seconds": 1.8048159219324589,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 1.8025001091882586,
+            "idle_seconds": 0.0023158127442002296
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.072984352707863e-05,
+            "idle_seconds": 1.8047951920889318
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.7792993932962418e-05,
+            "idle_seconds": 1.804788128938526
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.8535258024930954e-05,
+            "idle_seconds": 1.804787386674434
+          }
+        ]
+      }
+    ]
+  }
+}

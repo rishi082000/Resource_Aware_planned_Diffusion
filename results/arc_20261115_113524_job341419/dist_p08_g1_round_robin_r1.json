@@ -1,0 +1,133 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Write a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 43,
+  "tokens_generated": 469,
+  "latency_seconds": 21.474153032060713,
+  "tokens_per_second": 21.840209450858776,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 17322836480,
+  "peak_memory_allocated_gib": 16.133148670196533,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 49,
+          "end_exclusive": 101,
+          "predicted_content_length": 50
+        }
+      ],
+      "max_block_size": 50,
+      "diffusion_steps": 50,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWrite a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 5</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 4,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 126,
+          "end_exclusive": 208,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 1,
+          "start": 208,
+          "end_exclusive": 290,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 2,
+          "start": 290,
+          "end_exclusive": 412,
+          "predicted_content_length": 120
+        },
+        {
+          "chunk_id": 3,
+          "start": 412,
+          "end_exclusive": 544,
+          "predicted_content_length": 130
+        }
+      ],
+      "max_block_size": 130,
+      "diffusion_steps": 130,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWrite a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 5</topic><async>Alright, little one! So you want to go on a week-long trip to Japan, right? That's a super cool idea! Let's plan it together, step by step, like we're on a fun adventure![PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>budget 8</topic><promise>-<topic>transport 8</topic><promise>-<topic>food 12</topic><promise>-<topic>sightseeing 13</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 1,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 50,
+        "prefix_length": 49,
+        "schedule_seconds": 0.000614984892308712,
+        "broadcast_seconds": 0.10030408995226026,
+        "stage_seconds": 1.8720578267239034,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              50
+            ],
+            "predicted_load": 50.0,
+            "compute_seconds": 1.7687065047211945,
+            "idle_seconds": 0.10335132200270891
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 130,
+        "prefix_length": 126,
+        "schedule_seconds": 4.437612369656563e-05,
+        "broadcast_seconds": 0.0014583799056708813,
+        "stage_seconds": 18.177950588054955,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "chunk_lengths": [
+              80,
+              80,
+              120,
+              130
+            ],
+            "predicted_load": 410.0,
+            "compute_seconds": 18.175141343846917,
+            "idle_seconds": 0.0028092442080378532
+          }
+        ]
+      }
+    ]
+  }
+}

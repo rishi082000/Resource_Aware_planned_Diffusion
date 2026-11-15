@@ -1,0 +1,85 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "What is Aurora Borealis? Please be concise.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 30,
+  "tokens_generated": 82,
+  "latency_seconds": 1.8791891299188137,
+  "tokens_per_second": 43.63584202061803,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15686199808,
+  "peak_memory_allocated_gib": 14.608911991119385,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 3,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 46,
+          "end_exclusive": 78,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 1,
+          "start": 78,
+          "end_exclusive": 100,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 2,
+          "start": 100,
+          "end_exclusive": 112,
+          "predicted_content_length": 10
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWhat is Aurora Borealis? Please be concise.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>definition 3</topic><promise>-<topic>origin 2</topic><promise>-<topic>analogy 1</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 1,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 30,
+        "prefix_length": 46,
+        "schedule_seconds": 0.0005825222469866276,
+        "broadcast_seconds": 0.10391219612210989,
+        "stage_seconds": 1.1927611720748246,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              1,
+              2
+            ],
+            "chunk_lengths": [
+              30,
+              20,
+              10
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 1.0857615289278328,
+            "idle_seconds": 0.10699964314699173
+          }
+        ]
+      }
+    ]
+  }
+}

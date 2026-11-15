@@ -1,0 +1,151 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Write a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 43,
+  "tokens_generated": 469,
+  "latency_seconds": 15.789615294896066,
+  "tokens_per_second": 29.703066936127474,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16298552832,
+  "peak_memory_allocated_gib": 15.179210186004639,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 49,
+          "end_exclusive": 101,
+          "predicted_content_length": 50
+        }
+      ],
+      "max_block_size": 50,
+      "diffusion_steps": 50,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWrite a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 5</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 4,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 126,
+          "end_exclusive": 208,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 1,
+          "start": 208,
+          "end_exclusive": 290,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 2,
+          "start": 290,
+          "end_exclusive": 412,
+          "predicted_content_length": 120
+        },
+        {
+          "chunk_id": 3,
+          "start": 412,
+          "end_exclusive": 544,
+          "predicted_content_length": 130
+        }
+      ],
+      "max_block_size": 130,
+      "diffusion_steps": 130,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWrite a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 5</topic><async>Alright, little one! So you want to go on a week-long trip to Japan, right? That's a super cool idea! Let's plan it together, step by step, like we're on a fun adventure![PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>budget 8</topic><promise>-<topic>transport 8</topic><promise>-<topic>food 12</topic><promise>-<topic>sightseeing 13</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 50,
+        "prefix_length": 49,
+        "schedule_seconds": 0.0005956878885626793,
+        "broadcast_seconds": 0.12775561911985278,
+        "stage_seconds": 1.9149628928862512,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              50
+            ],
+            "predicted_load": 50.0,
+            "compute_seconds": 1.7730616237968206,
+            "idle_seconds": 0.14190126908943057
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.7350691854953766e-05,
+            "idle_seconds": 1.9149255421943963
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 130,
+        "prefix_length": 126,
+        "schedule_seconds": 4.6819914132356644e-05,
+        "broadcast_seconds": 0.0014323913492262363,
+        "stage_seconds": 12.485432654153556,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              2
+            ],
+            "chunk_lengths": [
+              80,
+              120
+            ],
+            "predicted_load": 200.0,
+            "compute_seconds": 11.526072042062879,
+            "idle_seconds": 0.959360612090677
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1,
+              3
+            ],
+            "chunk_lengths": [
+              80,
+              130
+            ],
+            "predicted_load": 210.0,
+            "compute_seconds": 12.460132397711277,
+            "idle_seconds": 0.025300256442278624
+          }
+        ]
+      }
+    ]
+  }
+}

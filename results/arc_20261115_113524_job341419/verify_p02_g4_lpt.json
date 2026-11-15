@@ -1,0 +1,319 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Name France's capital and describe its geographic location.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 29,
+  "tokens_generated": 250,
+  "latency_seconds": 15.736176091711968,
+  "tokens_per_second": 15.886959992248157,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15725151744,
+  "peak_memory_allocated_gib": 14.645188808441162,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 40,
+          "end_exclusive": 62,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 1,
+          "start": 62,
+          "end_exclusive": 94,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nName France's capital and describe its geographic location.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>capital 2</topic><promise>-<topic>location overview 3</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 108,
+          "end_exclusive": 140,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 1,
+          "start": 140,
+          "end_exclusive": 162,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nName France's capital and describe its geographic location.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>capital 2</topic><promise>-<topic>location overview 3</topic><async>France's capital is called Paris. It is a beautiful city in the north part of France.[PAD]</async><async>It is a beautiful country in the middle of Europe, surrounded by the Atlantic Ocean and the Mediterranean Sea.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>northumbria 3</topic><promise>-<topic>alps 2</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 177,
+          "end_exclusive": 209,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 1,
+          "start": 209,
+          "end_exclusive": 241,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nName France's capital and describe its geographic location.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>capital 2</topic><promise>-<topic>location overview 3</topic><async>France's capital is called Paris. It is a beautiful city in the north part of France.[PAD]</async><async>It is a beautiful country in the middle of Europe, surrounded by the Atlantic Ocean and the Mediterranean Sea.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>northumbria 3</topic><promise>-<topic>alps 2</topic><async>France has many different parts, like the northumbria region in the north, where people enjoy the hills and forests.[PAD][PAD][PAD][PAD][PAD][PAD]</async><async>The Alps are a big mountain range in the south of France, where people go to climb.[PAD]</async><sync/><promise>-<topic>french speaking regions 3</topic><promise>-<topic>variety 3</topic>"
+    },
+    {
+      "stage_id": 3,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 247,
+          "end_exclusive": 279,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nName France's capital and describe its geographic location.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>capital 2</topic><promise>-<topic>location overview 3</topic><async>France's capital is called Paris. It is a beautiful city in the north part of France.[PAD]</async><async>It is a beautiful country in the middle of Europe, surrounded by the Atlantic Ocean and the Mediterranean Sea.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>northumbria 3</topic><promise>-<topic>alps 2</topic><async>France has many different parts, like the northumbria region in the north, where people enjoy the hills and forests.[PAD][PAD][PAD][PAD][PAD][PAD]</async><async>The Alps are a big mountain range in the south of France, where people go to climb.[PAD]</async><sync/><promise>-<topic>french speaking regions 3</topic><promise>-<topic>variety 3</topic><async>France is also a country where many people speak different languages, like French, which is the language of many people in France.[PAD][PAD][PAD][PAD][PAD]</async><async>France is a big country with many different parts, and people there enjoy different things, like the hills and forests, or the beautiful coastal areas.[PAD]</async><sync/><promise>-<topic>summary 3</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 4,
+    "scheduler": "lpt",
+    "verify": true,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 30,
+        "prefix_length": 40,
+        "schedule_seconds": 0.0006046849302947521,
+        "broadcast_seconds": 0.17033689888194203,
+        "stage_seconds": 1.559292169753462,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.0552358659915626,
+            "idle_seconds": 0.5040563037618995
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.8160136099904776,
+            "idle_seconds": 0.7432785597629845
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.335392102599144e-05,
+            "idle_seconds": 1.559258815832436
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.2883137464523315e-05,
+            "idle_seconds": 1.5592592866159976
+          }
+        ],
+        "verify_mismatch_count": 0
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 30,
+        "prefix_length": 108,
+        "schedule_seconds": 4.5486725866794586e-05,
+        "broadcast_seconds": 0.0011384929530322552,
+        "stage_seconds": 1.4726288900710642,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.4703239109367132,
+            "idle_seconds": 0.002304979134351015
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.9730125991627574,
+            "idle_seconds": 0.49961629090830684
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.057904541492462e-05,
+            "idle_seconds": 1.4725983110256493
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.9146205633878708e-05,
+            "idle_seconds": 1.4725997438654304
+          }
+        ],
+        "verify_mismatch_count": 0
+      },
+      {
+        "stage_id": 2,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 30,
+        "prefix_length": 177,
+        "schedule_seconds": 4.8452988266944885e-05,
+        "broadcast_seconds": 0.001264005433768034,
+        "stage_seconds": 1.5892095863819122,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.58671966008842,
+            "idle_seconds": 0.002489926293492317
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.5557586140930653,
+            "idle_seconds": 0.03345097228884697
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.715224400162697e-05,
+            "idle_seconds": 1.5891824341379106
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.8925016522407532e-05,
+            "idle_seconds": 1.5891806613653898
+          }
+        ],
+        "verify_mismatch_count": 0
+      },
+      {
+        "stage_id": 3,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 30,
+        "prefix_length": 247,
+        "schedule_seconds": 4.1600316762924194e-05,
+        "broadcast_seconds": 0.0012152008712291718,
+        "stage_seconds": 2.4282360933721066,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 2.425959327723831,
+            "idle_seconds": 0.002276765648275614
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.5749672204256058e-05,
+            "idle_seconds": 2.4282103436999023
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.7894042432308197e-05,
+            "idle_seconds": 2.4282081993296742
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.67811119556427e-05,
+            "idle_seconds": 2.428209312260151
+          }
+        ],
+        "verify_mismatch_count": 0
+      }
+    ]
+  }
+}

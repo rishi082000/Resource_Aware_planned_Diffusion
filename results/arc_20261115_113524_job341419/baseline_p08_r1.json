@@ -1,0 +1,72 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Write a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.",
+  "device": "cuda",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 43,
+  "tokens_generated": 469,
+  "latency_seconds": 21.34938714420423,
+  "tokens_per_second": 21.967843705870525,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 17322533376,
+  "peak_memory_allocated_gib": 16.132866382598877,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 49,
+          "end_exclusive": 101,
+          "predicted_content_length": 50
+        }
+      ],
+      "max_block_size": 50,
+      "diffusion_steps": 50,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWrite a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 5</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 4,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 126,
+          "end_exclusive": 208,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 1,
+          "start": 208,
+          "end_exclusive": 290,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 2,
+          "start": 290,
+          "end_exclusive": 412,
+          "predicted_content_length": 120
+        },
+        {
+          "chunk_id": 3,
+          "start": 412,
+          "end_exclusive": 544,
+          "predicted_content_length": 130
+        }
+      ],
+      "max_block_size": 130,
+      "diffusion_steps": 130,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWrite a short guide to planning a week-long trip to Japan, covering budget, transport, food, and sightseeing.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 5</topic><async>Alright, little one! So you want to go on a week-long trip to Japan, right? That's a super cool idea! Let's plan it together, step by step, like we're on a fun adventure![PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>budget 8</topic><promise>-<topic>transport 8</topic><promise>-<topic>food 12</topic><promise>-<topic>sightseeing 13</topic>"
+    }
+  ],
+  "run_isolated_oracle": false
+}

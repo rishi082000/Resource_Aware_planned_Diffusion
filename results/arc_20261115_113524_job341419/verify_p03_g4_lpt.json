@@ -1,0 +1,114 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "What is Aurora Borealis? Please be concise.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 30,
+  "tokens_generated": 82,
+  "latency_seconds": 3.3526150747202337,
+  "tokens_per_second": 24.458519147726097,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15686184448,
+  "peak_memory_allocated_gib": 14.608897686004639,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 3,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 46,
+          "end_exclusive": 78,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 1,
+          "start": 78,
+          "end_exclusive": 100,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 2,
+          "start": 100,
+          "end_exclusive": 112,
+          "predicted_content_length": 10
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWhat is Aurora Borealis? Please be concise.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>definition 3</topic><promise>-<topic>origin 2</topic><promise>-<topic>analogy 1</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 4,
+    "scheduler": "lpt",
+    "verify": true,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 30,
+        "prefix_length": 46,
+        "schedule_seconds": 0.0006298539228737354,
+        "broadcast_seconds": 0.16404892830178142,
+        "stage_seconds": 1.5943485950119793,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.0622767573222518,
+            "idle_seconds": 0.5320718376897275
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.8527922430075705,
+            "idle_seconds": 0.7415563520044088
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [
+              2
+            ],
+            "chunk_lengths": [
+              10
+            ],
+            "predicted_load": 10.0,
+            "compute_seconds": 0.5206025950610638,
+            "idle_seconds": 1.0737459999509156
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.952665090560913e-05,
+            "idle_seconds": 1.5943190683610737
+          }
+        ],
+        "verify_mismatch_count": 0
+      }
+    ]
+  }
+}
