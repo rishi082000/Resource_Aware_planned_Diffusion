@@ -11,9 +11,10 @@
 #   GPU_COUNTS="1 2" SCHEDULERS=lpt REPEATS=3 bash scripts/run_arc_experiments.sh
 #
 #SBATCH --job-name=pd-multigpu
+#SBATCH --partition=a6000
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --gres=gpu:4
+#SBATCH --exclusive
 #SBATCH --time=03:00:00
 #SBATCH --output=slurm-%j.out
 
