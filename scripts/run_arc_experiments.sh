@@ -48,7 +48,7 @@ OUT_DIR="${OUT_DIR:-results/arc_$RUN_ID}"
 LOG_DIR="$OUT_DIR/logs"
 
 if [[ -n "$CONDA_ENV" ]]; then
-    source "$(conda info --base)/etc/profile.d/conda.sh"
+    eval "$(conda shell.bash hook)"
     conda activate "$CONDA_ENV" || exit 1
 fi
 
