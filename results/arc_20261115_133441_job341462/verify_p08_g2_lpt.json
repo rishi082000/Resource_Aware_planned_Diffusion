@@ -1,0 +1,339 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain cloud computing in separate sections: define virtualization briefly, explain containers in detail, summarize distributed storage in two sentences, discuss cloud networking in depth, give a short note on monitoring, and provide a detailed security section.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 64,
+  "tokens_generated": 366,
+  "latency_seconds": 45.44634851301089,
+  "tokens_per_second": 8.053452300908564,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15759632384,
+  "peak_memory_allocated_gib": 14.677301406860352,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 77,
+          "end_exclusive": 109,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 1,
+          "start": 109,
+          "end_exclusive": 151,
+          "predicted_content_length": 40
+        }
+      ],
+      "max_block_size": 40,
+      "diffusion_steps": 40,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain cloud computing in separate sections: define virtualization briefly, explain containers in detail, summarize distributed storage in two sentences, discuss cloud networking in depth, give a short note on monitoring, and provide a detailed security section.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic><promise>-<topic>virtualization explanation 4</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 158,
+          "end_exclusive": 220,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain cloud computing in separate sections: define virtualization briefly, explain containers in detail, summarize distributed storage in two sentences, discuss cloud networking in depth, give a short note on monitoring, and provide a detailed security section.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic><promise>-<topic>virtualization explanation 4</topic><async>Alright, little one! Cloud computing is like a big, magical playground where computers can work together to help us do lots of things.[PAD][PAD][PAD]</async><async>1. Virtualization: Virtualization is like creating pretend computers inside a real computer. This helps us use our computers more efficiently and safely, because we can run different applications and systems without any problems.</async><sync/><promise>-<topic>containers explanation 6</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 229,
+          "end_exclusive": 271,
+          "predicted_content_length": 40
+        }
+      ],
+      "max_block_size": 40,
+      "diffusion_steps": 40,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain cloud computing in separate sections: define virtualization briefly, explain containers in detail, summarize distributed storage in two sentences, discuss cloud networking in depth, give a short note on monitoring, and provide a detailed security section.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic><promise>-<topic>virtualization explanation 4</topic><async>Alright, little one! Cloud computing is like a big, magical playground where computers can work together to help us do lots of things.[PAD][PAD][PAD]</async><async>1. Virtualization: Virtualization is like creating pretend computers inside a real computer. This helps us use our computers more efficiently and safely, because we can run different applications and systems without any problems.</async><sync/><promise>-<topic>containers explanation 6</topic><async>2. Now, containers are like little boxes inside our pretend computers. They help us keep our applications and data safe and organized. Imagine putting your toys in their own little boxes, so they don't get mixed up. That's what containers do for our computer applications.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>distributed storage explanation 4</topic>"
+    },
+    {
+      "stage_id": 3,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 279,
+          "end_exclusive": 331,
+          "predicted_content_length": 50
+        }
+      ],
+      "max_block_size": 50,
+      "diffusion_steps": 50,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain cloud computing in separate sections: define virtualization briefly, explain containers in detail, summarize distributed storage in two sentences, discuss cloud networking in depth, give a short note on monitoring, and provide a detailed security section.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic><promise>-<topic>virtualization explanation 4</topic><async>Alright, little one! Cloud computing is like a big, magical playground where computers can work together to help us do lots of things.[PAD][PAD][PAD]</async><async>1. Virtualization: Virtualization is like creating pretend computers inside a real computer. This helps us use our computers more efficiently and safely, because we can run different applications and systems without any problems.</async><sync/><promise>-<topic>containers explanation 6</topic><async>2. Now, containers are like little boxes inside our pretend computers. They help us keep our applications and data safe and organized. Imagine putting your toys in their own little boxes, so they don't get mixed up. That's what containers do for our computer applications.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>distributed storage explanation 4</topic><async>3. Distributed storage is like having many computers working together to store lots of information. This helps us keep our data safe and easily accessible, just like having a big toy box for our computer stuff.</async><sync/><promise>-<topic>cloud networking explanation 5</topic>"
+    },
+    {
+      "stage_id": 4,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 339,
+          "end_exclusive": 371,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain cloud computing in separate sections: define virtualization briefly, explain containers in detail, summarize distributed storage in two sentences, discuss cloud networking in depth, give a short note on monitoring, and provide a detailed security section.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic><promise>-<topic>virtualization explanation 4</topic><async>Alright, little one! Cloud computing is like a big, magical playground where computers can work together to help us do lots of things.[PAD][PAD][PAD]</async><async>1. Virtualization: Virtualization is like creating pretend computers inside a real computer. This helps us use our computers more efficiently and safely, because we can run different applications and systems without any problems.</async><sync/><promise>-<topic>containers explanation 6</topic><async>2. Now, containers are like little boxes inside our pretend computers. They help us keep our applications and data safe and organized. Imagine putting your toys in their own little boxes, so they don't get mixed up. That's what containers do for our computer applications.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>distributed storage explanation 4</topic><async>3. Distributed storage is like having many computers working together to store lots of information. This helps us keep our data safe and easily accessible, just like having a big toy box for our computer stuff.</async><sync/><promise>-<topic>cloud networking explanation 5</topic><async>4. Cloud networking is like the way our computers talk to each other and share resources. It's kind of like the internet, but even faster and more reliable. This helps us work together and share our computer power and storage.[PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>monitoring explanation 3</topic>"
+    },
+    {
+      "stage_id": 5,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 378,
+          "end_exclusive": 430,
+          "predicted_content_length": 50
+        }
+      ],
+      "max_block_size": 50,
+      "diffusion_steps": 50,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain cloud computing in separate sections: define virtualization briefly, explain containers in detail, summarize distributed storage in two sentences, discuss cloud networking in depth, give a short note on monitoring, and provide a detailed security section.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic><promise>-<topic>virtualization explanation 4</topic><async>Alright, little one! Cloud computing is like a big, magical playground where computers can work together to help us do lots of things.[PAD][PAD][PAD]</async><async>1. Virtualization: Virtualization is like creating pretend computers inside a real computer. This helps us use our computers more efficiently and safely, because we can run different applications and systems without any problems.</async><sync/><promise>-<topic>containers explanation 6</topic><async>2. Now, containers are like little boxes inside our pretend computers. They help us keep our applications and data safe and organized. Imagine putting your toys in their own little boxes, so they don't get mixed up. That's what containers do for our computer applications.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>distributed storage explanation 4</topic><async>3. Distributed storage is like having many computers working together to store lots of information. This helps us keep our data safe and easily accessible, just like having a big toy box for our computer stuff.</async><sync/><promise>-<topic>cloud networking explanation 5</topic><async>4. Cloud networking is like the way our computers talk to each other and share resources. It's kind of like the internet, but even faster and more reliable. This helps us work together and share our computer power and storage.[PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>monitoring explanation 3</topic><async>5. Monitoring is like keeping an eye on our computer playground. It helps us know if everything is working well and if there are any problems.[PAD]</async><sync/><promise>-<topic>security explanation 5</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "lpt",
+    "verify": true,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 40,
+        "prefix_length": 77,
+        "schedule_seconds": 0.011449392884969711,
+        "broadcast_seconds": 0.14070224622264504,
+        "stage_seconds": 1.6722935209982097,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              40
+            ],
+            "predicted_load": 40.0,
+            "compute_seconds": 1.432284759124741,
+            "idle_seconds": 0.24000876187346876
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.2482467629015446,
+            "idle_seconds": 0.42404675809666514
+          }
+        ],
+        "verify_mismatch_count": 0,
+        "verify_tokens_compared": 70
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 60,
+        "prefix_length": 158,
+        "schedule_seconds": 5.170796066522598e-05,
+        "broadcast_seconds": 0.0013600911479443312,
+        "stage_seconds": 3.188219220144674,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 3.1857848800718784,
+            "idle_seconds": 0.0024343400727957487
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.168010152876377e-05,
+            "idle_seconds": 3.1881875400431454
+          }
+        ],
+        "verify_mismatch_count": 0,
+        "verify_tokens_compared": 60
+      },
+      {
+        "stage_id": 2,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 40,
+        "prefix_length": 229,
+        "schedule_seconds": 4.4904882088303566e-05,
+        "broadcast_seconds": 0.0012855611275881529,
+        "stage_seconds": 3.0509476880542934,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              40
+            ],
+            "predicted_load": 40.0,
+            "compute_seconds": 3.0485908039845526,
+            "idle_seconds": 0.0023568840697407722
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.880510874092579e-05,
+            "idle_seconds": 3.0509188829455525
+          }
+        ],
+        "verify_mismatch_count": 0,
+        "verify_tokens_compared": 40
+      },
+      {
+        "stage_id": 3,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 50,
+        "prefix_length": 279,
+        "schedule_seconds": 5.139806307852268e-05,
+        "broadcast_seconds": 0.0014157970435917377,
+        "stage_seconds": 4.426133119035512,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              50
+            ],
+            "predicted_load": 50.0,
+            "compute_seconds": 4.423411211930215,
+            "idle_seconds": 0.00272190710529685
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.99669336527586e-05,
+            "idle_seconds": 4.4261031521018595
+          }
+        ],
+        "verify_mismatch_count": 0,
+        "verify_tokens_compared": 50
+      },
+      {
+        "stage_id": 4,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 30,
+        "prefix_length": 339,
+        "schedule_seconds": 4.832097329199314e-05,
+        "broadcast_seconds": 0.0014623759780079126,
+        "stage_seconds": 2.80698849610053,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 2.804278823081404,
+            "idle_seconds": 0.0027096730191260576
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.2902928069233894e-05,
+            "idle_seconds": 2.806955593172461
+          }
+        ],
+        "verify_mismatch_count": 0,
+        "verify_tokens_compared": 30
+      },
+      {
+        "stage_id": 5,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 50,
+        "prefix_length": 378,
+        "schedule_seconds": 4.704995080828667e-05,
+        "broadcast_seconds": 0.0013394420966506004,
+        "stage_seconds": 5.7483103279955685,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              50
+            ],
+            "predicted_load": 50.0,
+            "compute_seconds": 5.745901404181495,
+            "idle_seconds": 0.002408923814073205
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.495696000754833e-05,
+            "idle_seconds": 5.748275371035561
+          }
+        ],
+        "verify_mismatch_count": 0,
+        "verify_tokens_compared": 50
+      }
+    ]
+  }
+}

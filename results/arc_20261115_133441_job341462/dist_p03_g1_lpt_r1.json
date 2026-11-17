@@ -1,0 +1,149 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain the difference between TCP and UDP, with one brief example use case for each.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 37,
+  "tokens_generated": 227,
+  "latency_seconds": 12.525012773927301,
+  "tokens_per_second": 18.12373401107699,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15831718912,
+  "peak_memory_allocated_gib": 14.744437217712402,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 44,
+          "end_exclusive": 106,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain the difference between TCP and UDP, with one brief example use case for each.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>analogy introduction 6</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 114,
+          "end_exclusive": 196,
+          "predicted_content_length": 80
+        }
+      ],
+      "max_block_size": 80,
+      "diffusion_steps": 80,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain the difference between TCP and UDP, with one brief example use case for each.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>analogy introduction 6</topic><async>Imagine you have two friends, TCP and UDP. TCP is like a friend who makes sure everything is delivered and you can hear the message clearly. UDP is like a friend who sends the message quickly but sometimes it might get lost or you might not hear it right.[PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>reliability 8</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 202,
+          "end_exclusive": 264,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain the difference between TCP and UDP, with one brief example use case for each.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>analogy introduction 6</topic><async>Imagine you have two friends, TCP and UDP. TCP is like a friend who makes sure everything is delivered and you can hear the message clearly. UDP is like a friend who sends the message quickly but sometimes it might get lost or you might not hear it right.[PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>reliability 8</topic><async>Now, let's talk about a use case for each:\n\n- TCP: If you want to play a game with a friend and you want to be sure every move you make is delivered, you would use TCP.\n- UDP: If you want to send a message quickly and don't worry about if it gets lost, you might use UDP.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>summary 6</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 1,
+    "scheduler": "lpt",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 1,
+        "diffusion_steps": 60,
+        "prefix_length": 44,
+        "schedule_seconds": 0.0005526889581233263,
+        "broadcast_seconds": 0.11903086607344449,
+        "stage_seconds": 2.234026378020644,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 2.1119468440301716,
+            "idle_seconds": 0.12207953399047256
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 1,
+        "diffusion_steps": 80,
+        "prefix_length": 114,
+        "schedule_seconds": 4.03369776904583e-05,
+        "broadcast_seconds": 0.0012217189650982618,
+        "stage_seconds": 4.604232463054359,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              80
+            ],
+            "predicted_load": 80.0,
+            "compute_seconds": 4.6020805581938475,
+            "idle_seconds": 0.002151904860511422
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "lpt",
+        "world_size": 1,
+        "diffusion_steps": 60,
+        "prefix_length": 202,
+        "schedule_seconds": 3.73409129679203e-05,
+        "broadcast_seconds": 0.0011442331597208977,
+        "stage_seconds": 4.659119338029996,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 4.657091808039695,
+            "idle_seconds": 0.002027529990300536
+          }
+        ]
+      }
+    ]
+  }
+}

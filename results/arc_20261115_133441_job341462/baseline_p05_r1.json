@@ -1,0 +1,84 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain solar, wind, hydroelectric, geothermal, biomass, and tidal energy in separate sections of approximately equal length.",
+  "device": "cuda",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 44,
+  "tokens_generated": 468,
+  "latency_seconds": 28.321113612037152,
+  "tokens_per_second": 16.52477393406906,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 18502069760,
+  "peak_memory_allocated_gib": 17.23139524459839,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 50,
+          "end_exclusive": 112,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain solar, wind, hydroelectric, geothermal, biomass, and tidal energy in separate sections of approximately equal length.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 6</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 6,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 159,
+          "end_exclusive": 281,
+          "predicted_content_length": 120
+        },
+        {
+          "chunk_id": 1,
+          "start": 281,
+          "end_exclusive": 393,
+          "predicted_content_length": 110
+        },
+        {
+          "chunk_id": 2,
+          "start": 393,
+          "end_exclusive": 505,
+          "predicted_content_length": 110
+        },
+        {
+          "chunk_id": 3,
+          "start": 505,
+          "end_exclusive": 607,
+          "predicted_content_length": 100
+        },
+        {
+          "chunk_id": 4,
+          "start": 607,
+          "end_exclusive": 719,
+          "predicted_content_length": 110
+        },
+        {
+          "chunk_id": 5,
+          "start": 719,
+          "end_exclusive": 821,
+          "predicted_content_length": 100
+        }
+      ],
+      "max_block_size": 120,
+      "diffusion_steps": 120,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain solar, wind, hydroelectric, geothermal, biomass, and tidal energy in separate sections of approximately equal length.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 6</topic><async>In this section, we will explore the various renewable energy sources that are being increasingly utilized to address the growing demand for clean energy. Each of these energy sources has its unique characteristics, advantages, and applications, making them essential components of a sustainable energy future.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>solar energy 12</topic><promise>-<topic>wind energy 11</topic><promise>-<topic>hydroelectric energy 11</topic><promise>-<topic>geothermal energy 10</topic><promise>-<topic>bioenergy 11</topic><promise>-<topic>tidal energy 10</topic>"
+    }
+  ],
+  "run_isolated_oracle": false
+}

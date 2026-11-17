@@ -1,0 +1,85 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "What is the capital of France?",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 26,
+  "tokens_generated": 96,
+  "latency_seconds": 2.0703758019953966,
+  "tokens_per_second": 46.36839355805679,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15751449088,
+  "peak_memory_allocated_gib": 14.669680118560791,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 3,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 46,
+          "end_exclusive": 58,
+          "predicted_content_length": 10
+        },
+        {
+          "chunk_id": 1,
+          "start": 58,
+          "end_exclusive": 90,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 2,
+          "start": 90,
+          "end_exclusive": 122,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWhat is the capital of France?<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>capital name 1</topic><promise>-<topic>location & purpose 3</topic><promise>-<topic>international orgs 3</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 1,
+    "scheduler": "lpt",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 1,
+        "diffusion_steps": 30,
+        "prefix_length": 46,
+        "schedule_seconds": 0.0009456460829824209,
+        "broadcast_seconds": 0.12568518985062838,
+        "stage_seconds": 1.2458158389199525,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              1,
+              2,
+              0
+            ],
+            "chunk_lengths": [
+              30,
+              30,
+              10
+            ],
+            "predicted_load": 70.0,
+            "compute_seconds": 1.103151960996911,
+            "idle_seconds": 0.14266387792304158
+          }
+        ]
+      }
+    ]
+  }
+}

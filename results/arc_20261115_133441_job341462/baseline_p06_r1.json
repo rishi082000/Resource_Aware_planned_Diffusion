@@ -1,0 +1,100 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Compare Python, C++, Java, Rust, Go, and JavaScript in six separate sections, giving three sentences to each language.",
+  "device": "cuda",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 44,
+  "tokens_generated": 468,
+  "latency_seconds": 15.737598783802241,
+  "tokens_per_second": 29.737700549443673,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 17123577344,
+  "peak_memory_allocated_gib": 15.947574138641357,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 50,
+          "end_exclusive": 72,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCompare Python, C++, Java, Rust, Go, and JavaScript in six separate sections, giving three sentences to each language.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 6,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 104,
+          "end_exclusive": 166,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 1,
+          "start": 166,
+          "end_exclusive": 228,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 2,
+          "start": 228,
+          "end_exclusive": 290,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 3,
+          "start": 290,
+          "end_exclusive": 352,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 4,
+          "start": 352,
+          "end_exclusive": 414,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 5,
+          "start": 414,
+          "end_exclusive": 486,
+          "predicted_content_length": 70
+        }
+      ],
+      "max_block_size": 70,
+      "diffusion_steps": 70,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCompare Python, C++, Java, Rust, Go, and JavaScript in six separate sections, giving three sentences to each language.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic><async>Sure, here are the comparisons for the given six sections:[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>python 6</topic><promise>-<topic>c++ 6</topic><promise>-<topic>java 6</topic><promise>-<topic>rust 6</topic><promise>-<topic>go 6</topic><promise>-<topic>javascript 7</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 493,
+          "end_exclusive": 525,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCompare Python, C++, Java, Rust, Go, and JavaScript in six separate sections, giving three sentences to each language.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic><async>Sure, here are the comparisons for the given six sections:[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>python 6</topic><promise>-<topic>c++ 6</topic><promise>-<topic>java 6</topic><promise>-<topic>rust 6</topic><promise>-<topic>go 6</topic><promise>-<topic>javascript 7</topic><async>1. Python: Python is a versatile, high-level programming language known for its simplicity and readability. It is widely used in data science, artificial intelligence, and web development. Python has a strong community and a vast library of packages and tools, making it a go-to choice for many developers.[PAD]</async><async>2. C++: C++ is a widely used, low-level language known for its performance and control over system resources. It is widely used in game development, system development, and embedded systems. C++ has a strong standard library and is easily usable with other languages.[PAD][PAD][PAD][PAD][PAD]</async><async>3. Java: Java is a popular, versatile, and widely used programming language. It is known for its robustness, portability, and ease of use. Java is widely used in enterprise applications, large-scale systems, and Android app development.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><async>4. Rust: Rust is a modern, fast, and safe programming language with a focus on safety and performance. It is widely used in the tech industry, particularly for building scalable and reliable systems. Rust offers excellent support for concurrent programming and has a strong community and ecosystem.[PAD][PAD][PAD][PAD][PAD]</async><async>5. JavaScript: JavaScript is a popular, versatile language used for front-end and back-end development. It is widely used in web development and has a robust community and ecosystem. JavaScript's focus is on accessibility and accessibility, making it a great choice for beginners and experts alike.[PAD][PAD][PAD][PAD][PAD]</async><async>6. JavaScript: JavaScript is a popular, versatile, and widely used language for front-end and back-end development. It is a part of the Web development stack and has gained traction in the financial and healthcare sectors. JavaScript's focus on ease of use and accessibility makes it a great choice for beginners and professionals looking to learn a new language.[PAD][PAD]</async><sync/><promise>-<topic>conclusion 3</topic>"
+    }
+  ],
+  "run_isolated_oracle": false
+}

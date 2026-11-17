@@ -1,0 +1,193 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Describe six major components of a modern computer in separate sections, using exactly two sentences for each component.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 39,
+  "tokens_generated": 132,
+  "latency_seconds": 4.190800393000245,
+  "tokens_per_second": 31.497563143421296,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15516286976,
+  "peak_memory_allocated_gib": 14.450668334960938,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 45,
+          "end_exclusive": 57,
+          "predicted_content_length": 10
+        }
+      ],
+      "max_block_size": 10,
+      "diffusion_steps": 10,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe six major components of a modern computer in separate sections, using exactly two sentences for each component.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 1</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 69,
+          "end_exclusive": 91,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 1,
+          "start": 91,
+          "end_exclusive": 113,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe six major components of a modern computer in separate sections, using exactly two sentences for each component.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 1</topic><async>Six major components of a modern computer are:[PAD]</async><sync/><promise>-<topic>CPU 2</topic><promise>-<topic>main memory 2</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 127,
+          "end_exclusive": 139,
+          "predicted_content_length": 10
+        },
+        {
+          "chunk_id": 1,
+          "start": 139,
+          "end_exclusive": 171,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe six major components of a modern computer in separate sections, using exactly two sentences for each component.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 1</topic><async>Six major components of a modern computer are:[PAD]</async><sync/><promise>-<topic>CPU 2</topic><promise>-<topic>main memory 2</topic><async>1. CPU (Central Processing Unit): The brain of the computer, responsible for performing calculations.[PAD]</async><async>2. Main memory (RAM): A big storage place where the computer keeps information while working.[PAD]</async><sync/><promise>-<topic>section 1 3</topic><promise>-<topic>disclaimer 3</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "lpt",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 10,
+        "prefix_length": 45,
+        "schedule_seconds": 0.0005470290780067444,
+        "broadcast_seconds": 0.19547255197539926,
+        "stage_seconds": 0.5615631891414523,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              10
+            ],
+            "predicted_load": 10.0,
+            "compute_seconds": 0.35261425003409386,
+            "idle_seconds": 0.20894893910735846
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.370409831404686e-05,
+            "idle_seconds": 0.5615294850431383
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 20,
+        "prefix_length": 69,
+        "schedule_seconds": 5.230004899203777e-05,
+        "broadcast_seconds": 0.0012504539918154478,
+        "stage_seconds": 0.9337481861002743,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.6690232008695602,
+            "idle_seconds": 0.2647249852307141
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.9141879980452359,
+            "idle_seconds": 0.019560188055038452
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 30,
+        "prefix_length": 127,
+        "schedule_seconds": 3.0989060178399086e-05,
+        "broadcast_seconds": 0.0010944679379463196,
+        "stage_seconds": 1.452050058171153,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.4499722430482507,
+            "idle_seconds": 0.0020778151229023933
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              10
+            ],
+            "predicted_load": 10.0,
+            "compute_seconds": 0.46170781389810145,
+            "idle_seconds": 0.9903422442730516
+          }
+        ]
+      }
+    ]
+  }
+}

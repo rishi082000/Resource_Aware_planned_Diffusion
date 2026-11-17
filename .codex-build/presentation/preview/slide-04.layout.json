@@ -1,0 +1,1785 @@
+{
+  "schema": "openai.presentation.layout/v5",
+  "unit": "px",
+  "slide": {
+    "id": "sl/gfsoe2",
+    "index": 3,
+    "layout": {
+      "id": "ly/14ra9krq",
+      "name": "Title Only"
+    },
+    "masterLayoutId": "ly/atofqts7",
+    "backgroundColor": "rgba(255,255,255,1)",
+    "position": {
+      "left": 0,
+      "top": 0,
+      "width": 960,
+      "height": 540
+    }
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "ly/14ra9krq",
+      "name": "Title Only",
+      "type": "titleOnly",
+      "parentLayoutId": "ly/atofqts7",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "textbox",
+          "scope": "layout",
+          "id": "sh/rmlgnihw",
+          "editable": false,
+          "name": "Title 1",
+          "position": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "text": "Click to edit Master title style",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master title style",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master title style"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "textbox",
+          "scope": "layout",
+          "id": "sh/qlcfedgb",
+          "editable": false,
+          "name": "Date Placeholder 3",
+          "position": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "text": "4/9/15",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "4/9/15",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "4/9/15"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "id": "sh/1cnytszy",
+          "editable": false,
+          "name": "Footer Placeholder 4",
+          "position": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "order": 4,
+          "kind": "textbox",
+          "scope": "layout",
+          "id": "sh/0behknyd",
+          "editable": false,
+          "name": "Slide Number Placeholder 5",
+          "position": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0
+          },
+          "text": "4",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "4",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "4"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "ly/atofqts7",
+      "type": "master",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "textbox",
+          "scope": "master",
+          "id": "sh/ri5g3q5g",
+          "editable": false,
+          "name": "Title Placeholder 1",
+          "position": {
+            "left": 48,
+            "top": 70.88,
+            "width": 864,
+            "height": 84.12
+          },
+          "geometry": "rect",
+          "lineWidth": 0,
+          "text": "Headline Line One\nHeadline Line Two",
+          "style": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "wrap": "square",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Headline Line One\nHeadline Line Two",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Headline Line One",
+                  "anchor": 2,
+                  "vertical": 1,
+                  "verticalAlignment": "middle",
+                  "wrap": "square",
+                  "insets": {
+                    "top": 4.8,
+                    "right": 9.6,
+                    "bottom": 4.8,
+                    "left": 9.6
+                  }
+                },
+                {
+                  "index": 2,
+                  "text": "\n",
+                  "anchor": 2,
+                  "vertical": 1,
+                  "verticalAlignment": "middle",
+                  "wrap": "square",
+                  "insets": {
+                    "top": 4.8,
+                    "right": 9.6,
+                    "bottom": 4.8,
+                    "left": 9.6
+                  }
+                },
+                {
+                  "index": 3,
+                  "text": "Headline Line Two",
+                  "anchor": 2,
+                  "vertical": 1,
+                  "verticalAlignment": "middle",
+                  "wrap": "square",
+                  "insets": {
+                    "top": 4.8,
+                    "right": 9.6,
+                    "bottom": 4.8,
+                    "left": 9.6
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "textbox",
+          "scope": "master",
+          "id": "sh/6hwfu54v",
+          "editable": false,
+          "name": "Text Placeholder 2",
+          "position": {
+            "left": 48,
+            "top": 238,
+            "width": 864,
+            "height": 244.38
+          },
+          "geometry": "rect",
+          "lineWidth": 0,
+          "text": "Click to edit Master text styles\nSecond level\nThird level\nFourth level\nFifth level",
+          "style": {
+            "anchor": 1,
+            "vertical": 1,
+            "verticalAlignment": "top",
+            "wrap": "square",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master text styles",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master text styles",
+                  "anchor": 1,
+                  "vertical": 1,
+                  "verticalAlignment": "top",
+                  "wrap": "square",
+                  "insets": {
+                    "top": 4.8,
+                    "right": 9.6,
+                    "bottom": 4.8,
+                    "left": 9.6
+                  }
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "text": "Second level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Second level",
+                  "anchor": 1,
+                  "vertical": 1,
+                  "verticalAlignment": "top",
+                  "wrap": "square",
+                  "insets": {
+                    "top": 4.8,
+                    "right": 9.6,
+                    "bottom": 4.8,
+                    "left": 9.6
+                  }
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "text": "Third level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Third level",
+                  "anchor": 1,
+                  "vertical": 1,
+                  "verticalAlignment": "top",
+                  "wrap": "square",
+                  "insets": {
+                    "top": 4.8,
+                    "right": 9.6,
+                    "bottom": 4.8,
+                    "left": 9.6
+                  }
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "text": "Fourth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fourth level",
+                  "anchor": 1,
+                  "vertical": 1,
+                  "verticalAlignment": "top",
+                  "wrap": "square",
+                  "insets": {
+                    "top": 4.8,
+                    "right": 9.6,
+                    "bottom": 4.8,
+                    "left": 9.6
+                  }
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "text": "Fifth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fifth level",
+                  "anchor": 1,
+                  "vertical": 1,
+                  "verticalAlignment": "top",
+                  "wrap": "square",
+                  "insets": {
+                    "top": 4.8,
+                    "right": 9.6,
+                    "bottom": 4.8,
+                    "left": 9.6
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "textbox",
+          "scope": "master",
+          "id": "sh/qxsr69kr",
+          "editable": false,
+          "name": "Date Placeholder 3",
+          "position": {
+            "left": 48,
+            "top": 500.5,
+            "width": 224,
+            "height": 28.75
+          },
+          "geometry": "rect",
+          "text": "4/9/15",
+          "style": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "4/9/15",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "4/9/15",
+                  "anchor": 2,
+                  "vertical": 1,
+                  "verticalAlignment": "middle",
+                  "insets": {
+                    "top": 4.8,
+                    "right": 9.6,
+                    "bottom": 4.8,
+                    "left": 9.6
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "master",
+          "id": "sh/ry1szulc",
+          "editable": false,
+          "name": "Footer Placeholder 4",
+          "position": {
+            "left": 328,
+            "top": 500.5,
+            "width": 304,
+            "height": 28.75
+          },
+          "geometry": "rect",
+          "style": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "textbox",
+          "scope": "master",
+          "id": "sh/czu98z2x",
+          "editable": false,
+          "name": "Slide Number Placeholder 5",
+          "position": {
+            "left": 688,
+            "top": 500.5,
+            "width": 224,
+            "height": 28.75
+          },
+          "geometry": "rect",
+          "text": "4",
+          "style": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "4",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "4",
+                  "anchor": 2,
+                  "vertical": 1,
+                  "verticalAlignment": "middle",
+                  "insets": {
+                    "top": 4.8,
+                    "right": 9.6,
+                    "bottom": 4.8,
+                    "left": 9.6
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 6,
+          "kind": "image",
+          "scope": "master",
+          "id": "im/l4zm1832",
+          "editable": false,
+          "name": "Picture 7",
+          "position": {
+            "left": 0,
+            "top": 0,
+            "width": 960.86,
+            "height": 48
+          },
+          "contentType": "image/jpeg",
+          "asset": {
+            "contentType": "image/jpeg",
+            "byteLength": 89771
+          },
+          "fillImage": {
+            "contentType": "image/jpeg",
+            "byteLength": 89771
+          }
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/o7axcbip",
+      "editable": true,
+      "name": "Title 1",
+      "position": {
+        "left": 48,
+        "top": 70.88,
+        "width": 864,
+        "height": 84.12
+      },
+      "text": "Worked example: one plan, two executions",
+      "style": {
+        "anchor": 2,
+        "vertical": 1,
+        "fontSize": 38,
+        "typeface": "Arial",
+        "color": "#111111",
+        "bold": true,
+        "italic": false,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Worked example: one plan, two executions",
+          "style": {
+            "fontSize": 38,
+            "typeface": "Arial",
+            "color": "#111111",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Worked example: one plan, two executions",
+              "anchor": 2,
+              "fontSize": 38,
+              "typeface": "Arial",
+              "color": "#111111",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "kind": "image",
+      "scope": "slide",
+      "id": "im/u5kry9cf",
+      "editable": true,
+      "position": {
+        "left": 0,
+        "top": 0,
+        "width": 960,
+        "height": 48
+      },
+      "alt": "NC State University brand header",
+      "contentType": "image/jpeg",
+      "fit": "cover",
+      "asset": {
+        "contentType": "image/jpeg",
+        "byteLength": 89771
+      }
+    },
+    {
+      "order": 3,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/5srmt87m",
+      "editable": true,
+      "position": {
+        "left": 55,
+        "top": 151,
+        "width": 850,
+        "height": 30
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "Generated plan and predicted chunk lengths",
+      "style": {
+        "anchor": 2,
+        "fontSize": 17.01,
+        "typeface": "Arial",
+        "color": "#333333",
+        "bold": true,
+        "italic": false,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.81,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Generated plan and predicted chunk lengths",
+          "style": {
+            "fontSize": 21,
+            "typeface": "Arial",
+            "color": "#333333",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Generated plan and predicted chunk lengths",
+              "anchor": 2,
+              "fontSize": 21,
+              "typeface": "Arial",
+              "color": "#333333",
+              "bold": true,
+              "alignment": "left",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.81
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/4ri5k3q1",
+      "editable": true,
+      "position": {
+        "left": 164,
+        "top": 188,
+        "width": 92,
+        "height": 39
+      },
+      "geometry": "rect",
+      "fillColor": "#E9A3A3",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 1
+    },
+    {
+      "order": 5,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/3q94rypw",
+      "editable": true,
+      "position": {
+        "left": 164,
+        "top": 188,
+        "width": 92,
+        "height": 39
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "Intro  20",
+      "style": {
+        "anchor": 2,
+        "fontSize": 17,
+        "typeface": "Arial",
+        "color": "#FFFFFF",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Intro  20",
+          "style": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Intro  20",
+              "anchor": 2,
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 1
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/ip0nit8b",
+      "editable": true,
+      "position": {
+        "left": 256,
+        "top": 188,
+        "width": 280,
+        "height": 39
+      },
+      "geometry": "rect",
+      "fillColor": "#CC0000",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 1
+    },
+    {
+      "order": 7,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/dwr6xs7y",
+      "editable": true,
+      "position": {
+        "left": 256,
+        "top": 188,
+        "width": 280,
+        "height": 39
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "Methods  80",
+      "style": {
+        "anchor": 2,
+        "fontSize": 17,
+        "typeface": "Arial",
+        "color": "#FFFFFF",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Methods  80",
+          "style": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Methods  80",
+              "anchor": 2,
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 1
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/svi5on6d",
+      "editable": true,
+      "position": {
+        "left": 536,
+        "top": 188,
+        "width": 185,
+        "height": 39
+      },
+      "geometry": "rect",
+      "fillColor": "#990000",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 1
+    },
+    {
+      "order": 9,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/ru9ovips",
+      "editable": true,
+      "position": {
+        "left": 536,
+        "top": 188,
+        "width": 185,
+        "height": 39
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "Results  50",
+      "style": {
+        "anchor": 2,
+        "fontSize": 17,
+        "typeface": "Arial",
+        "color": "#FFFFFF",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Results  50",
+          "style": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Results  50",
+              "anchor": 2,
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 1
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/qt0nmd87",
+      "editable": true,
+      "position": {
+        "left": 721,
+        "top": 188,
+        "width": 125,
+        "height": 39
+      },
+      "geometry": "rect",
+      "fillColor": "#E17676",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 1
+    },
+    {
+      "order": 11,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/1kb61s7u",
+      "editable": true,
+      "position": {
+        "left": 721,
+        "top": 188,
+        "width": 125,
+        "height": 39
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "Conclusion  30",
+      "style": {
+        "anchor": 2,
+        "fontSize": 14.79,
+        "typeface": "Arial",
+        "color": "#FFFFFF",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.87,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Conclusion  30",
+          "style": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Conclusion  30",
+              "anchor": 2,
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.87
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/0j25sn69",
+      "editable": true,
+      "position": {
+        "left": 55,
+        "top": 254,
+        "width": 405,
+        "height": 205
+      },
+      "geometry": "roundRect",
+      "fillColor": "#F2F2F2",
+      "lineColor": "#C9C9C9",
+      "lineWidth": 1
+    },
+    {
+      "order": 13,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/y5c3mpor",
+      "editable": true,
+      "position": {
+        "left": 75,
+        "top": 266,
+        "width": 365,
+        "height": 35
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "Original: one GPU",
+      "style": {
+        "anchor": 2,
+        "fontSize": 21.12,
+        "typeface": "Arial",
+        "color": "#333333",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.88,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Original: one GPU",
+          "style": {
+            "fontSize": 24,
+            "typeface": "Arial",
+            "color": "#333333",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Original: one GPU",
+              "anchor": 2,
+              "fontSize": 24,
+              "typeface": "Arial",
+              "color": "#333333",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.88
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 14,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/z65kfu5c",
+      "editable": true,
+      "position": {
+        "left": 75,
+        "top": 307,
+        "width": 365,
+        "height": 27
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "One combined sparse sequence",
+      "style": {
+        "anchor": 2,
+        "fontSize": 14.44,
+        "typeface": "Arial",
+        "color": "#666666",
+        "bold": false,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.76,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "One combined sparse sequence",
+          "style": {
+            "fontSize": 19,
+            "typeface": "Arial",
+            "color": "#666666",
+            "bold": false,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "One combined sparse sequence",
+              "anchor": 2,
+              "fontSize": 19,
+              "typeface": "Arial",
+              "color": "#666666",
+              "bold": false,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.76
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 15,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/k7eloz6x",
+      "editable": true,
+      "position": {
+        "left": 75,
+        "top": 335,
+        "width": 365,
+        "height": 26
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "shared prefix + all four chunks",
+      "style": {
+        "anchor": 2,
+        "fontSize": 13.68,
+        "typeface": "Arial",
+        "color": "#666666",
+        "bold": false,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.76,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "shared prefix + all four chunks",
+          "style": {
+            "fontSize": 18,
+            "typeface": "Arial",
+            "color": "#666666",
+            "bold": false,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "shared prefix + all four chunks",
+              "anchor": 2,
+              "fontSize": 18,
+              "typeface": "Arial",
+              "color": "#666666",
+              "bold": false,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.76
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/l8n2h4ni",
+      "editable": true,
+      "position": {
+        "left": 99,
+        "top": 377,
+        "width": 317,
+        "height": 48
+      },
+      "geometry": "rect",
+      "fillColor": "#333333",
+      "lineColor": "#333333",
+      "lineWidth": 0
+    },
+    {
+      "order": 17,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/m9w3q9o3",
+      "editable": true,
+      "position": {
+        "left": 99,
+        "top": 377,
+        "width": 317,
+        "height": 48
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "80 steps over the full stage tensor",
+      "style": {
+        "anchor": 2,
+        "fontSize": 18.4,
+        "typeface": "Arial",
+        "color": "#FFFFFF",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.92,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "80 steps over the full stage tensor",
+          "style": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "80 steps over the full stage tensor",
+              "anchor": 2,
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.92
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/7u5kju5o",
+      "editable": true,
+      "position": {
+        "left": 500,
+        "top": 254,
+        "width": 405,
+        "height": 205
+      },
+      "geometry": "roundRect",
+      "fillColor": "#F9E6E6",
+      "lineColor": "#CC0000",
+      "lineWidth": 2
+    },
+    {
+      "order": 19,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/8velszmt",
+      "editable": true,
+      "position": {
+        "left": 520,
+        "top": 266,
+        "width": 365,
+        "height": 35
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "Ours: four replicated GPUs",
+      "style": {
+        "anchor": 2,
+        "fontSize": 21.12,
+        "typeface": "Arial",
+        "color": "#990000",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.88,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Ours: four replicated GPUs",
+          "style": {
+            "fontSize": 24,
+            "typeface": "Arial",
+            "color": "#990000",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Ours: four replicated GPUs",
+              "anchor": 2,
+              "fontSize": 24,
+              "typeface": "Arial",
+              "color": "#990000",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.88
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/9wn2l4ne",
+      "editable": true,
+      "position": {
+        "left": 520,
+        "top": 315,
+        "width": 168,
+        "height": 44
+      },
+      "geometry": "rect",
+      "fillColor": "#333333",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 1
+    },
+    {
+      "order": 21,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/uxw3u94z",
+      "editable": true,
+      "position": {
+        "left": 520,
+        "top": 315,
+        "width": 168,
+        "height": 44
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "GPU 0  ·  Methods 80",
+      "style": {
+        "anchor": 2,
+        "fontSize": 14.96,
+        "typeface": "Arial",
+        "color": "#FFFFFF",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.88,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "GPU 0  ·  Methods 80",
+          "style": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "GPU 0  ·  Methods 80",
+              "anchor": 2,
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.88
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/vypkne5k",
+      "editable": true,
+      "position": {
+        "left": 703,
+        "top": 315,
+        "width": 168,
+        "height": 44
+      },
+      "geometry": "rect",
+      "fillColor": "#CC0000",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 1
+    },
+    {
+      "order": 23,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/fqlgj690",
+      "editable": true,
+      "position": {
+        "left": 703,
+        "top": 315,
+        "width": 168,
+        "height": 44
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "GPU 1  ·  Results 50",
+      "style": {
+        "anchor": 2,
+        "fontSize": 15.81,
+        "typeface": "Arial",
+        "color": "#FFFFFF",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.93,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "GPU 1  ·  Results 50",
+          "style": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "GPU 1  ·  Results 50",
+              "anchor": 2,
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.93
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/epczq18f",
+      "editable": true,
+      "position": {
+        "left": 520,
+        "top": 371,
+        "width": 168,
+        "height": 44
+      },
+      "geometry": "rect",
+      "fillColor": "#CC0000",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 1
+    },
+    {
+      "order": 25,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/1snylgr6",
+      "editable": true,
+      "position": {
+        "left": 520,
+        "top": 371,
+        "width": 168,
+        "height": 44
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "GPU 2  ·  Conclusion 30",
+      "style": {
+        "anchor": 2,
+        "fontSize": 14.28,
+        "typeface": "Arial",
+        "color": "#FFFFFF",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.84,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "GPU 2  ·  Conclusion 30",
+          "style": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "GPU 2  ·  Conclusion 30",
+              "anchor": 2,
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.84
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/gruhsbql",
+      "editable": true,
+      "position": {
+        "left": 703,
+        "top": 371,
+        "width": 168,
+        "height": 44
+      },
+      "geometry": "rect",
+      "fillColor": "#CC0000",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 1
+    },
+    {
+      "order": 27,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/3u5gnq9w",
+      "editable": true,
+      "position": {
+        "left": 703,
+        "top": 371,
+        "width": 168,
+        "height": 44
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "GPU 3  ·  Intro 20",
+      "style": {
+        "anchor": 2,
+        "fontSize": 17,
+        "typeface": "Arial",
+        "color": "#FFFFFF",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "GPU 3  ·  Intro 20",
+          "style": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "GPU 3  ·  Intro 20",
+              "anchor": 2,
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 1
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 28,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/2twzul8b",
+      "editable": true,
+      "position": {
+        "left": 520,
+        "top": 427,
+        "width": 365,
+        "height": 24
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "Rank 0 broadcasts context and gathers chunks",
+      "style": {
+        "anchor": 2,
+        "fontSize": 12.07,
+        "typeface": "Arial",
+        "color": "#666666",
+        "bold": false,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 0.71,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Rank 0 broadcasts context and gathers chunks",
+          "style": {
+            "fontSize": 17,
+            "typeface": "Arial",
+            "color": "#666666",
+            "bold": false,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Rank 0 broadcasts context and gathers chunks",
+              "anchor": 2,
+              "fontSize": 17,
+              "typeface": "Arial",
+              "color": "#666666",
+              "bold": false,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 0.71
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 29,
+      "kind": "shape",
+      "scope": "slide",
+      "id": "sh/pwnyp0r2",
+      "editable": true,
+      "position": {
+        "left": 55,
+        "top": 478,
+        "width": 850,
+        "height": 37
+      },
+      "geometry": "roundRect",
+      "fillColor": "#333333",
+      "lineColor": "#333333",
+      "lineWidth": 0
+    },
+    {
+      "order": 30,
+      "kind": "textbox",
+      "scope": "slide",
+      "id": "sh/ovehwvqh",
+      "editable": true,
+      "position": {
+        "left": 70,
+        "top": 478,
+        "width": 820,
+        "height": 37
+      },
+      "geometry": "rect",
+      "lineWidth": 0,
+      "text": "Same semantic plan · smaller per-rank sequence · added broadcast and gather",
+      "style": {
+        "anchor": 2,
+        "fontSize": 20,
+        "typeface": "Arial",
+        "color": "#FFFFFF",
+        "bold": true,
+        "italic": false,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "autoFit": "shrinkText",
+        "autoFitScale": 1,
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Same semantic plan · smaller per-rank sequence · added broadcast and gather",
+          "style": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Same semantic plan · smaller per-rank sequence · added broadcast and gather",
+              "anchor": 2,
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center",
+              "verticalAlignment": "middle",
+              "autoFit": "shrinkText",
+              "autoFitScale": 1
+            }
+          ],
+          "marginLeft": 0
+        }
+      ]
+    }
+  ]
+}

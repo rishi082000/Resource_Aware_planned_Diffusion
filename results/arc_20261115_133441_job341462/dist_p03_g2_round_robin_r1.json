@@ -1,0 +1,173 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain the difference between TCP and UDP, with one brief example use case for each.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 37,
+  "tokens_generated": 227,
+  "latency_seconds": 12.599878418026492,
+  "tokens_per_second": 18.01604685924857,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15831718912,
+  "peak_memory_allocated_gib": 14.744437217712402,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 44,
+          "end_exclusive": 106,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain the difference between TCP and UDP, with one brief example use case for each.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>analogy introduction 6</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 114,
+          "end_exclusive": 196,
+          "predicted_content_length": 80
+        }
+      ],
+      "max_block_size": 80,
+      "diffusion_steps": 80,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain the difference between TCP and UDP, with one brief example use case for each.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>analogy introduction 6</topic><async>Imagine you have two friends, TCP and UDP. TCP is like a friend who makes sure everything is delivered and you can hear the message clearly. UDP is like a friend who sends the message quickly but sometimes it might get lost or you might not hear it right.[PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>reliability 8</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 202,
+          "end_exclusive": 264,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain the difference between TCP and UDP, with one brief example use case for each.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>analogy introduction 6</topic><async>Imagine you have two friends, TCP and UDP. TCP is like a friend who makes sure everything is delivered and you can hear the message clearly. UDP is like a friend who sends the message quickly but sometimes it might get lost or you might not hear it right.[PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>reliability 8</topic><async>Now, let's talk about a use case for each:\n\n- TCP: If you want to play a game with a friend and you want to be sure every move you make is delivered, you would use TCP.\n- UDP: If you want to send a message quickly and don't worry about if it gets lost, you might use UDP.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>summary 6</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 60,
+        "prefix_length": 44,
+        "schedule_seconds": 0.000559923006221652,
+        "broadcast_seconds": 0.22080931696109474,
+        "stage_seconds": 2.399494712939486,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 2.135144544998184,
+            "idle_seconds": 0.26435016794130206
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.3793970942497253e-05,
+            "idle_seconds": 2.3994609189685434
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 80,
+        "prefix_length": 114,
+        "schedule_seconds": 4.19889111071825e-05,
+        "broadcast_seconds": 0.0012482411693781614,
+        "stage_seconds": 4.57601550896652,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              80
+            ],
+            "predicted_load": 80.0,
+            "compute_seconds": 4.573635357897729,
+            "idle_seconds": 0.002380151068791747
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.9515940696001053e-05,
+            "idle_seconds": 4.575985993025824
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 60,
+        "prefix_length": 202,
+        "schedule_seconds": 4.060682840645313e-05,
+        "broadcast_seconds": 0.0011884670238941908,
+        "stage_seconds": 4.62097783992067,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 4.61856066994369,
+            "idle_seconds": 0.002417169976979494
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.0138064175844193e-05,
+            "idle_seconds": 4.620947701856494
+          }
+        ]
+      }
+    ]
+  }
+}

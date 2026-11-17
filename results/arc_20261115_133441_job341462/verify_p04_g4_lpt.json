@@ -1,0 +1,247 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Describe six major components of a modern computer in separate sections, using exactly two sentences for each component.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 39,
+  "tokens_generated": 132,
+  "latency_seconds": 7.1829991301056,
+  "tokens_per_second": 18.376725043270252,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15582000640,
+  "peak_memory_allocated_gib": 14.511868953704834,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 45,
+          "end_exclusive": 57,
+          "predicted_content_length": 10
+        }
+      ],
+      "max_block_size": 10,
+      "diffusion_steps": 10,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe six major components of a modern computer in separate sections, using exactly two sentences for each component.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 1</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 69,
+          "end_exclusive": 91,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 1,
+          "start": 91,
+          "end_exclusive": 113,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe six major components of a modern computer in separate sections, using exactly two sentences for each component.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 1</topic><async>Six major components of a modern computer are:[PAD]</async><sync/><promise>-<topic>CPU 2</topic><promise>-<topic>main memory 2</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 127,
+          "end_exclusive": 139,
+          "predicted_content_length": 10
+        },
+        {
+          "chunk_id": 1,
+          "start": 139,
+          "end_exclusive": 171,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe six major components of a modern computer in separate sections, using exactly two sentences for each component.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 1</topic><async>Six major components of a modern computer are:[PAD]</async><sync/><promise>-<topic>CPU 2</topic><promise>-<topic>main memory 2</topic><async>1. CPU (Central Processing Unit): The brain of the computer, responsible for performing calculations.[PAD]</async><async>2. Main memory (RAM): A big storage place where the computer keeps information while working.[PAD]</async><sync/><promise>-<topic>section 1 3</topic><promise>-<topic>disclaimer 3</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 4,
+    "scheduler": "lpt",
+    "verify": true,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 10,
+        "prefix_length": 45,
+        "schedule_seconds": 0.0005569779314100742,
+        "broadcast_seconds": 0.38793927687220275,
+        "stage_seconds": 1.0266949469223619,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              10
+            ],
+            "predicted_load": 10.0,
+            "compute_seconds": 0.35956267081201077,
+            "idle_seconds": 0.6671322761103511
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.231107257306576e-05,
+            "idle_seconds": 1.0266626358497888
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.3011892810463905e-05,
+            "idle_seconds": 1.0266619350295514
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.309291787445545e-05,
+            "idle_seconds": 1.0266618540044874
+          }
+        ],
+        "verify_mismatch_count": 0,
+        "verify_tokens_compared": 10
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 20,
+        "prefix_length": 69,
+        "schedule_seconds": 5.1026931032538414e-05,
+        "broadcast_seconds": 0.0012378499377518892,
+        "stage_seconds": 0.910194078925997,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.6806989391334355,
+            "idle_seconds": 0.22949513979256153
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.8852910869754851,
+            "idle_seconds": 0.024902991950511932
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.2732030376791954e-05,
+            "idle_seconds": 0.9101613468956202
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.152899444103241e-05,
+            "idle_seconds": 0.910162549931556
+          }
+        ],
+        "verify_mismatch_count": 6,
+        "verify_tokens_compared": 40
+      },
+      {
+        "stage_id": 2,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 30,
+        "prefix_length": 127,
+        "schedule_seconds": 5.307001993060112e-05,
+        "broadcast_seconds": 0.0011829459108412266,
+        "stage_seconds": 1.454841666854918,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.4523644358851016,
+            "idle_seconds": 0.0024772309698164463
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              10
+            ],
+            "predicted_load": 10.0,
+            "compute_seconds": 0.4653585981577635,
+            "idle_seconds": 0.9894830686971545
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.605918027460575e-05,
+            "idle_seconds": 1.4548056076746434
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.878415398299694e-05,
+            "idle_seconds": 1.454812882700935
+          }
+        ],
+        "verify_mismatch_count": 0,
+        "verify_tokens_compared": 40
+      }
+    ]
+  }
+}

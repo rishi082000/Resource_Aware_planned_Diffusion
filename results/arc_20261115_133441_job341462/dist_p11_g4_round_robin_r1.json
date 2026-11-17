@@ -1,0 +1,211 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Describe a machine-learning production pipeline with a short problem-definition section, a detailed data-engineering section, a moderate training section, an extensive evaluation section, a brief deployment section, and a detailed monitoring section.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 60,
+  "tokens_generated": 452,
+  "latency_seconds": 12.04905897192657,
+  "tokens_per_second": 37.51330299346423,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16142048256,
+  "peak_memory_allocated_gib": 15.033453941345215,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 66,
+          "end_exclusive": 118,
+          "predicted_content_length": 50
+        }
+      ],
+      "max_block_size": 50,
+      "diffusion_steps": 50,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe a machine-learning production pipeline with a short problem-definition section, a detailed data-engineering section, a moderate training section, an extensive evaluation section, a brief deployment section, and a detailed monitoring section.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 5</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 7,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 158,
+          "end_exclusive": 220,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 1,
+          "start": 220,
+          "end_exclusive": 282,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 2,
+          "start": 282,
+          "end_exclusive": 334,
+          "predicted_content_length": 50
+        },
+        {
+          "chunk_id": 3,
+          "start": 334,
+          "end_exclusive": 396,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 4,
+          "start": 396,
+          "end_exclusive": 468,
+          "predicted_content_length": 70
+        },
+        {
+          "chunk_id": 5,
+          "start": 468,
+          "end_exclusive": 530,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 6,
+          "start": 530,
+          "end_exclusive": 602,
+          "predicted_content_length": 70
+        }
+      ],
+      "max_block_size": 70,
+      "diffusion_steps": 70,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nDescribe a machine-learning production pipeline with a short problem-definition section, a detailed data-engineering section, a moderate training section, an extensive evaluation section, a brief deployment section, and a detailed monitoring section.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 5</topic><async>In this machine learning production pipeline, we have a few sections. Let's start with the problem definition. We want to learn how to tell if a picture is a cat or a dog. That's our problem definition.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>data gathering 6</topic><promise>-<topic>data processing 6</topic><promise>-<topic>initialization 5</topic><promise>-<topic>training 6</topic><promise>-<topic>evaluation 7</topic><promise>-<topic>implementation 6</topic><promise>-<topic>monitoring 7</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 4,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 4,
+        "diffusion_steps": 50,
+        "prefix_length": 66,
+        "schedule_seconds": 0.012673453195020556,
+        "broadcast_seconds": 0.3550968738272786,
+        "stage_seconds": 2.4008981180377305,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              50
+            ],
+            "predicted_load": 50.0,
+            "compute_seconds": 1.88148202910088,
+            "idle_seconds": 0.5194160889368504
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.227195702493191e-05,
+            "idle_seconds": 2.4008658460807055
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.596814349293709e-05,
+            "idle_seconds": 2.4008621498942375
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.2210955396294594e-05,
+            "idle_seconds": 2.400865907082334
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 4,
+        "diffusion_steps": 70,
+        "prefix_length": 158,
+        "schedule_seconds": 5.6077027693390846e-05,
+        "broadcast_seconds": 0.0017450877930969,
+        "stage_seconds": 7.320686714956537,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              4
+            ],
+            "chunk_lengths": [
+              60,
+              70
+            ],
+            "predicted_load": 130.0,
+            "compute_seconds": 6.082507781917229,
+            "idle_seconds": 1.2381789330393076
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1,
+              5
+            ],
+            "chunk_lengths": [
+              60,
+              60
+            ],
+            "predicted_load": 120.0,
+            "compute_seconds": 5.320990175940096,
+            "idle_seconds": 1.9996965390164405
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [
+              2,
+              6
+            ],
+            "chunk_lengths": [
+              50,
+              70
+            ],
+            "predicted_load": 120.0,
+            "compute_seconds": 7.279783084988594,
+            "idle_seconds": 0.040903629967942834
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [
+              3
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 3.553193757077679,
+            "idle_seconds": 3.767492957878858
+          }
+        ]
+      }
+    ]
+  }
+}

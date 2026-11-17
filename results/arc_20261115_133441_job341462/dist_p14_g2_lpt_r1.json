@@ -1,0 +1,263 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Analyze phishing, ransomware, credential theft, supply-chain attacks, denial-of-service attacks, and insider threats independently. Then produce a prioritized mitigation roadmap based on the preceding risk analyses.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 57,
+  "tokens_generated": 455,
+  "latency_seconds": 21.19226090796292,
+  "tokens_per_second": 21.47010184406683,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16146180096,
+  "peak_memory_allocated_gib": 15.037302017211914,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 63,
+          "end_exclusive": 105,
+          "predicted_content_length": 40
+        }
+      ],
+      "max_block_size": 40,
+      "diffusion_steps": 40,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nAnalyze phishing, ransomware, credential theft, supply-chain attacks, denial-of-service attacks, and insider threats independently. Then produce a prioritized mitigation roadmap based on the preceding risk analyses.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>understanding 4</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 6,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 150,
+          "end_exclusive": 202,
+          "predicted_content_length": 50
+        },
+        {
+          "chunk_id": 1,
+          "start": 202,
+          "end_exclusive": 254,
+          "predicted_content_length": 50
+        },
+        {
+          "chunk_id": 2,
+          "start": 254,
+          "end_exclusive": 306,
+          "predicted_content_length": 50
+        },
+        {
+          "chunk_id": 3,
+          "start": 306,
+          "end_exclusive": 358,
+          "predicted_content_length": 50
+        },
+        {
+          "chunk_id": 4,
+          "start": 358,
+          "end_exclusive": 410,
+          "predicted_content_length": 50
+        },
+        {
+          "chunk_id": 5,
+          "start": 410,
+          "end_exclusive": 462,
+          "predicted_content_length": 50
+        }
+      ],
+      "max_block_size": 50,
+      "diffusion_steps": 50,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nAnalyze phishing, ransomware, credential theft, supply-chain attacks, denial-of-service attacks, and insider threats independently. Then produce a prioritized mitigation roadmap based on the preceding risk analyses.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>understanding 4</topic><async>Step 1: Understand the concept of each type of attack\nIn order to effectively analyze and mitigate these threats, it is essential to first understand what each type of attack means.[PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>phishing definition 5</topic><promise>-<topic>ransomware definition 5</topic><promise>-<topic>cred theft definition 5</topic><promise>-<topic>supply chain attacks 5</topic><promise>-<topic>denial of service 5</topic><promise>-<topic>insider threats 5</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 470,
+          "end_exclusive": 492,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nAnalyze phishing, ransomware, credential theft, supply-chain attacks, denial-of-service attacks, and insider threats independently. Then produce a prioritized mitigation roadmap based on the preceding risk analyses.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>understanding 4</topic><async>Step 1: Understand the concept of each type of attack\nIn order to effectively analyze and mitigate these threats, it is essential to first understand what each type of attack means.[PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>phishing definition 5</topic><promise>-<topic>ransomware definition 5</topic><promise>-<topic>cred theft definition 5</topic><promise>-<topic>supply chain attacks 5</topic><promise>-<topic>denial of service 5</topic><promise>-<topic>insider threats 5</topic><async>1. Phishing: Phishing is a type of social engineering where an attacker uses deceptive communication methods to trick users into providing sensitive information. This can involve convincing users that they are interacting with a trustworthy organization or individual.[PAD][PAD][PAD][PAD][PAD][PAD]</async><async>2. Ransomware: Ransomware is a type of malware that encrypts files or systems, often demanding a ransom in exchange for decryption. It is a significant threat to sensitive data and operations, and can cause substantial financial and operational harm.</async><async>3. Credentials theft: This type of attack involves the unauthorized access of sensitive credentials, such as passwords, usernames, and authentication codes. It can lead to unauthorized access to data, applications, and systems, potentially causing significant security risks.[PAD][PAD][PAD]</async><async>4. Supply chain attacks: Supply chain attacks involve targeting the companies that provide products or services to an organization. An attacker may manipulate the supply chain to gain access to sensitive data or execute an attack on the organization's network.[PAD][PAD][PAD][PAD][PAD]</async><async>d. Denial of Service (DOS) attacks: A denial of service attack is an attempt to disrupt the normal operation of a system or service, often by overwhelming it with requests or by targeting its resources.[PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><async>6. Insider threats: Insider threats involve an employee or a partner gaining access to sensitive data or information and using it for personal gain or to cause harm. This type of attack is particularly concerning as it involves someone with access to your organization's data.</async><sync/><promise>-<topic>analyzing risks 2</topic>"
+    },
+    {
+      "stage_id": 3,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 500,
+          "end_exclusive": 562,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nAnalyze phishing, ransomware, credential theft, supply-chain attacks, denial-of-service attacks, and insider threats independently. Then produce a prioritized mitigation roadmap based on the preceding risk analyses.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>understanding 4</topic><async>Step 1: Understand the concept of each type of attack\nIn order to effectively analyze and mitigate these threats, it is essential to first understand what each type of attack means.[PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>phishing definition 5</topic><promise>-<topic>ransomware definition 5</topic><promise>-<topic>cred theft definition 5</topic><promise>-<topic>supply chain attacks 5</topic><promise>-<topic>denial of service 5</topic><promise>-<topic>insider threats 5</topic><async>1. Phishing: Phishing is a type of social engineering where an attacker uses deceptive communication methods to trick users into providing sensitive information. This can involve convincing users that they are interacting with a trustworthy organization or individual.[PAD][PAD][PAD][PAD][PAD][PAD]</async><async>2. Ransomware: Ransomware is a type of malware that encrypts files or systems, often demanding a ransom in exchange for decryption. It is a significant threat to sensitive data and operations, and can cause substantial financial and operational harm.</async><async>3. Credentials theft: This type of attack involves the unauthorized access of sensitive credentials, such as passwords, usernames, and authentication codes. It can lead to unauthorized access to data, applications, and systems, potentially causing significant security risks.[PAD][PAD][PAD]</async><async>4. Supply chain attacks: Supply chain attacks involve targeting the companies that provide products or services to an organization. An attacker may manipulate the supply chain to gain access to sensitive data or execute an attack on the organization's network.[PAD][PAD][PAD][PAD][PAD]</async><async>d. Denial of Service (DOS) attacks: A denial of service attack is an attempt to disrupt the normal operation of a system or service, often by overwhelming it with requests or by targeting its resources.[PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><async>6. Insider threats: Insider threats involve an employee or a partner gaining access to sensitive data or information and using it for personal gain or to cause harm. This type of attack is particularly concerning as it involves someone with access to your organization's data.</async><sync/><promise>-<topic>analyzing risks 2</topic><async>Step 2: Analyzing the risk of each type of attack based on the impact and likelihood[PAD]</async><sync/><promise>-<topic>comparing risks 6</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "lpt",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 40,
+        "prefix_length": 63,
+        "schedule_seconds": 0.0005455261562019587,
+        "broadcast_seconds": 0.19228177284821868,
+        "stage_seconds": 1.6222549160011113,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              40
+            ],
+            "predicted_load": 40.0,
+            "compute_seconds": 1.41137694590725,
+            "idle_seconds": 0.21087797009386122
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.272294998168945e-05,
+            "idle_seconds": 1.6222221930511296
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 50,
+        "prefix_length": 150,
+        "schedule_seconds": 5.725910887122154e-05,
+        "broadcast_seconds": 0.0015777868684381247,
+        "stage_seconds": 4.720042981905863,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              2,
+              4
+            ],
+            "chunk_lengths": [
+              50,
+              50,
+              50
+            ],
+            "predicted_load": 150.0,
+            "compute_seconds": 4.402272657025605,
+            "idle_seconds": 0.31777032488025725
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1,
+              3,
+              5
+            ],
+            "chunk_lengths": [
+              50,
+              50,
+              50
+            ],
+            "predicted_load": 150.0,
+            "compute_seconds": 4.694627582095563,
+            "idle_seconds": 0.025415399810299277
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 20,
+        "prefix_length": 470,
+        "schedule_seconds": 4.922389052808285e-05,
+        "broadcast_seconds": 0.0013493930455297232,
+        "stage_seconds": 2.372367959935218,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 2.3700528119225055,
+            "idle_seconds": 0.002315148012712598
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.2792955860495567e-05,
+            "idle_seconds": 2.3723451669793576
+          }
+        ]
+      },
+      {
+        "stage_id": 3,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 60,
+        "prefix_length": 500,
+        "schedule_seconds": 3.862287849187851e-05,
+        "broadcast_seconds": 0.0014110112097114325,
+        "stage_seconds": 8.235641860868782,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 8.233026403002441,
+            "idle_seconds": 0.0026154578663408756
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.473709173500538e-05,
+            "idle_seconds": 8.235617123777047
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Evaluate solar, wind, hydroelectric, geothermal, and nuclear power independently. Then use those evaluations to design and justify a balanced electricity plan for a growing coastal city.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 53,
+  "tokens_generated": 459,
+  "latency_seconds": 10.379389506066218,
+  "tokens_per_second": 44.22225408649884,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16490916864,
+  "peak_memory_allocated_gib": 15.358363151550293,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 59,
+          "end_exclusive": 81,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nEvaluate solar, wind, hydroelectric, geothermal, and nuclear power independently. Then use those evaluations to design and justify a balanced electricity plan for a growing coastal city.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 5,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 116,
+          "end_exclusive": 198,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 1,
+          "start": 198,
+          "end_exclusive": 280,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 2,
+          "start": 280,
+          "end_exclusive": 362,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 3,
+          "start": 362,
+          "end_exclusive": 444,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 4,
+          "start": 444,
+          "end_exclusive": 526,
+          "predicted_content_length": 80
+        }
+      ],
+      "max_block_size": 80,
+      "diffusion_steps": 80,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nEvaluate solar, wind, hydroelectric, geothermal, and nuclear power independently. Then use those evaluations to design and justify a balanced electricity plan for a growing coastal city.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic><async>To evaluate each type of renewable energy, let's break down the task step by step:[PAD][PAD]</async><sync/><promise>-<topic>solar evaluation 8</topic><promise>-<topic>wind evaluation 8</topic><promise>-<topic>hydroelectric evaluation 8</topic><promise>-<topic>geothermal evaluation 8</topic><promise>-<topic>nuclear evaluation 8</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 20,
+        "prefix_length": 59,
+        "schedule_seconds": 0.0005491229239851236,
+        "broadcast_seconds": 0.16730763600207865,
+        "stage_seconds": 0.909044889966026,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.7068036289419979,
+            "idle_seconds": 0.20224126102402806
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.9727118089795113e-05,
+            "idle_seconds": 0.9090151628479362
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 80,
+        "prefix_length": 116,
+        "schedule_seconds": 4.3692998588085175e-05,
+        "broadcast_seconds": 0.0015374899376183748,
+        "stage_seconds": 7.778507074108347,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              2,
+              4
+            ],
+            "chunk_lengths": [
+              80,
+              80,
+              80
+            ],
+            "predicted_load": 240.0,
+            "compute_seconds": 7.775423526996747,
+            "idle_seconds": 0.0030835471116006374
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1,
+              3
+            ],
+            "chunk_lengths": [
+              80,
+              80
+            ],
+            "predicted_load": 160.0,
+            "compute_seconds": 6.989476982038468,
+            "idle_seconds": 0.7890300920698792
+          }
+        ]
+      }
+    ]
+  }
+}

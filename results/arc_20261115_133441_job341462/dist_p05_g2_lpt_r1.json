@@ -1,0 +1,167 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain solar, wind, hydroelectric, geothermal, biomass, and tidal energy in separate sections of approximately equal length.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 44,
+  "tokens_generated": 468,
+  "latency_seconds": 19.87552830390632,
+  "tokens_per_second": 23.546543912899143,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16943028736,
+  "peak_memory_allocated_gib": 15.779425144195557,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 50,
+          "end_exclusive": 112,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain solar, wind, hydroelectric, geothermal, biomass, and tidal energy in separate sections of approximately equal length.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 6</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 6,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 159,
+          "end_exclusive": 281,
+          "predicted_content_length": 120
+        },
+        {
+          "chunk_id": 1,
+          "start": 281,
+          "end_exclusive": 393,
+          "predicted_content_length": 110
+        },
+        {
+          "chunk_id": 2,
+          "start": 393,
+          "end_exclusive": 505,
+          "predicted_content_length": 110
+        },
+        {
+          "chunk_id": 3,
+          "start": 505,
+          "end_exclusive": 607,
+          "predicted_content_length": 100
+        },
+        {
+          "chunk_id": 4,
+          "start": 607,
+          "end_exclusive": 719,
+          "predicted_content_length": 110
+        },
+        {
+          "chunk_id": 5,
+          "start": 719,
+          "end_exclusive": 821,
+          "predicted_content_length": 100
+        }
+      ],
+      "max_block_size": 120,
+      "diffusion_steps": 120,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain solar, wind, hydroelectric, geothermal, biomass, and tidal energy in separate sections of approximately equal length.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 6</topic><async>In this section, we will explore the various renewable energy sources that are being increasingly utilized to address the growing demand for clean energy. Each of these energy sources has its unique characteristics, advantages, and applications, making them essential components of a sustainable energy future.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>solar energy 12</topic><promise>-<topic>wind energy 11</topic><promise>-<topic>hydroelectric energy 11</topic><promise>-<topic>geothermal energy 10</topic><promise>-<topic>bioenergy 11</topic><promise>-<topic>tidal energy 10</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "lpt",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 60,
+        "prefix_length": 50,
+        "schedule_seconds": 0.0005948699545115232,
+        "broadcast_seconds": 0.23499154206365347,
+        "stage_seconds": 2.4585242909379303,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 2.1696434339974076,
+            "idle_seconds": 0.2888808569405228
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.777211531996727e-05,
+            "idle_seconds": 2.4584865188226104
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 120,
+        "prefix_length": 159,
+        "schedule_seconds": 5.649705417454243e-05,
+        "broadcast_seconds": 0.0021496019326150417,
+        "stage_seconds": 14.84916250500828,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              4,
+              5
+            ],
+            "chunk_lengths": [
+              120,
+              110,
+              100
+            ],
+            "predicted_load": 330.0,
+            "compute_seconds": 14.845326322130859,
+            "idle_seconds": 0.003836182877421379
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1,
+              2,
+              3
+            ],
+            "chunk_lengths": [
+              110,
+              110,
+              100
+            ],
+            "predicted_load": 320.0,
+            "compute_seconds": 13.934405035106465,
+            "idle_seconds": 0.9147574699018151
+          }
+        ]
+      }
+    ]
+  }
+}

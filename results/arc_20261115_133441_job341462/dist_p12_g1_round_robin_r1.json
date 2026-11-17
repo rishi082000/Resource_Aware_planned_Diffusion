@@ -1,0 +1,181 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Analyze PostgreSQL, MongoDB, Redis, and Cassandra independently for consistency, scalability, and operational complexity. After those analyses, synthesize them into a recommendation for an online marketplace.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 54,
+  "tokens_generated": 448,
+  "latency_seconds": 22.21285088197328,
+  "tokens_per_second": 20.168505266632476,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16348980736,
+  "peak_memory_allocated_gib": 15.22617483139038,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 59,
+          "end_exclusive": 101,
+          "predicted_content_length": 40
+        }
+      ],
+      "max_block_size": 40,
+      "diffusion_steps": 40,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nAnalyze PostgreSQL, MongoDB, Redis, and Cassandra independently for consistency, scalability, and operational complexity. After those analyses, synthesize them into a recommendation for an online marketplace.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 4</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 4,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 125,
+          "end_exclusive": 187,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 1,
+          "start": 187,
+          "end_exclusive": 239,
+          "predicted_content_length": 50
+        },
+        {
+          "chunk_id": 2,
+          "start": 239,
+          "end_exclusive": 291,
+          "predicted_content_length": 50
+        },
+        {
+          "chunk_id": 3,
+          "start": 291,
+          "end_exclusive": 343,
+          "predicted_content_length": 50
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nAnalyze PostgreSQL, MongoDB, Redis, and Cassandra independently for consistency, scalability, and operational complexity. After those analyses, synthesize them into a recommendation for an online marketplace.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 4</topic><async>To analyze PostgreSQL, MongoDB, Redis, and Cassandra, I will evaluate their features, performance, and suitability for various applications. Then, I will synthesize these findings to create an online marketplace recommendation.</async><sync/><promise>-<topic>PostgreSQL 6</topic><promise>-<topic>MongoDB 5</topic><promise>-<topic>Redis 5</topic><promise>-<topic>Cassandra 5</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 358,
+          "end_exclusive": 460,
+          "predicted_content_length": 100
+        },
+        {
+          "chunk_id": 1,
+          "start": 460,
+          "end_exclusive": 502,
+          "predicted_content_length": 40
+        }
+      ],
+      "max_block_size": 100,
+      "diffusion_steps": 100,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nAnalyze PostgreSQL, MongoDB, Redis, and Cassandra independently for consistency, scalability, and operational complexity. After those analyses, synthesize them into a recommendation for an online marketplace.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 4</topic><async>To analyze PostgreSQL, MongoDB, Redis, and Cassandra, I will evaluate their features, performance, and suitability for various applications. Then, I will synthesize these findings to create an online marketplace recommendation.</async><sync/><promise>-<topic>PostgreSQL 6</topic><promise>-<topic>MongoDB 5</topic><promise>-<topic>Redis 5</topic><promise>-<topic>Cassandra 5</topic><async>1. PostgreSQL: PostgreSQL is an open source relational database system known for its reliability, features, and support for complex queries. It is widely used in enterprise settings and is known to be scalable. However, it may have some performance issues with large datasets.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><async>2. MongoDB: A NoSQL database with a flexible query language, allowing for more complex data types and more advanced query capabilities. It is known for its high availability and performance, making it suitable for large data sets and high volume transactions.[PAD][PAD]</async><async>3. Redis: Redis is a key-value pair data store with high performance and low latency. It is widely used for caching and handling high volume data. Redis offers a wide range of data types and is easily usable with various programming languages.[PAD][PAD]</async><async>4. Cassandra: Cassandra is a scalable, open source, NoSQL database system developed by Facebook. It is known for its high availability and low latencies, making it suitable for large data sets and high volume transactions.[PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>marketplace analysis 10</topic><promise>-<topic>conclusion 4</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 1,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 40,
+        "prefix_length": 59,
+        "schedule_seconds": 0.0005382329691201448,
+        "broadcast_seconds": 0.11340489517897367,
+        "stage_seconds": 1.5060914380010217,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              40
+            ],
+            "predicted_load": 40.0,
+            "compute_seconds": 1.3898284719325602,
+            "idle_seconds": 0.11626296606846154
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 60,
+        "prefix_length": 125,
+        "schedule_seconds": 5.2819959819316864e-05,
+        "broadcast_seconds": 0.0014240259770303965,
+        "stage_seconds": 5.748028784990311,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "chunk_lengths": [
+              60,
+              50,
+              50,
+              50
+            ],
+            "predicted_load": 210.0,
+            "compute_seconds": 5.745253851171583,
+            "idle_seconds": 0.0027749338187277317
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 100,
+        "prefix_length": 358,
+        "schedule_seconds": 4.231114871799946e-05,
+        "broadcast_seconds": 0.0014910029713064432,
+        "stage_seconds": 12.3400445911102,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              1
+            ],
+            "chunk_lengths": [
+              100,
+              40
+            ],
+            "predicted_load": 140.0,
+            "compute_seconds": 12.337461962830275,
+            "idle_seconds": 0.0025826282799243927
+          }
+        ]
+      }
+    ]
+  }
+}

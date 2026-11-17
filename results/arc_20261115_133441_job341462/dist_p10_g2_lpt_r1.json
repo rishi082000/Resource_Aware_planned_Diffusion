@@ -1,0 +1,167 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain internet infrastructure in separate sections: describe DNS briefly, TCP in detail, HTTP in moderate detail, TLS in detail, load balancing briefly, and content-delivery networks in moderate detail.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 57,
+  "tokens_generated": 455,
+  "latency_seconds": 17.17818569391966,
+  "tokens_per_second": 26.487081238215424,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16645460992,
+  "peak_memory_allocated_gib": 15.502293586730957,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 62,
+          "end_exclusive": 94,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain internet infrastructure in separate sections: describe DNS briefly, TCP in detail, HTTP in moderate detail, TLS in detail, load balancing briefly, and content-delivery networks in moderate detail.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 6,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 136,
+          "end_exclusive": 208,
+          "predicted_content_length": 70
+        },
+        {
+          "chunk_id": 1,
+          "start": 208,
+          "end_exclusive": 310,
+          "predicted_content_length": 100
+        },
+        {
+          "chunk_id": 2,
+          "start": 310,
+          "end_exclusive": 392,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 3,
+          "start": 392,
+          "end_exclusive": 494,
+          "predicted_content_length": 100
+        },
+        {
+          "chunk_id": 4,
+          "start": 494,
+          "end_exclusive": 556,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 5,
+          "start": 556,
+          "end_exclusive": 678,
+          "predicted_content_length": 120
+        }
+      ],
+      "max_block_size": 120,
+      "diffusion_steps": 120,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain internet infrastructure in separate sections: describe DNS briefly, TCP in detail, HTTP in moderate detail, TLS in detail, load balancing briefly, and content-delivery networks in moderate detail.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 3</topic><async>Sure, let's break down internet infrastructure into separate sections and explain each part in the detail you asked for.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>DNS explanation 7</topic><promise>-<topic>TCP explanation 10</topic><promise>-<topic>HTTP explanation 8</topic><promise>-<topic>TLS explanation 10</topic><promise>-<topic>Load balancing explanation 6</topic><promise>-<topic>Content delivery networks 12</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "lpt",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 30,
+        "prefix_length": 62,
+        "schedule_seconds": 0.0005635498091578484,
+        "broadcast_seconds": 0.18740692012943327,
+        "stage_seconds": 1.2848028608132154,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.056360460119322,
+            "idle_seconds": 0.22844240069389343
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.3142976462841034e-05,
+            "idle_seconds": 1.2847697178367525
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 120,
+        "prefix_length": 136,
+        "schedule_seconds": 5.012494511902332e-05,
+        "broadcast_seconds": 0.0018090249504894018,
+        "stage_seconds": 13.997346536023542,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              5,
+              2,
+              0
+            ],
+            "chunk_lengths": [
+              120,
+              80,
+              70
+            ],
+            "predicted_load": 270.0,
+            "compute_seconds": 13.99382790690288,
+            "idle_seconds": 0.0035186291206628084
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1,
+              3,
+              4
+            ],
+            "chunk_lengths": [
+              100,
+              100,
+              60
+            ],
+            "predicted_load": 260.0,
+            "compute_seconds": 12.062207146082073,
+            "idle_seconds": 1.9351393899414688
+          }
+        ]
+      }
+    ]
+  }
+}

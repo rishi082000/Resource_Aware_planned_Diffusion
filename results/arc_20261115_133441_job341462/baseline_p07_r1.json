@@ -1,0 +1,44 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain processes, threads, scheduling, virtual memory, file systems, synchronization, networking, and security as eight independent operating-system topics, using exactly two sentences per topic.",
+  "device": "cuda",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 53,
+  "tokens_generated": 94,
+  "latency_seconds": 2.5437589010689408,
+  "tokens_per_second": 36.95318764702867,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15818390016,
+  "peak_memory_allocated_gib": 14.7320237159729,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 63,
+          "end_exclusive": 105,
+          "predicted_content_length": 40
+        },
+        {
+          "chunk_id": 1,
+          "start": 105,
+          "end_exclusive": 147,
+          "predicted_content_length": 40
+        }
+      ],
+      "max_block_size": 40,
+      "diffusion_steps": 40,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain processes, threads, scheduling, virtual memory, file systems, synchronization, networking, and security as eight independent operating-system topics, using exactly two sentences per topic.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 4</topic><promise>-<topic>summary 4</topic>"
+    }
+  ],
+  "run_isolated_oracle": false
+}

@@ -1,0 +1,80 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Write an introductory artificial-intelligence study guide with independent forty-to-fifty-word sections on supervised learning, unsupervised learning, reinforcement learning, neural networks, transformers, generative models, evaluation, and responsible AI.",
+  "device": "cuda",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 62,
+  "tokens_generated": 450,
+  "latency_seconds": 14.484952196944505,
+  "tokens_per_second": 31.066723167710848,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 17859099136,
+  "peak_memory_allocated_gib": 16.632582187652588,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 8,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 118,
+          "end_exclusive": 200,
+          "predicted_content_length": 80
+        },
+        {
+          "chunk_id": 1,
+          "start": 200,
+          "end_exclusive": 262,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 2,
+          "start": 262,
+          "end_exclusive": 324,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 3,
+          "start": 324,
+          "end_exclusive": 386,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 4,
+          "start": 386,
+          "end_exclusive": 458,
+          "predicted_content_length": 70
+        },
+        {
+          "chunk_id": 5,
+          "start": 458,
+          "end_exclusive": 520,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 6,
+          "start": 520,
+          "end_exclusive": 582,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 7,
+          "start": 582,
+          "end_exclusive": 654,
+          "predicted_content_length": 70
+        }
+      ],
+      "max_block_size": 80,
+      "diffusion_steps": 80,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWrite an introductory artificial-intelligence study guide with independent forty-to-fifty-word sections on supervised learning, unsupervised learning, reinforcement learning, neural networks, transformers, generative models, evaluation, and responsible AI.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>title and overview 8</topic><promise>-<topic>supervised learning 6</topic><promise>-<topic>unsupervised learning 6</topic><promise>-<topic>reinforcement learning 6</topic><promise>-<topic>neural networks 7</topic><promise>-<topic>transformation 6</topic><promise>-<topic>evaluation 6</topic><promise>-<topic>responsible AI 7</topic>"
+    }
+  ],
+  "run_isolated_oracle": false
+}

@@ -1,0 +1,231 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Create a comparative travel guide to Japan, Italy, Iceland, Thailand, Peru, Morocco, New Zealand, and Greece. Give each destination its own forty-to-fifty-word section covering cost, transportation, food, and one major attraction.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 66,
+  "tokens_generated": 273,
+  "latency_seconds": 6.077901314012706,
+  "tokens_per_second": 44.91682011529108,
+  "memory_before_bytes": 15276337664,
+  "peak_memory_allocated_bytes": 15845196288,
+  "peak_memory_allocated_gib": 14.756989002227783,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 72,
+          "end_exclusive": 94,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCreate a comparative travel guide to Japan, Italy, Iceland, Thailand, Peru, Morocco, New Zealand, and Greece. Give each destination its own forty-to-fifty-word section covering cost, transportation, food, and one major attraction.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 8,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 144,
+          "end_exclusive": 166,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 1,
+          "start": 166,
+          "end_exclusive": 188,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 2,
+          "start": 188,
+          "end_exclusive": 210,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 3,
+          "start": 210,
+          "end_exclusive": 232,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 4,
+          "start": 232,
+          "end_exclusive": 254,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 5,
+          "start": 254,
+          "end_exclusive": 276,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 6,
+          "start": 276,
+          "end_exclusive": 298,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 7,
+          "start": 298,
+          "end_exclusive": 320,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCreate a comparative travel guide to Japan, Italy, Iceland, Thailand, Peru, Morocco, New Zealand, and Greece. Give each destination its own forty-to-fifty-word section covering cost, transportation, food, and one major attraction.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic><async>In this guide, we will give you a brief overview of each destination with a focus on:[PAD]</async><sync/><promise>-<topic>japan 2</topic><promise>-<topic>italy 2</topic><promise>-<topic>iceland 2</topic><promise>-<topic>thai 2</topic><promise>-<topic>peru 2</topic><promise>-<topic>morocco 2</topic><promise>-<topic>new zealand 2</topic><promise>-<topic>greece 2</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 327,
+          "end_exclusive": 339,
+          "predicted_content_length": 10
+        }
+      ],
+      "max_block_size": 10,
+      "diffusion_steps": 10,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCreate a comparative travel guide to Japan, Italy, Iceland, Thailand, Peru, Morocco, New Zealand, and Greece. Give each destination its own forty-to-fifty-word section covering cost, transportation, food, and one major attraction.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic><async>In this guide, we will give you a brief overview of each destination with a focus on:[PAD]</async><sync/><promise>-<topic>japan 2</topic><promise>-<topic>italy 2</topic><promise>-<topic>iceland 2</topic><promise>-<topic>thai 2</topic><promise>-<topic>peru 2</topic><promise>-<topic>morocco 2</topic><promise>-<topic>new zealand 2</topic><promise>-<topic>greece 2</topic><async>1. Japan - Japan is a beautiful island country with lots of fun places to visit.[PAD][PAD]</async><async>Italy: Full of art, food, and beautiful landscapes. Visit the famous attraction, Venice.[PAD]</async><async>Iceland: Iceland is a land of volcanoes and glaciers, with breathtaking landscapes and unique culture.</async><async>Thailand: Great for food and pretty flowers. Lots of fun water and air shows.[PAD][PAD]</async><async>4. Peru - Inca ruins, Amazon jungle, and the Andes mountains.[PAD][PAD][PAD]</async><async>5. Morocco - A traditional culture with traditional food and a famous tourist attraction called the Moroccan Mosque.</async><async>5. Morocco - traditional culture, vibrant cities, and traditional cuisine; famous attraction: Atlas Mountains.</async><async>Greece: Ancient culture, beautiful landscapes, and a variety of food and attractions to explore.[PAD]</async><sync/><promise>-<topic>conclusion 1</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 20,
+        "prefix_length": 72,
+        "schedule_seconds": 0.012855781940743327,
+        "broadcast_seconds": 0.14744604006409645,
+        "stage_seconds": 0.9084291630424559,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.7145032139960676,
+            "idle_seconds": 0.19392594904638827
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.337394446134567e-05,
+            "idle_seconds": 0.9083957890979946
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 20,
+        "prefix_length": 144,
+        "schedule_seconds": 6.284890696406364e-05,
+        "broadcast_seconds": 0.0014564059674739838,
+        "stage_seconds": 1.3674093030858785,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              2,
+              4,
+              6
+            ],
+            "chunk_lengths": [
+              20,
+              20,
+              20,
+              20
+            ],
+            "predicted_load": 80.0,
+            "compute_seconds": 1.102976632071659,
+            "idle_seconds": 0.2644326710142195
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1,
+              3,
+              5,
+              7
+            ],
+            "chunk_lengths": [
+              20,
+              20,
+              20,
+              20
+            ],
+            "predicted_load": 80.0,
+            "compute_seconds": 1.3453765260055661,
+            "idle_seconds": 0.02203277708031237
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "round_robin",
+        "world_size": 2,
+        "diffusion_steps": 10,
+        "prefix_length": 327,
+        "schedule_seconds": 4.418380558490753e-05,
+        "broadcast_seconds": 0.0012863019946962595,
+        "stage_seconds": 0.9064534909557551,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              10
+            ],
+            "predicted_load": 10.0,
+            "compute_seconds": 0.9043051921762526,
+            "idle_seconds": 0.002148298779502511
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.167094498872757e-05,
+            "idle_seconds": 0.9064318200107664
+          }
+        ]
+      }
+    ]
+  }
+}

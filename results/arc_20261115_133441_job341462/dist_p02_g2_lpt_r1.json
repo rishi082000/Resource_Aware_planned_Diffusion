@@ -1,0 +1,87 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "What is Aurora Borealis? Answer in two concise sentences.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 32,
+  "tokens_generated": 55,
+  "latency_seconds": 1.8949822490103543,
+  "tokens_per_second": 29.024018577864513,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15429859840,
+  "peak_memory_allocated_gib": 14.370176792144775,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 43,
+          "end_exclusive": 65,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 1,
+          "start": 65,
+          "end_exclusive": 87,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nWhat is Aurora Borealis? Answer in two concise sentences.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>definition 2</topic><promise>-<topic>analogy 2</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 2,
+    "scheduler": "lpt",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 2,
+        "diffusion_steps": 20,
+        "prefix_length": 43,
+        "schedule_seconds": 0.0005567669868469238,
+        "broadcast_seconds": 0.21767667401582003,
+        "stage_seconds": 1.3444713759236038,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.6909228400327265,
+            "idle_seconds": 0.6535485358908772
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.8541597458533943,
+            "idle_seconds": 0.4903116300702095
+          }
+        ]
+      }
+    ]
+  }
+}

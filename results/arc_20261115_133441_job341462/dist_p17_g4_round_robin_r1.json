@@ -1,0 +1,219 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain eight distributed-systems topics in independent forty-to-fifty-word sections: replication, partitioning, consensus, fault tolerance, caching, load balancing, observability, and consistency models.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 57,
+  "tokens_generated": 455,
+  "latency_seconds": 11.367771592922509,
+  "tokens_per_second": 40.02543473720739,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15719463936,
+  "peak_memory_allocated_gib": 14.639891624450684,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 63,
+          "end_exclusive": 95,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain eight distributed-systems topics in independent forty-to-fifty-word sections: replication, partitioning, consensus, fault tolerance, caching, load balancing, observability, and consistency models.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 8,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 152,
+          "end_exclusive": 164,
+          "predicted_content_length": 10
+        },
+        {
+          "chunk_id": 1,
+          "start": 164,
+          "end_exclusive": 186,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 2,
+          "start": 186,
+          "end_exclusive": 218,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 3,
+          "start": 218,
+          "end_exclusive": 260,
+          "predicted_content_length": 40
+        },
+        {
+          "chunk_id": 4,
+          "start": 260,
+          "end_exclusive": 312,
+          "predicted_content_length": 50
+        },
+        {
+          "chunk_id": 5,
+          "start": 312,
+          "end_exclusive": 374,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 6,
+          "start": 374,
+          "end_exclusive": 446,
+          "predicted_content_length": 70
+        },
+        {
+          "chunk_id": 7,
+          "start": 446,
+          "end_exclusive": 528,
+          "predicted_content_length": 80
+        }
+      ],
+      "max_block_size": 80,
+      "diffusion_steps": 80,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain eight distributed-systems topics in independent forty-to-fifty-word sections: replication, partitioning, consensus, fault tolerance, caching, load balancing, observability, and consistency models.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic><async>In this explanation, I will discuss eight topics related to distributed systems, each in 40-50-word sections.[PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>topic 1 4</topic><promise>-<topic>topic 2 3</topic><promise>-<topic>topic 3 3</topic><promise>-<topic>topic 4 3</topic><promise>-<topic>topic 5 3</topic><promise>-<topic>topic 6 3</topic><promise>-<topic>topic 7 3</topic><promise>-<topic>topic 8 4</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 4,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 4,
+        "diffusion_steps": 30,
+        "prefix_length": 63,
+        "schedule_seconds": 0.0006012620870023966,
+        "broadcast_seconds": 0.6112129469402134,
+        "stage_seconds": 1.8000220430549234,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 1.1091007620561868,
+            "idle_seconds": 0.6909212809987366
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.649899736046791e-05,
+            "idle_seconds": 1.799985544057563
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.1330157071352005e-05,
+            "idle_seconds": 1.799990712897852
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.3714110031723976e-05,
+            "idle_seconds": 1.7999883289448917
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 4,
+        "diffusion_steps": 80,
+        "prefix_length": 152,
+        "schedule_seconds": 6.0674967244267464e-05,
+        "broadcast_seconds": 0.0016045691445469856,
+        "stage_seconds": 6.710843130946159,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              4
+            ],
+            "chunk_lengths": [
+              10,
+              50
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 2.70745859015733,
+            "idle_seconds": 4.003384540788829
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1,
+              5
+            ],
+            "chunk_lengths": [
+              20,
+              60
+            ],
+            "predicted_load": 80.0,
+            "compute_seconds": 3.6854736530222,
+            "idle_seconds": 3.0253694779239595
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [
+              2,
+              6
+            ],
+            "chunk_lengths": [
+              30,
+              70
+            ],
+            "predicted_load": 100.0,
+            "compute_seconds": 4.644317670026794,
+            "idle_seconds": 2.0665254609193653
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [
+              3,
+              7
+            ],
+            "chunk_lengths": [
+              40,
+              80
+            ],
+            "predicted_load": 120.0,
+            "compute_seconds": 6.67769181006588,
+            "idle_seconds": 0.033151320880278945
+          }
+        ]
+      }
+    ]
+  }
+}

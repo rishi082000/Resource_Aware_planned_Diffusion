@@ -1,0 +1,96 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain eight distributed-systems topics in independent forty-to-fifty-word sections: replication, partitioning, consensus, fault tolerance, caching, load balancing, observability, and consistency models.",
+  "device": "cuda",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 57,
+  "tokens_generated": 455,
+  "latency_seconds": 14.277662998996675,
+  "tokens_per_second": 31.86796046607725,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 17090208768,
+  "peak_memory_allocated_gib": 15.916497230529785,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 63,
+          "end_exclusive": 95,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain eight distributed-systems topics in independent forty-to-fifty-word sections: replication, partitioning, consensus, fault tolerance, caching, load balancing, observability, and consistency models.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 8,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 152,
+          "end_exclusive": 164,
+          "predicted_content_length": 10
+        },
+        {
+          "chunk_id": 1,
+          "start": 164,
+          "end_exclusive": 186,
+          "predicted_content_length": 20
+        },
+        {
+          "chunk_id": 2,
+          "start": 186,
+          "end_exclusive": 218,
+          "predicted_content_length": 30
+        },
+        {
+          "chunk_id": 3,
+          "start": 218,
+          "end_exclusive": 260,
+          "predicted_content_length": 40
+        },
+        {
+          "chunk_id": 4,
+          "start": 260,
+          "end_exclusive": 312,
+          "predicted_content_length": 50
+        },
+        {
+          "chunk_id": 5,
+          "start": 312,
+          "end_exclusive": 374,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 6,
+          "start": 374,
+          "end_exclusive": 446,
+          "predicted_content_length": 70
+        },
+        {
+          "chunk_id": 7,
+          "start": 446,
+          "end_exclusive": 528,
+          "predicted_content_length": 80
+        }
+      ],
+      "max_block_size": 80,
+      "diffusion_steps": 80,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain eight distributed-systems topics in independent forty-to-fifty-word sections: replication, partitioning, consensus, fault tolerance, caching, load balancing, observability, and consistency models.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 3</topic><async>In this explanation, I will discuss eight topics related to distributed systems, each in 40-50-word sections.[PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>topic 1 4</topic><promise>-<topic>topic 2 3</topic><promise>-<topic>topic 3 3</topic><promise>-<topic>topic 4 3</topic><promise>-<topic>topic 5 3</topic><promise>-<topic>topic 6 3</topic><promise>-<topic>topic 7 3</topic><promise>-<topic>topic 8 4</topic>"
+    }
+  ],
+  "run_isolated_oracle": false
+}

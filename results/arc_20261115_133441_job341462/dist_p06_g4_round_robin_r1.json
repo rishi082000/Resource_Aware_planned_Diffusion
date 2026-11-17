@@ -1,0 +1,267 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Compare Python, C++, Java, Rust, Go, and JavaScript in six separate sections, giving three sentences to each language.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 44,
+  "tokens_generated": 468,
+  "latency_seconds": 11.638550030998886,
+  "tokens_per_second": 40.211194586395884,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16087453184,
+  "peak_memory_allocated_gib": 14.982608318328857,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 50,
+          "end_exclusive": 72,
+          "predicted_content_length": 20
+        }
+      ],
+      "max_block_size": 20,
+      "diffusion_steps": 20,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCompare Python, C++, Java, Rust, Go, and JavaScript in six separate sections, giving three sentences to each language.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 6,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 104,
+          "end_exclusive": 166,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 1,
+          "start": 166,
+          "end_exclusive": 228,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 2,
+          "start": 228,
+          "end_exclusive": 290,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 3,
+          "start": 290,
+          "end_exclusive": 352,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 4,
+          "start": 352,
+          "end_exclusive": 414,
+          "predicted_content_length": 60
+        },
+        {
+          "chunk_id": 5,
+          "start": 414,
+          "end_exclusive": 486,
+          "predicted_content_length": 70
+        }
+      ],
+      "max_block_size": 70,
+      "diffusion_steps": 70,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCompare Python, C++, Java, Rust, Go, and JavaScript in six separate sections, giving three sentences to each language.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic><async>Sure, here are the comparisons for the given six sections:[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>python 6</topic><promise>-<topic>c++ 6</topic><promise>-<topic>java 6</topic><promise>-<topic>rust 6</topic><promise>-<topic>go 6</topic><promise>-<topic>javascript 7</topic>"
+    },
+    {
+      "stage_id": 2,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 493,
+          "end_exclusive": 525,
+          "predicted_content_length": 30
+        }
+      ],
+      "max_block_size": 30,
+      "diffusion_steps": 30,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nCompare Python, C++, Java, Rust, Go, and JavaScript in six separate sections, giving three sentences to each language.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 2</topic><async>Sure, here are the comparisons for the given six sections:[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>python 6</topic><promise>-<topic>c++ 6</topic><promise>-<topic>java 6</topic><promise>-<topic>rust 6</topic><promise>-<topic>go 6</topic><promise>-<topic>javascript 7</topic><async>1. Python: Python is a versatile, high-level programming language known for its simplicity and readability. It is widely used in data science, artificial intelligence, and web development. Python has a strong community and a vast library of packages and tools, making it a go-to choice for many developers.[PAD]</async><async>2. C++: C++ is a widely used, low-level language known for its performance and control over system resources. It is widely used in game development, system development, and embedded systems. C++ has a strong standard library and is easily usable with other languages.[PAD][PAD][PAD][PAD][PAD]</async><async>3. Java: Java is a popular, versatile, and widely used programming language. It is known for its robustness, portability, and ease of use. Java is widely used in enterprise applications, large-scale systems, and Android app development.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><async>4. Rust: Rust is a modern, fast, and safe programming language with a focus on safety and performance. It is widely used in the tech industry, particularly for building scalable and reliable systems. Rust offers excellent support for concurrent programming and has a strong community and ecosystem.[PAD][PAD][PAD][PAD][PAD]</async><async>5. JavaScript: JavaScript is a popular, versatile language used for front-end and back-end development. It is widely used in web development and has a robust community and ecosystem. JavaScript's focus is on accessibility and accessibility, making it a great choice for beginners and experts alike.[PAD][PAD][PAD][PAD][PAD]</async><async>6. JavaScript: JavaScript is a popular, versatile, and widely used language for front-end and back-end development. It is a part of the Web development stack and has gained traction in the financial and healthcare sectors. JavaScript's focus on ease of use and accessibility makes it a great choice for beginners and professionals looking to learn a new language.[PAD][PAD]</async><sync/><promise>-<topic>conclusion 3</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 4,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 4,
+        "diffusion_steps": 20,
+        "prefix_length": 50,
+        "schedule_seconds": 0.0005608049686998129,
+        "broadcast_seconds": 0.4347691179718822,
+        "stage_seconds": 1.2199214620050043,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              20
+            ],
+            "predicted_load": 20.0,
+            "compute_seconds": 0.7489736080169678,
+            "idle_seconds": 0.4709478539880365
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.226078115403652e-05,
+            "idle_seconds": 1.2198892012238503
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.244192339479923e-05,
+            "idle_seconds": 1.2198890200816095
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.140885382890701e-05,
+            "idle_seconds": 1.2198900531511754
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "round_robin",
+        "world_size": 4,
+        "diffusion_steps": 70,
+        "prefix_length": 104,
+        "schedule_seconds": 5.939300172030926e-05,
+        "broadcast_seconds": 0.0016157070640474558,
+        "stage_seconds": 4.259827903006226,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              4
+            ],
+            "chunk_lengths": [
+              60,
+              60
+            ],
+            "predicted_load": 120.0,
+            "compute_seconds": 3.3315983859356493,
+            "idle_seconds": 0.9282295170705765
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1,
+              5
+            ],
+            "chunk_lengths": [
+              60,
+              70
+            ],
+            "predicted_load": 130.0,
+            "compute_seconds": 4.234056900022551,
+            "idle_seconds": 0.025771002983674407
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [
+              2
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 3.5757806280162185,
+            "idle_seconds": 0.6840472749900073
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [
+              3
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 3.182179640047252,
+            "idle_seconds": 1.0776482629589736
+          }
+        ]
+      },
+      {
+        "stage_id": 2,
+        "policy": "round_robin",
+        "world_size": 4,
+        "diffusion_steps": 30,
+        "prefix_length": 493,
+        "schedule_seconds": 4.2350031435489655e-05,
+        "broadcast_seconds": 0.0014847498387098312,
+        "stage_seconds": 3.935010901885107,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              30
+            ],
+            "predicted_load": 30.0,
+            "compute_seconds": 3.932239028858021,
+            "idle_seconds": 0.002771873027086258
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.1911924704909325e-05,
+            "idle_seconds": 3.9349889899604023
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.415594644844532e-05,
+            "idle_seconds": 3.9349867459386587
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 2.5649089366197586e-05,
+            "idle_seconds": 3.934985252795741
+          }
+        ]
+      }
+    ]
+  }
+}

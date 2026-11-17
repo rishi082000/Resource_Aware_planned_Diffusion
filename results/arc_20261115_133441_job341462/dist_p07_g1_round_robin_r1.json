@@ -1,0 +1,77 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain processes, threads, scheduling, virtual memory, file systems, synchronization, networking, and security as eight independent operating-system topics, using exactly two sentences per topic.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 53,
+  "tokens_generated": 94,
+  "latency_seconds": 2.6571996700949967,
+  "tokens_per_second": 35.37558771284938,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 15818416128,
+  "peak_memory_allocated_gib": 14.732048034667969,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 2,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 63,
+          "end_exclusive": 105,
+          "predicted_content_length": 40
+        },
+        {
+          "chunk_id": 1,
+          "start": 105,
+          "end_exclusive": 147,
+          "predicted_content_length": 40
+        }
+      ],
+      "max_block_size": 40,
+      "diffusion_steps": 40,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain processes, threads, scheduling, virtual memory, file systems, synchronization, networking, and security as eight independent operating-system topics, using exactly two sentences per topic.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>intro 4</topic><promise>-<topic>summary 4</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 1,
+    "scheduler": "round_robin",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "round_robin",
+        "world_size": 1,
+        "diffusion_steps": 40,
+        "prefix_length": 63,
+        "schedule_seconds": 0.0005930771585553885,
+        "broadcast_seconds": 0.10250034579075873,
+        "stage_seconds": 2.087205340154469,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0,
+              1
+            ],
+            "chunk_lengths": [
+              40,
+              40
+            ],
+            "predicted_load": 80.0,
+            "compute_seconds": 1.9807568190153688,
+            "idle_seconds": 0.1064485211391002
+          }
+        ]
+      }
+    ]
+  }
+}

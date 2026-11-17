@@ -1,0 +1,203 @@
+{
+  "model_path": "dmisrael/planned-diffusion-dream7b-sft-16ep",
+  "prompt": "Explain solar, wind, hydroelectric, geothermal, biomass, and tidal energy in separate sections of approximately equal length.",
+  "device": "cuda:0",
+  "dtype": "torch.float16",
+  "random_seed": 42,
+  "max_length": 512,
+  "steps_ratio": 1.0,
+  "length_scale": null,
+  "use_cache": false,
+  "disable_block_sparsity": false,
+  "input_tokens": 44,
+  "tokens_generated": 468,
+  "latency_seconds": 18.392406412865967,
+  "tokens_per_second": 25.445283748874854,
+  "memory_before_bytes": 15276337152,
+  "peak_memory_allocated_bytes": 16105030656,
+  "peak_memory_allocated_gib": 14.998978614807129,
+  "stages": [
+    {
+      "stage_id": 0,
+      "num_promises": 1,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 50,
+          "end_exclusive": 112,
+          "predicted_content_length": 60
+        }
+      ],
+      "max_block_size": 60,
+      "diffusion_steps": 60,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain solar, wind, hydroelectric, geothermal, biomass, and tidal energy in separate sections of approximately equal length.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 6</topic>"
+    },
+    {
+      "stage_id": 1,
+      "num_promises": 6,
+      "blocks": [
+        {
+          "chunk_id": 0,
+          "start": 159,
+          "end_exclusive": 281,
+          "predicted_content_length": 120
+        },
+        {
+          "chunk_id": 1,
+          "start": 281,
+          "end_exclusive": 393,
+          "predicted_content_length": 110
+        },
+        {
+          "chunk_id": 2,
+          "start": 393,
+          "end_exclusive": 505,
+          "predicted_content_length": 110
+        },
+        {
+          "chunk_id": 3,
+          "start": 505,
+          "end_exclusive": 607,
+          "predicted_content_length": 100
+        },
+        {
+          "chunk_id": 4,
+          "start": 607,
+          "end_exclusive": 719,
+          "predicted_content_length": 110
+        },
+        {
+          "chunk_id": 5,
+          "start": 719,
+          "end_exclusive": 821,
+          "predicted_content_length": 100
+        }
+      ],
+      "max_block_size": 120,
+      "diffusion_steps": 120,
+      "steps_ratio": 1.0,
+      "planning_text": "<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nExplain solar, wind, hydroelectric, geothermal, biomass, and tidal energy in separate sections of approximately equal length.<|im_end|>\n<|im_start|>assistant\n<promise>-<topic>introduction 6</topic><async>In this section, we will explore the various renewable energy sources that are being increasingly utilized to address the growing demand for clean energy. Each of these energy sources has its unique characteristics, advantages, and applications, making them essential components of a sustainable energy future.[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD]</async><sync/><promise>-<topic>solar energy 12</topic><promise>-<topic>wind energy 11</topic><promise>-<topic>hydroelectric energy 11</topic><promise>-<topic>geothermal energy 10</topic><promise>-<topic>bioenergy 11</topic><promise>-<topic>tidal energy 10</topic>"
+    }
+  ],
+  "run_isolated_oracle": false,
+  "distributed": {
+    "world_size": 4,
+    "scheduler": "lpt",
+    "verify": false,
+    "stages": [
+      {
+        "stage_id": 0,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 60,
+        "prefix_length": 50,
+        "schedule_seconds": 0.0006151781417429447,
+        "broadcast_seconds": 0.5725287368986756,
+        "stage_seconds": 2.8473868041764945,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              60
+            ],
+            "predicted_load": 60.0,
+            "compute_seconds": 2.2082465349230915,
+            "idle_seconds": 0.639140269253403
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.094901330769062e-05,
+            "idle_seconds": 2.847355855163187
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.6569079384207726e-05,
+            "idle_seconds": 2.8473502350971103
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [],
+            "chunk_lengths": [],
+            "predicted_load": 0.0,
+            "compute_seconds": 3.3043092116713524e-05,
+            "idle_seconds": 2.8473537610843778
+          }
+        ]
+      },
+      {
+        "stage_id": 1,
+        "policy": "lpt",
+        "world_size": 4,
+        "diffusion_steps": 120,
+        "prefix_length": 159,
+        "schedule_seconds": 6.269896402955055e-05,
+        "broadcast_seconds": 0.0023421680089086294,
+        "stage_seconds": 12.910898624919355,
+        "workers": [
+          {
+            "rank": 0,
+            "chunk_ids": [
+              0
+            ],
+            "chunk_lengths": [
+              120
+            ],
+            "predicted_load": 120.0,
+            "compute_seconds": 9.542986227897927,
+            "idle_seconds": 3.3679123970214278
+          },
+          {
+            "rank": 1,
+            "chunk_ids": [
+              1,
+              3
+            ],
+            "chunk_lengths": [
+              110,
+              100
+            ],
+            "predicted_load": 210.0,
+            "compute_seconds": 11.278488798066974,
+            "idle_seconds": 1.6324098268523812
+          },
+          {
+            "rank": 2,
+            "chunk_ids": [
+              2,
+              5
+            ],
+            "chunk_lengths": [
+              110,
+              100
+            ],
+            "predicted_load": 210.0,
+            "compute_seconds": 12.873610242037103,
+            "idle_seconds": 0.037288382882252336
+          },
+          {
+            "rank": 3,
+            "chunk_ids": [
+              4
+            ],
+            "chunk_lengths": [
+              110
+            ],
+            "predicted_load": 110.0,
+            "compute_seconds": 8.824699005112052,
+            "idle_seconds": 4.086199619807303
+          }
+        ]
+      }
+    ]
+  }
+}
