@@ -42,7 +42,8 @@ def main():
     parser.add_argument("--run_isolated_oracle", action="store_true", help="Run the isolated oracle generation algorithm.")
     parser.add_argument("--metrics_json", type=str,default=None, help="Optional path for structured JSON metrics.")
     parser.add_argument("--distributed", action="store_true", help="Spread each stage's chunks across GPUs; launch with torchrun.")
-    parser.add_argument("--scheduler", type=str, default="lpt", choices=["lpt", "round_robin"], help="Chunk placement policy for --distributed.")
+    parser.add_argument("--scheduler", type=str, default="lpt", choices=["lpt", "round_robin", "dynamic"], help="Chunk placement policy for --distributed; dynamic lets free GPUs claim the next chunk.")
+    parser.add_argument("--max_active_chunks", type=int, default=2, help="With --scheduler dynamic: chunks a GPU diffuses at once (1 = strictly one at a time).")
     parser.add_argument("--verify_distributed", action="store_true", help="Also run each stage combined on rank 0 and count token mismatches (use --temperature 0; slows the run).")
     args = parser.parse_args()
 
@@ -51,6 +52,12 @@ def main():
 
     if args.distributed and args.disable_block_sparsity:
         parser.error("--distributed needs block sparsity: dense blocks are not independent")
+
+    if args.scheduler == "dynamic" and args.confidence_threshold is not None:
+        parser.error("--scheduler dynamic does not support --confidence_threshold yet")
+
+    if args.max_active_chunks < 1:
+        parser.error("--max_active_chunks must be at least 1")
     
     # set random seed
     torch.manual_seed(args.random_seed)
@@ -123,7 +130,13 @@ def main():
     #     return x
 
     stage_executor = (
-        DistributedStageExecutor(model, device, policy=args.scheduler, verify=args.verify_distributed)
+        DistributedStageExecutor(
+            model,
+            device,
+            policy=args.scheduler,
+            verify=args.verify_distributed,
+            max_active_chunks=args.max_active_chunks,
+        )
         if args.distributed
         else None
     )
@@ -214,6 +227,7 @@ def main():
         metrics["distributed"] = {
             "world_size": stage_executor.world_size,
             "scheduler": args.scheduler,
+            "max_active_chunks": args.max_active_chunks if args.scheduler == "dynamic" else None,
             "verify": args.verify_distributed,
             "stages": stage_executor.stage_records,
         }

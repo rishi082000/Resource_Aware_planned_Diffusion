@@ -8,6 +8,7 @@ using semantic_parallel::scheduler::TaskSpec;
 using semantic_parallel::scheduler::WorkerAssignment;
 using semantic_parallel::scheduler::schedule_round_robin;
 using semantic_parallel::scheduler::schedule_lpt;
+using semantic_parallel::scheduler::dynamic_claim_order;
 
 PYBIND11_MODULE(_scheduler_native, module){
     module.doc() = "Native scheduling policies for semantic parallelism";
@@ -41,6 +42,12 @@ PYBIND11_MODULE(_scheduler_native, module){
         &schedule_lpt,
         py::arg("tasks"),
         py::arg("worker_count")
+    );
+
+    module.def(
+        "dynamic_claim_order",
+        &dynamic_claim_order,
+        py::arg("tasks")
     );
 }
 

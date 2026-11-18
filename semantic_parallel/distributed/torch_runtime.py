@@ -2,13 +2,16 @@
 from __future__ import annotations
 
 import dataclasses
+import json
+import time
 import traceback
+import uuid
 from time import perf_counter
 
 import torch
 import torch.distributed as dist
 
-from semantic_parallel.scheduler import schedule_lpt, schedule_round_robin
+from semantic_parallel.scheduler import dynamic_claim_order, schedule_lpt, schedule_round_robin
 from semantic_parallel.stage import PlannedStage
 
 from .runtime import TaskExecution, reconstruct_outputs, validate_static_assignments
@@ -17,6 +20,10 @@ SCHEDULER_POLICIES = {
     "lpt": schedule_lpt,
     "round_robin": schedule_round_robin,
 }
+
+# Workers claim free chunks from a shared queue instead of receiving a fixed assignment
+DYNAMIC_POLICY = "dynamic"
+DYNAMIC_ALGS = ("pd_entropy", "pd_maskgit_plus", "pd_topk_margin")
 
 _STAGE = "stage"
 _STOP = "stop"
@@ -75,12 +82,95 @@ def _run_assigned_chunks(model, stage, chunk_ids, generation_config, threshold, 
         }
 
 
+def _default_store():
+    # torchrun's rendezvous key-value store: shared by all ranks, with atomic add, set and blocking get
+    return dist.distributed_c10d._get_default_store()
+
+
+def _run_claimed_chunks(model, stage, order, key_prefix, max_active_chunks, generation_config):
+    """Every rank, rank 0 included: claim free chunks from the shared queue and publish each result under its tag."""
+    store = _default_store()
+    rank = dist.get_rank()
+    claimed_at = {}
+    published = set()
+
+    def claim_next_chunk():
+        # store.add is atomic across ranks, so every queue position goes to exactly one rank
+        position = store.add(f"{key_prefix}/next", 1) - 1
+        if position >= len(order):
+            return None
+
+        chunk_id = order[position]
+        claimed_at[chunk_id] = time.time()
+        return chunk_id
+
+    def publish(chunk_id, tokens, error=None):
+        store.set(f"{key_prefix}/chunk{chunk_id}", json.dumps({
+            "stage_id": stage.stage_id,
+            "chunk_id": chunk_id,
+            "rank": rank,
+            "tokens": tokens,
+            "claimed_at": claimed_at.get(chunk_id),
+            "finished_at": time.time(),
+            "error": error,
+        }))
+        published.add(chunk_id)
+
+    try:
+        with torch.no_grad():
+            model._diff_sample_dynamic(
+                stage,
+                claim_next_chunk,
+                lambda chunk_id, tokens: publish(chunk_id, tokens[0].tolist()),
+                generation_config,
+                max_active_chunks,
+            )
+    except Exception:
+        # Report the failure under every tag this rank claimed but did not finish, so rank 0 never waits forever
+        error = traceback.format_exc()
+        for chunk_id in claimed_at:
+            if chunk_id not in published:
+                publish(chunk_id, None, error)
+
+
+def _collect_tagged_results(stage, key_prefix):
+    """Rank 0: wait for every chunk's tagged result, check the tag, and fail loudly on worker errors."""
+    store = _default_store()
+    results = {}
+
+    for task in stage.tasks:
+        # Blocks until the rank that claimed this chunk publishes it
+        result = json.loads(store.get(f"{key_prefix}/chunk{task.chunk_id}"))
+
+        if result["error"] is not None:
+            raise RuntimeError(f"chunk {task.chunk_id} failed on rank {result['rank']}:\n{result['error']}")
+
+        if (result["stage_id"], result["chunk_id"]) != (stage.stage_id, task.chunk_id):
+            raise ValueError(
+                f"tag mismatch: expected stage {stage.stage_id} chunk {task.chunk_id}, "
+                f"got stage {result['stage_id']} chunk {result['chunk_id']}"
+            )
+
+        if len(result["tokens"]) != task.end_exclusive - task.start:
+            raise ValueError(
+                f"chunk {task.chunk_id} returned {len(result['tokens'])} tokens, "
+                f"expected {task.end_exclusive - task.start}"
+            )
+
+        results[task.chunk_id] = result
+
+    return results
+
+
 class DistributedStageExecutor:
     """Rank 0 side. planned_diffusion_generate calls it once per stage instead of the combined _diff_sample."""
 
-    def __init__(self, model, device, policy: str = "lpt", verify: bool = False):
-        if policy not in SCHEDULER_POLICIES:
+    def __init__(self, model, device, policy: str = "lpt", verify: bool = False, max_active_chunks: int = 2):
+        if policy not in SCHEDULER_POLICIES and policy != DYNAMIC_POLICY:
             raise ValueError(f"unknown scheduler policy: {policy}")
+
+        if max_active_chunks < 1:
+            raise ValueError("max_active_chunks must be at least 1")
 
         if dist.get_rank() != 0:
             raise RuntimeError("DistributedStageExecutor must run on rank 0; other ranks call serve_stages")
@@ -90,9 +180,15 @@ class DistributedStageExecutor:
         self.policy = policy
         self.verify = verify
         self.world_size = dist.get_world_size()
+        self.max_active_chunks = max_active_chunks
+        # Keeps this run's queue and result keys apart from any other run sharing the store
+        self.run_id = uuid.uuid4().hex[:12]
         self.stage_records = []
 
     def __call__(self, stage: PlannedStage, generation_config, threshold=None):
+        if self.policy == DYNAMIC_POLICY:
+            return self._run_dynamic_stage(stage, generation_config, threshold)
+
         stage_start = perf_counter()
 
         assignments = SCHEDULER_POLICIES[self.policy](stage.tasks, self.world_size)
@@ -171,6 +267,95 @@ class DistributedStageExecutor:
             ],
         }
 
+        return self._finish_stage(record, stage, sequence, generation_config, threshold)
+
+    def _run_dynamic_stage(self, stage: PlannedStage, generation_config, threshold):
+        # Checked here, before any rank starts claiming, so an unsupported algorithm cannot leave rank 0 waiting
+        if generation_config.alg not in DYNAMIC_ALGS:
+            raise ValueError(f"the dynamic scheduler does not support alg={generation_config.alg}")
+
+        stage_start = perf_counter()
+        wall_start = time.time()
+
+        order = dynamic_claim_order(stage.tasks)
+        key_prefix = f"pd/{self.run_id}/stage{stage.stage_id}"
+        schedule_seconds = perf_counter() - stage_start
+
+        request = {
+            "command": _STAGE,
+            "mode": DYNAMIC_POLICY,
+            "stage": _stage_to(stage, "cpu"),
+            "order": order,
+            "key_prefix": key_prefix,
+            "max_active_chunks": self.max_active_chunks,
+            "generation_config": generation_config,
+        }
+        dist.broadcast_object_list([request], src=0)
+        _synchronize(self.device)
+        broadcast_seconds = perf_counter() - stage_start - schedule_seconds
+
+        _run_claimed_chunks(self.model, stage, order, key_prefix, self.max_active_chunks, generation_config)
+
+        results = _collect_tagged_results(stage, key_prefix)
+        stage_seconds = perf_counter() - stage_start
+
+        tasks_by_id = {task.chunk_id: task for task in stage.tasks}
+        sequence = stage.full_sequence.clone()
+        for chunk_id, result in results.items():
+            task = tasks_by_id[chunk_id]
+            sequence[:, task.start:task.end_exclusive] = torch.tensor(
+                result["tokens"], dtype=sequence.dtype, device=sequence.device
+            )
+
+        chunk_ids_by_rank = {rank: [] for rank in range(self.world_size)}
+        for chunk_id in sorted(results, key=lambda chunk_id: results[chunk_id]["claimed_at"]):
+            chunk_ids_by_rank[results[chunk_id]["rank"]].append(chunk_id)
+
+        workers = []
+        for rank, chunk_ids in chunk_ids_by_rank.items():
+            # A rank is busy from its first claim until its last chunk finishes
+            busy_seconds = (
+                max(results[chunk_id]["finished_at"] for chunk_id in chunk_ids)
+                - min(results[chunk_id]["claimed_at"] for chunk_id in chunk_ids)
+                if chunk_ids
+                else 0.0
+            )
+            workers.append({
+                "rank": rank,
+                "chunk_ids": chunk_ids,
+                "chunk_lengths": [tasks_by_id[chunk_id].content_length for chunk_id in chunk_ids],
+                "compute_seconds": busy_seconds,
+                "idle_seconds": max(0.0, stage_seconds - busy_seconds),
+            })
+
+        record = {
+            "stage_id": stage.stage_id,
+            "policy": self.policy,
+            "world_size": self.world_size,
+            "diffusion_steps": stage.diffusion_steps,
+            "prefix_length": stage.prefix.shape[1],
+            "schedule_seconds": schedule_seconds,
+            "broadcast_seconds": broadcast_seconds,
+            "stage_seconds": stage_seconds,
+            "max_active_chunks": self.max_active_chunks,
+            "claim_order": order,
+            "workers": workers,
+            # Per-chunk timeline relative to the stage start, e.g. for a Gantt chart
+            "chunks": [
+                {
+                    "chunk_id": chunk_id,
+                    "rank": results[chunk_id]["rank"],
+                    "content_length": tasks_by_id[chunk_id].content_length,
+                    "claimed_seconds": results[chunk_id]["claimed_at"] - wall_start,
+                    "finished_seconds": results[chunk_id]["finished_at"] - wall_start,
+                }
+                for chunk_id in order
+            ],
+        }
+
+        return self._finish_stage(record, stage, sequence, generation_config, threshold)
+
+    def _finish_stage(self, record, stage, sequence, generation_config, threshold):
         if self.verify:
             record["verify_mismatch_count"] = self._count_mismatches_against_combined(
                 stage, sequence, generation_config, threshold
@@ -207,7 +392,7 @@ class DistributedStageExecutor:
 
 
 def serve_stages(model, device):
-    """Ranks 1..N-1: run the chunks rank 0 assigns, stage after stage, until rank 0 sends stop."""
+    """Ranks 1..N-1: run the chunks rank 0 assigns (or claim them, under the dynamic policy) until rank 0 sends stop."""
     rank = dist.get_rank()
 
     while True:
@@ -217,6 +402,17 @@ def serve_stages(model, device):
 
         if request["command"] == _STOP:
             return
+
+        if request.get("mode") == DYNAMIC_POLICY:
+            _run_claimed_chunks(
+                model,
+                _stage_to(request["stage"], device),
+                request["order"],
+                request["key_prefix"],
+                request["max_active_chunks"],
+                request["generation_config"],
+            )
+            continue
 
         result = _run_assigned_chunks(
             model,

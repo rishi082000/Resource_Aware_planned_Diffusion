@@ -12,11 +12,7 @@ class WorkerAssignment:
     chunk_ids: tuple[int, ...]
     estimated_load: float
 
-def _schedule(
-    tasks: Sequence[ChunkTask],
-    worker_count: int,
-    policy_name: str,
-):
+def _native_module():
     try:
         from . import _scheduler_native
     except ImportError as error:
@@ -24,16 +20,26 @@ def _schedule(
             "The native scheduler extension has not been built."
         ) from error
 
-    native_tasks = [
-        _scheduler_native.TaskSpec(
+    return _scheduler_native
+
+def _native_tasks(native_module, tasks: Sequence[ChunkTask]):
+    return [
+        native_module.TaskSpec(
             chunk_id=task.chunk_id,
             estimated_cost=float(task.content_length)
         )
         for task in tasks
     ]
 
-    native_policy = getattr(_scheduler_native, policy_name)
-    native_assignments = native_policy(native_tasks, worker_count)
+def _schedule(
+    tasks: Sequence[ChunkTask],
+    worker_count: int,
+    policy_name: str,
+):
+    native_module = _native_module()
+
+    native_policy = getattr(native_module, policy_name)
+    native_assignments = native_policy(_native_tasks(native_module, tasks), worker_count)
 
     return [
         WorkerAssignment(
@@ -55,3 +61,9 @@ def schedule_lpt(
         worker_count:int
 ):
     return _schedule(tasks, worker_count, "schedule_lpt")
+
+def dynamic_claim_order(
+        tasks: Sequence[ChunkTask]
+):
+    native_module = _native_module()
+    return list(native_module.dynamic_claim_order(_native_tasks(native_module, tasks)))
