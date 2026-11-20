@@ -25,4 +25,9 @@ namespace semantic_parallel::scheduler {
         const std::vector<TaskSpec>& tasks,
         std::int64_t worker_count
     );
+
+    // Order in which workers claim chunks from the shared queue: largest estimated cost first
+    std::vector<std::int64_t> dynamic_claim_order(
+        const std::vector<TaskSpec>& tasks
+    );
 }

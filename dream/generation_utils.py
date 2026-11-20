@@ -1089,12 +1089,99 @@ class DreamGenerationMixin:
             for task, (local_start, local_end, _) in zip(tasks, block_info)
         }
 
+    def _diff_sample_dynamic(
+            self,
+            stage: PlannedStage,
+            claim_next_chunk: Callable[[], Optional[int]],
+            on_chunk_done: Callable[[int, torch.Tensor], None],
+            generation_config: DreamGenerationConfig,
+            max_active_chunks: int
+    ):
+        """Diffuses chunks claimed one by one from a shared queue, up to max_active_chunks at a time.
+
+        Each chunk keeps its own step counter, so it follows the same unmasking schedule as in the
+        combined stage whenever it joins. A finished chunk is handed to on_chunk_done and frees a slot.
+        """
+        alg = generation_config.alg
+        if alg not in ("pd_entropy", "pd_maskgit_plus", "pd_topk_margin"):
+            raise ValueError(f"dynamic chunk scheduling does not support alg={alg}")
+
+        if max_active_chunks < 1:
+            raise ValueError("max_active_chunks must be at least 1")
+
+        mask_token_id = generation_config.mask_token_id
+        steps = stage.diffusion_steps
+        timesteps = torch.linspace(1, generation_config.eps, steps + 1, device=stage.full_sequence.device)
+        tasks_by_id = {task.chunk_id: task for task in stage.tasks}
+
+        sequence = stage.full_sequence.clone()
+        steps_taken = {}
+        queue_open = True
+
+        def claim(slots):
+            nonlocal queue_open
+            while queue_open and len(steps_taken) < slots:
+                chunk_id = claim_next_chunk()
+                if chunk_id is None:
+                    queue_open = False
+                    break
+
+                task = tasks_by_id[chunk_id]
+                if (sequence[:, task.start:task.end_exclusive] == mask_token_id).any():
+                    steps_taken[chunk_id] = 0
+                else:
+                    on_chunk_done(chunk_id, sequence[:, task.start:task.end_exclusive].clone())
+
+        # Start with one chunk so every rank gets a first chunk before anyone fills extra slots
+        claim(1)
+
+        while steps_taken:
+            active = sorted((tasks_by_id[chunk_id] for chunk_id in steps_taken), key=lambda task: task.start)
+            input_ids, attention_mask, position_ids, block_info = build_chunk_subset_inputs(stage, active, sequence)
+
+            logits = self(
+                input_ids=input_ids,
+                attention_mask=invert_and_expand_attention_mask(attention_mask, self.dtype),
+                position_ids=position_ids
+            ).logits
+            logits = torch.cat([logits[:, :1], logits[:, :-1]], dim=1) # Shift logits, as in _diff_sample
+
+            for task, (local_start, local_end, content_length) in zip(active, block_info):
+                i = steps_taken[task.chunk_id]
+                chunk_tokens = input_ids[:, local_start:local_end].clone()
+                chunk_logits = logits[:, local_start:local_end]
+                mask_index = chunk_tokens == mask_token_id
+
+                confidence, x0 = sample_tokens(
+                    chunk_logits[mask_index],
+                    temperature=generation_config.temperature,
+                    top_p=generation_config.top_p,
+                    top_k=generation_config.top_k,
+                    margin_confidence=alg == "pd_topk_margin",
+                    neg_entropy=alg == "pd_entropy"
+                )
+                chunk_tokens = block_unmask(
+                    chunk_logits, mask_index, chunk_tokens, [(0, local_end - local_start, content_length)],
+                    confidence, x0, timesteps[i], timesteps[i + 1], steps, i, generation_config.alg_temp
+                )
+
+                sequence[:, task.start:task.end_exclusive] = chunk_tokens
+                steps_taken[task.chunk_id] = i + 1
+
+                if not (chunk_tokens == mask_token_id).any():
+                    del steps_taken[task.chunk_id]
+                    on_chunk_done(task.chunk_id, chunk_tokens)
+
+            claim(max_active_chunks)
+
 def build_isolated_chunk_inputs(stage: PlannedStage, task: ChunkTask):
     return build_chunk_subset_inputs(stage, [task])
 
-def build_chunk_subset_inputs(stage: PlannedStage, tasks: List[ChunkTask]):
+def build_chunk_subset_inputs(stage: PlannedStage, tasks: List[ChunkTask], sequence: Optional[torch.Tensor] = None):
+    # sequence: the stage's tokens as they currently stand; defaults to the stage's initial (masked) tokens
+    sequence = stage.full_sequence if sequence is None else sequence
     prefix_length = stage.prefix.shape[1]
-    device = stage.full_sequence.device
+    device = sequence.device
 
     index_parts = [
         torch.arange(
@@ -1126,7 +1213,7 @@ def build_chunk_subset_inputs(stage: PlannedStage, tasks: List[ChunkTask]):
 
     selected_indices = torch.cat(index_parts)
 
-    input_ids = stage.full_sequence.index_select(1, selected_indices)
+    input_ids = sequence.index_select(1, selected_indices)
 
     position_ids = selected_indices.unsqueeze(0).expand(
         input_ids.shape[0],

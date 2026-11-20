@@ -35,7 +35,9 @@ fi
 export MODEL_PATH="${MODEL_PATH:-dmisrael/planned-diffusion-dream7b-sft-16ep}"
 export PROMPTS_FILE="${PROMPTS_FILE:-scripts/arc_prompts.txt}"
 export GPU_COUNTS="${GPU_COUNTS:-1 2 4}"            # GPU counts for the multi-GPU runs; larger than the node has are skipped
-export SCHEDULERS="${SCHEDULERS:-lpt round_robin}"
+export SCHEDULERS="${SCHEDULERS:-lpt round_robin}"      # add "dynamic" for the work-queue scheduler
+export VERIFY_SCHEDULERS="${VERIFY_SCHEDULERS:-lpt}"     # schedulers that get the correctness check, e.g. "lpt dynamic"
+export MAX_ACTIVE_CHUNKS="${MAX_ACTIVE_CHUNKS:-2}"       # dynamic scheduler: chunks a GPU diffuses at once
 export VERIFY_PROMPT_IDS="${VERIFY_PROMPT_IDS:-p01 p04 p08 p12 p15}"  # one representative from each workload class
 export REPEATS="${REPEATS:-1}"
 export MAX_LENGTH="${MAX_LENGTH:-512}"
@@ -64,13 +66,16 @@ if (( AVAILABLE_GPUS < 1 )); then
     exit 1
 fi
 
-if ! python -c "import semantic_parallel.scheduler._scheduler_native" 2>/dev/null; then
-    echo "Building the C++ scheduler extension..."
-    python -c "import pybind11" 2>/dev/null || python -m pip install "pybind11>=3.0" || exit 1
-    if ! python setup.py build_ext --inplace > "$LOG_DIR/build_ext.log" 2>&1; then
-        echo "error: building the extension failed; see $LOG_DIR/build_ext.log" >&2
-        exit 1
-    fi
+# Always run the build: it recompiles only when the C++ sources changed, so a stale extension is never used
+echo "Building the C++ scheduler extension (skipped if up to date)..."
+python -c "import pybind11" 2>/dev/null || python -m pip install "pybind11>=3.0" || exit 1
+if ! python setup.py build_ext --inplace > "$LOG_DIR/build_ext.log" 2>&1; then
+    echo "error: building the extension failed; see $LOG_DIR/build_ext.log" >&2
+    exit 1
+fi
+if ! python -c "from semantic_parallel.scheduler._scheduler_native import dynamic_claim_order" 2>/dev/null; then
+    echo "error: the C++ scheduler extension is missing dynamic_claim_order; rebuild with: python setup.py build_ext --inplace --force" >&2
+    exit 1
 fi
 
 PROMPT_IDS=()
@@ -156,7 +161,7 @@ info = {
     "gpus": [torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())],
     "settings": {
         key: os.environ.get(key)
-        for key in ["MODEL_PATH", "GPU_COUNTS", "SCHEDULERS", "VERIFY_PROMPT_IDS", "REPEATS", "MAX_LENGTH", "USE_FP16", "RUN_TIMEOUT"]
+        for key in ["MODEL_PATH", "GPU_COUNTS", "SCHEDULERS", "VERIFY_PROMPT_IDS", "VERIFY_SCHEDULERS", "MAX_ACTIVE_CHUNKS", "REPEATS", "MAX_LENGTH", "USE_FP16", "RUN_TIMEOUT"]
     },
     "prompts": {prompt_id: prompt for prompt_id, _, prompt in prompt_rows},
     "prompt_workload_classes": {
@@ -200,12 +205,15 @@ echo "== 1/3 correctness: multi-GPU output vs single-GPU output ($VERIFY_PROMPT_
 EXPECTED_VERIFY_RUNS=0
 for gpus in $MULTI_GPU_COUNTS; do
     (( gpus > 1 )) || continue
-    for i in "${VERIFY_INDICES[@]}"; do
-        EXPECTED_VERIFY_RUNS=$(( EXPECTED_VERIFY_RUNS + 1 ))
-        prompt_id="${PROMPT_IDS[$i]}"
-        run "$OUT_DIR/verify_${prompt_id}_g${gpus}_lpt.json" \
-            "${MULTI_GPU[@]}" --nproc_per_node="$gpus" -m eval.pd_generate "${COMMON_ARGS[@]}" \
-            --distributed --scheduler lpt --verify_distributed --prompt "${PROMPTS[$i]}"
+    for scheduler in $VERIFY_SCHEDULERS; do
+        for i in "${VERIFY_INDICES[@]}"; do
+            EXPECTED_VERIFY_RUNS=$(( EXPECTED_VERIFY_RUNS + 1 ))
+            prompt_id="${PROMPT_IDS[$i]}"
+            run "$OUT_DIR/verify_${prompt_id}_g${gpus}_${scheduler}.json" \
+                "${MULTI_GPU[@]}" --nproc_per_node="$gpus" -m eval.pd_generate "${COMMON_ARGS[@]}" \
+                --distributed --scheduler "$scheduler" --max_active_chunks "$MAX_ACTIVE_CHUNKS" \
+                --verify_distributed --prompt "${PROMPTS[$i]}"
+        done
     done
 done
 
@@ -267,7 +275,8 @@ for (( repeat = 1; repeat <= REPEATS; repeat++ )); do
                 prompt_id="${PROMPT_IDS[$i]}"
                 run "$OUT_DIR/dist_${prompt_id}_g${gpus}_${scheduler}_r${repeat}.json" \
                     "${MULTI_GPU[@]}" --nproc_per_node="$gpus" -m eval.pd_generate "${COMMON_ARGS[@]}" \
-                    --distributed --scheduler "$scheduler" --prompt "${PROMPTS[$i]}"
+                    --distributed --scheduler "$scheduler" --max_active_chunks "$MAX_ACTIVE_CHUNKS" \
+                    --prompt "${PROMPTS[$i]}"
             done
         done
     done

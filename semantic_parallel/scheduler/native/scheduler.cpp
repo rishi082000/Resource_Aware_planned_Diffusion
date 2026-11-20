@@ -46,6 +46,23 @@ namespace semantic_parallel::scheduler {
 
             return assignments;
         }
+
+        std::vector<TaskSpec> sort_largest_first(
+            const std::vector<TaskSpec>& tasks
+        ) {
+            std::vector<TaskSpec> ordered_tasks = tasks;
+
+            std::sort(ordered_tasks.begin(), ordered_tasks.end(),
+                [](const TaskSpec& left, const TaskSpec& right){
+                    if(left.estimated_cost != right.estimated_cost){
+                        return left.estimated_cost > right.estimated_cost;
+                    }
+
+                    return left.chunk_id < right.chunk_id;
+                });
+
+            return ordered_tasks;
+        }
     }
     std::vector<WorkerAssignment> schedule_round_robin(
         const std::vector<TaskSpec>& tasks,
@@ -81,16 +98,7 @@ namespace semantic_parallel::scheduler {
     ) {
         validate_inputs(tasks, worker_count);
 
-        std::vector<TaskSpec> ordered_tasks = tasks;
-
-        std::sort(ordered_tasks.begin(), ordered_tasks.end(), 
-            [](const TaskSpec& left, const TaskSpec& right){
-                if(left.estimated_cost != right.estimated_cost){
-                    return left.estimated_cost > right.estimated_cost;
-                }
-
-                return left.chunk_id < right.chunk_id;
-            });
+        std::vector<TaskSpec> ordered_tasks = sort_largest_first(tasks);
 
         std::vector<WorkerAssignment> assignments = make_empty_assignments(worker_count);
 
@@ -112,5 +120,20 @@ namespace semantic_parallel::scheduler {
         }
 
         return assignments;
+    }
+
+    std::vector<std::int64_t> dynamic_claim_order(
+        const std::vector<TaskSpec>& tasks
+    ) {
+        validate_inputs(tasks, 1);
+
+        std::vector<std::int64_t> order;
+        order.reserve(tasks.size());
+
+        for(const TaskSpec& task : sort_largest_first(tasks)){
+            order.push_back(task.chunk_id);
+        }
+
+        return order;
     }
 }
