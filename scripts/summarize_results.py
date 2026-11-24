@@ -16,8 +16,10 @@ COLUMNS = [
     "repeat",
     "gpus",
     "scheduler",
+    "prefix_cache",
     "latency_seconds",
     "speedup_vs_baseline",
+    "speedup_vs_1gpu_same_settings",
     "gpu_seconds",
     "tokens_generated",
     "peak_memory_gib_rank0",
@@ -102,8 +104,10 @@ def summarize_run(path: Path, workload_classes):
         "repeat": repeat,
         "gpus": gpus,
         "scheduler": distributed["scheduler"] if distributed else "combined",
+        "prefix_cache": bool(distributed.get("prefix_cache")) if distributed else None,
         "latency_seconds": metrics["latency_seconds"],
         "speedup_vs_baseline": None,
+        "speedup_vs_1gpu_same_settings": None,
         "gpu_seconds": metrics["latency_seconds"] * gpus,
         "tokens_generated": metrics["tokens_generated"],
         "peak_memory_gib_rank0": metrics["peak_memory_allocated_gib"],
@@ -156,6 +160,18 @@ def main():
         if row["mode"] == "dist" and baseline_latency[row["prompt_id"]]:
             row["speedup_vs_baseline"] = statistics.mean(baseline_latency[row["prompt_id"]]) / row["latency_seconds"]
 
+    # The single-GPU baseline never caches the prefix, so it flatters --prefix_cache runs. This speedup instead
+    # compares each run with the 1-GPU --distributed run that used the same scheduler and cache setting.
+    one_gpu_latency = defaultdict(list)
+    for row in rows:
+        if row["mode"] == "dist" and row["gpus"] == 1:
+            one_gpu_latency[(row["prompt_id"], row["scheduler"], row["prefix_cache"])].append(row["latency_seconds"])
+
+    for row in rows:
+        same_settings = one_gpu_latency.get((row["prompt_id"], row["scheduler"], row["prefix_cache"]))
+        if row["mode"] == "dist" and same_settings:
+            row["speedup_vs_1gpu_same_settings"] = statistics.mean(same_settings) / row["latency_seconds"]
+
     summary_path = args.results_dir / "summary.csv"
     with summary_path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=COLUMNS)
@@ -164,35 +180,48 @@ def main():
 
     print(f"\nWrote {len(rows)} runs to {summary_path}\n")
 
+    def geo_mean(values):
+        values = [value for value in values if value]
+        return f"{statistics.geometric_mean(values):.2f}x" if values else "-"
+
     groups = defaultdict(list)
     for row in rows:
         if row["mode"] in ("baseline", "dist"):
-            groups[(row["mode"], row["gpus"], row["scheduler"])].append(row)
+            groups[(row["mode"], row["gpus"], row["scheduler"], row["prefix_cache"])].append(row)
 
-    print(f"{'config':<28}{'runs':>5}{'mean latency (s)':>18}{'speedup (geo-mean)':>20}{'mean idle':>11}")
-    for (mode, gpus, scheduler), group in sorted(groups.items(), key=lambda item: (item[0][0] != "baseline", item[0][1], item[0][2])):
-        label = "baseline, 1 GPU" if mode == "baseline" else f"{gpus} GPU, {scheduler}"
-        speedups = [row["speedup_vs_baseline"] for row in group if row["speedup_vs_baseline"]]
+    print(
+        f"{'config':<36}{'runs':>5}{'mean latency (s)':>18}{'speedup (geo-mean)':>20}"
+        f"{'vs 1-GPU same settings':>24}{'mean idle':>11}"
+    )
+    group_order = lambda item: (item[0][0] != "baseline", item[0][1], item[0][2], bool(item[0][3]))
+    for (mode, gpus, scheduler, prefix_cache), group in sorted(groups.items(), key=group_order):
+        label = (
+            "baseline, 1 GPU"
+            if mode == "baseline"
+            else f"{gpus} GPU, {scheduler}" + (", prefix cache" if prefix_cache else "")
+        )
         idles = [row["mean_idle_fraction"] for row in group if row["mean_idle_fraction"] is not None]
         print(
-            f"{label:<28}{len(group):>5}"
+            f"{label:<36}{len(group):>5}"
             f"{statistics.mean(row['latency_seconds'] for row in group):>18.2f}"
-            f"{(f'{statistics.geometric_mean(speedups):.2f}x' if speedups else '-'):>20}"
+            f"{geo_mean(row['speedup_vs_baseline'] for row in group):>20}"
+            f"{geo_mean(row['speedup_vs_1gpu_same_settings'] for row in group):>24}"
             f"{(f'{statistics.mean(idles):.0%}' if idles else '-'):>11}"
         )
 
     class_groups = defaultdict(list)
     for row in rows:
         if row["mode"] == "dist":
-            class_groups[(row["workload_class"], row["gpus"], row["scheduler"])].append(row)
+            class_groups[(row["workload_class"], row["gpus"], row["scheduler"], row["prefix_cache"])].append(row)
 
     if class_groups:
-        print(f"\n{'workload class':<24}{'GPUs':>6}{'scheduler':>14}{'runs':>7}{'speedup (geo-mean)':>20}")
-        for (workload_class, gpus, scheduler), group in sorted(class_groups.items()):
-            speedups = [row["speedup_vs_baseline"] for row in group if row["speedup_vs_baseline"]]
+        print(f"\n{'workload class':<24}{'GPUs':>6}{'scheduler':>18}{'runs':>7}{'speedup (geo-mean)':>20}{'vs 1-GPU same':>16}")
+        for (workload_class, gpus, scheduler, prefix_cache), group in sorted(class_groups.items()):
+            scheduler_label = scheduler + (" +cache" if prefix_cache else "")
             print(
-                f"{workload_class:<24}{gpus:>6}{scheduler:>14}{len(group):>7}"
-                f"{(f'{statistics.geometric_mean(speedups):.2f}x' if speedups else '-'):>20}"
+                f"{workload_class:<24}{gpus:>6}{scheduler_label:>18}{len(group):>7}"
+                f"{geo_mean(row['speedup_vs_baseline'] for row in group):>20}"
+                f"{geo_mean(row['speedup_vs_1gpu_same_settings'] for row in group):>16}"
             )
 
     verify_rows = [row for row in rows if row["mode"] == "verify"]

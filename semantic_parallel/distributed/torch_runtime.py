@@ -51,7 +51,7 @@ def _stage_to(stage: PlannedStage, device):
     )
 
 
-def _run_assigned_chunks(model, stage, chunk_ids, generation_config, threshold, device):
+def _run_assigned_chunks(model, stage, chunk_ids, generation_config, threshold, device, use_prefix_cache=False):
     # Errors are returned instead of raised so every rank still reaches the gather and nobody hangs
     try:
         _synchronize(device)
@@ -65,6 +65,7 @@ def _run_assigned_chunks(model, stage, chunk_ids, generation_config, threshold, 
                 _identity_tokens,
                 _identity_logits,
                 threshold=threshold,
+                use_prefix_cache=use_prefix_cache,
             )
 
         _synchronize(device)
@@ -87,7 +88,7 @@ def _default_store():
     return dist.distributed_c10d._get_default_store()
 
 
-def _run_claimed_chunks(model, stage, order, key_prefix, max_active_chunks, generation_config):
+def _run_claimed_chunks(model, stage, order, key_prefix, max_active_chunks, generation_config, use_prefix_cache=False):
     """Every rank, rank 0 included: claim free chunks from the shared queue and publish each result under its tag."""
     store = _default_store()
     rank = dist.get_rank()
@@ -124,6 +125,7 @@ def _run_claimed_chunks(model, stage, order, key_prefix, max_active_chunks, gene
                 lambda chunk_id, tokens: publish(chunk_id, tokens[0].tolist()),
                 generation_config,
                 max_active_chunks,
+                use_prefix_cache=use_prefix_cache,
             )
     except Exception:
         # Report the failure under every tag this rank claimed but did not finish, so rank 0 never waits forever
@@ -165,7 +167,15 @@ def _collect_tagged_results(stage, key_prefix):
 class DistributedStageExecutor:
     """Rank 0 side. planned_diffusion_generate calls it once per stage instead of the combined _diff_sample."""
 
-    def __init__(self, model, device, policy: str = "lpt", verify: bool = False, max_active_chunks: int = 2):
+    def __init__(
+        self,
+        model,
+        device,
+        policy: str = "lpt",
+        verify: bool = False,
+        max_active_chunks: int = 2,
+        prefix_cache: bool = False,
+    ):
         if policy not in SCHEDULER_POLICIES and policy != DYNAMIC_POLICY:
             raise ValueError(f"unknown scheduler policy: {policy}")
 
@@ -181,6 +191,8 @@ class DistributedStageExecutor:
         self.verify = verify
         self.world_size = dist.get_world_size()
         self.max_active_chunks = max_active_chunks
+        # Each rank runs the stage's prefix once and reuses its keys and values on every diffusion step
+        self.prefix_cache = prefix_cache
         # Keeps this run's queue and result keys apart from any other run sharing the store
         self.run_id = uuid.uuid4().hex[:12]
         self.stage_records = []
@@ -201,6 +213,7 @@ class DistributedStageExecutor:
             "chunk_ids": [assignment.chunk_ids for assignment in assignments],
             "generation_config": generation_config,
             "threshold": threshold,
+            "prefix_cache": self.prefix_cache,
         }
         dist.broadcast_object_list([request], src=0)
         _synchronize(self.device)
@@ -213,6 +226,7 @@ class DistributedStageExecutor:
             generation_config,
             threshold,
             self.device,
+            use_prefix_cache=self.prefix_cache,
         )
 
         gathered = [None] * self.world_size
@@ -251,6 +265,7 @@ class DistributedStageExecutor:
             "world_size": self.world_size,
             "diffusion_steps": stage.diffusion_steps,
             "prefix_length": stage.prefix.shape[1],
+            "prefix_cache": self.prefix_cache,
             "schedule_seconds": schedule_seconds,
             "broadcast_seconds": broadcast_seconds,
             "stage_seconds": stage_seconds,
@@ -289,12 +304,21 @@ class DistributedStageExecutor:
             "key_prefix": key_prefix,
             "max_active_chunks": self.max_active_chunks,
             "generation_config": generation_config,
+            "prefix_cache": self.prefix_cache,
         }
         dist.broadcast_object_list([request], src=0)
         _synchronize(self.device)
         broadcast_seconds = perf_counter() - stage_start - schedule_seconds
 
-        _run_claimed_chunks(self.model, stage, order, key_prefix, self.max_active_chunks, generation_config)
+        _run_claimed_chunks(
+            self.model,
+            stage,
+            order,
+            key_prefix,
+            self.max_active_chunks,
+            generation_config,
+            use_prefix_cache=self.prefix_cache,
+        )
 
         results = _collect_tagged_results(stage, key_prefix)
         stage_seconds = perf_counter() - stage_start
@@ -334,6 +358,7 @@ class DistributedStageExecutor:
             "world_size": self.world_size,
             "diffusion_steps": stage.diffusion_steps,
             "prefix_length": stage.prefix.shape[1],
+            "prefix_cache": self.prefix_cache,
             "schedule_seconds": schedule_seconds,
             "broadcast_seconds": broadcast_seconds,
             "stage_seconds": stage_seconds,
@@ -411,6 +436,7 @@ def serve_stages(model, device):
                 request["key_prefix"],
                 request["max_active_chunks"],
                 request["generation_config"],
+                use_prefix_cache=request.get("prefix_cache", False),
             )
             continue
 
@@ -421,5 +447,6 @@ def serve_stages(model, device):
             request["generation_config"],
             request["threshold"],
             device,
+            use_prefix_cache=request.get("prefix_cache", False),
         )
         dist.gather_object(result, None, dst=0)

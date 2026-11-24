@@ -794,7 +794,9 @@ class DreamGenerationMixin:
         format_inputs: bool = True,
         block_info: Optional[List[Tuple[int, int, int]]] = None,
         position_ids: Optional[torch.LongTensor] = None,
+        past_key_values: Optional[List[Tuple[torch.Tensor, torch.Tensor]]] = None,
     ) -> Union[DreamModelOutput, torch.LongTensor]:
+        # past_key_values: cached keys and values of a prefix that input_ids does not include (see _build_prefix_cache)
         # init values
         output_history = generation_config.output_history
         return_dict_in_generate = generation_config.return_dict_in_generate
@@ -893,7 +895,12 @@ class DreamGenerationMixin:
         while i < steps:
             mask_index = (x == mask_token_id)
             
-            logits = self(input_ids=x, attention_mask=attention_mask, position_ids=model_position_ids).logits
+            logits = self(
+                input_ids=x,
+                attention_mask=attention_mask,
+                position_ids=model_position_ids,
+                past_key_values=past_key_values,
+            ).logits
             logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1) # Shift logits
             
             # this allows user-defined logits control of the intermediate steps
@@ -1041,7 +1048,8 @@ class DreamGenerationMixin:
             generation_config: DreamGenerationConfig,
             generation_tokens_hook_func,
             generation_logits_hook_func,
-            threshold: Optional[float] = None
+            threshold: Optional[float] = None,
+            use_prefix_cache: bool = False
     ) -> Dict[int, torch.Tensor]:
         if not chunk_ids:
             return {}
@@ -1061,7 +1069,13 @@ class DreamGenerationMixin:
             key = lambda task : task.start
         )
 
-        input_ids, attention_mask, position_ids, block_info = build_chunk_subset_inputs(stage, tasks)
+        if use_prefix_cache:
+            # The prefix runs once here; every diffusion step then feeds only the chunk tokens
+            prefix_cache = self._build_prefix_cache(stage)
+            input_ids, attention_mask, position_ids, block_info = build_chunk_inputs_after_prefix(stage, tasks)
+        else:
+            prefix_cache = None
+            input_ids, attention_mask, position_ids, block_info = build_chunk_subset_inputs(stage, tasks)
 
         subset_generation_config = copy.deepcopy(generation_config)
         subset_generation_config.steps = stage.diffusion_steps
@@ -1075,7 +1089,8 @@ class DreamGenerationMixin:
             generation_logits_hook_func=generation_logits_hook_func,
             format_inputs=False,
             threshold=threshold,
-            block_info=block_info
+            block_info=block_info,
+            past_key_values=prefix_cache
         )
 
         sequences = (
@@ -1095,12 +1110,14 @@ class DreamGenerationMixin:
             claim_next_chunk: Callable[[], Optional[int]],
             on_chunk_done: Callable[[int, torch.Tensor], None],
             generation_config: DreamGenerationConfig,
-            max_active_chunks: int
+            max_active_chunks: int,
+            use_prefix_cache: bool = False
     ):
         """Diffuses chunks claimed one by one from a shared queue, up to max_active_chunks at a time.
 
         Each chunk keeps its own step counter, so it follows the same unmasking schedule as in the
         combined stage whenever it joins. A finished chunk is handed to on_chunk_done and frees a slot.
+        With use_prefix_cache, the prefix runs once and every chunk this rank claims in the stage reuses it.
         """
         alg = generation_config.alg
         if alg not in ("pd_entropy", "pd_maskgit_plus", "pd_topk_margin"):
@@ -1117,6 +1134,7 @@ class DreamGenerationMixin:
         sequence = stage.full_sequence.clone()
         steps_taken = {}
         queue_open = True
+        prefix_cache = None
 
         def claim(slots):
             nonlocal queue_open
@@ -1137,12 +1155,20 @@ class DreamGenerationMixin:
 
         while steps_taken:
             active = sorted((tasks_by_id[chunk_id] for chunk_id in steps_taken), key=lambda task: task.start)
-            input_ids, attention_mask, position_ids, block_info = build_chunk_subset_inputs(stage, active, sequence)
+
+            if use_prefix_cache:
+                if prefix_cache is None:
+                    # Built at the first claimed chunk, so a rank that gets no chunk never runs the prefix
+                    prefix_cache = self._build_prefix_cache(stage)
+                input_ids, attention_mask, position_ids, block_info = build_chunk_inputs_after_prefix(stage, active, sequence)
+            else:
+                input_ids, attention_mask, position_ids, block_info = build_chunk_subset_inputs(stage, active, sequence)
 
             logits = self(
                 input_ids=input_ids,
                 attention_mask=invert_and_expand_attention_mask(attention_mask, self.dtype),
-                position_ids=position_ids
+                position_ids=position_ids,
+                past_key_values=prefix_cache
             ).logits
             logits = torch.cat([logits[:, :1], logits[:, :-1]], dim=1) # Shift logits, as in _diff_sample
 
@@ -1173,6 +1199,30 @@ class DreamGenerationMixin:
                     on_chunk_done(task.chunk_id, chunk_tokens)
 
             claim(max_active_chunks)
+
+    def _build_prefix_cache(self, stage: PlannedStage) -> Optional[List[Tuple[torch.Tensor, torch.Tensor]]]:
+        """Runs the stage's prefix through the model once and returns each layer's keys and values.
+
+        Prefix tokens never attend to chunk tokens (see update_attention_mask), so these stay the same
+        for every diffusion step and every chunk of the stage. The base model is called directly, so no
+        logits are computed for the prefix. Keys are stored before RoPE; each later pass rotates them
+        using the full prefix + chunk position_ids.
+        """
+        prefix_length = stage.prefix.shape[1]
+        if prefix_length == 0:
+            return None
+
+        device = stage.full_sequence.device
+        prefix_mask = stage.attention_mask[:, :prefix_length, :prefix_length].to(device)
+
+        outputs = self.model(
+            input_ids=stage.full_sequence[:, :prefix_length],
+            attention_mask=invert_and_expand_attention_mask(prefix_mask, self.dtype),
+            position_ids=torch.arange(prefix_length, device=device).unsqueeze(0),
+            use_cache=True,
+            return_dict=True,
+        )
+        return outputs.past_key_values
 
 def build_isolated_chunk_inputs(stage: PlannedStage, task: ChunkTask):
     return build_chunk_subset_inputs(stage, [task])
@@ -1235,4 +1285,22 @@ def build_chunk_subset_inputs(stage: PlannedStage, tasks: List[ChunkTask], seque
         attention_mask,
         position_ids,
         subset_block_info
+    )
+
+def build_chunk_inputs_after_prefix(stage: PlannedStage, tasks: List[ChunkTask], sequence: Optional[torch.Tensor] = None):
+    """Inputs for a pass that reuses the prefix's cached keys and values (see _build_prefix_cache).
+
+    input_ids and the attention-mask rows cover only the chunk tokens, and block_info is relative to them.
+    position_ids still covers prefix + chunks: RoPE rotates the cached prefix keys with the first positions
+    and the chunk queries with the last ones. No chunk needs a prefix logit, because each block starts with
+    its own <async> tag, whose logit predicts the block's first content token.
+    """
+    input_ids, attention_mask, position_ids, block_info = build_chunk_subset_inputs(stage, tasks, sequence)
+    prefix_length = stage.prefix.shape[1]
+
+    return (
+        input_ids[:, prefix_length:],
+        attention_mask[:, prefix_length:, :],
+        position_ids,
+        [(start - prefix_length, end - prefix_length, content_length) for start, end, content_length in block_info]
     )

@@ -4,7 +4,7 @@
 #
 # ARC batch submission from the repository root:
 #   CONDA_ENV=planned-diffusion USE_FP16=1 REPEATS=1 sbatch scripts/run_arc_experiments.sh
-# For the final repeated campaign, set REPEATS=3.
+# For the final repeated campaign, set REPEATS=3. Add PREFIX_CACHE=1 to run every multi-GPU run with --prefix_cache.
 #
 # Every setting below can be overridden from the environment, e.g.
 #   GPU_COUNTS="1 2" SCHEDULERS=lpt REPEATS=3 bash scripts/run_arc_experiments.sh
@@ -38,6 +38,7 @@ export GPU_COUNTS="${GPU_COUNTS:-1 2 4}"            # GPU counts for the multi-G
 export SCHEDULERS="${SCHEDULERS:-lpt round_robin}"      # add "dynamic" for the work-queue scheduler
 export VERIFY_SCHEDULERS="${VERIFY_SCHEDULERS:-lpt}"     # schedulers that get the correctness check, e.g. "lpt dynamic"
 export MAX_ACTIVE_CHUNKS="${MAX_ACTIVE_CHUNKS:-2}"       # dynamic scheduler: chunks a GPU diffuses at once
+export PREFIX_CACHE="${PREFIX_CACHE:-0}"                 # 1 = multi-GPU runs reuse each stage's prefix keys and values (--prefix_cache)
 export VERIFY_PROMPT_IDS="${VERIFY_PROMPT_IDS:-p01 p04 p08 p12 p15}"  # one representative from each workload class
 export REPEATS="${REPEATS:-1}"
 export MAX_LENGTH="${MAX_LENGTH:-512}"
@@ -125,6 +126,15 @@ fi
 SINGLE_GPU=(python -m eval.pd_generate "${COMMON_ARGS[@]}")
 MULTI_GPU=(python -m torch.distributed.run --standalone)
 
+# Flags for the --distributed runs only. The single-GPU baseline stays uncached, so with PREFIX_CACHE=1
+# compare against the 1-GPU --distributed run (keep 1 in GPU_COUNTS); its files carry the same _pc tag.
+DIST_ARGS=()
+RUN_TAG=""
+if [[ "$PREFIX_CACHE" == "1" ]]; then
+    DIST_ARGS+=(--prefix_cache)
+    RUN_TAG="_pc"
+fi
+
 MULTI_GPU_COUNTS=""
 for gpus in $GPU_COUNTS; do
     if (( gpus > AVAILABLE_GPUS )); then
@@ -161,7 +171,7 @@ info = {
     "gpus": [torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())],
     "settings": {
         key: os.environ.get(key)
-        for key in ["MODEL_PATH", "GPU_COUNTS", "SCHEDULERS", "VERIFY_PROMPT_IDS", "VERIFY_SCHEDULERS", "MAX_ACTIVE_CHUNKS", "REPEATS", "MAX_LENGTH", "USE_FP16", "RUN_TIMEOUT"]
+        for key in ["MODEL_PATH", "GPU_COUNTS", "SCHEDULERS", "VERIFY_PROMPT_IDS", "VERIFY_SCHEDULERS", "MAX_ACTIVE_CHUNKS", "PREFIX_CACHE", "REPEATS", "MAX_LENGTH", "USE_FP16", "RUN_TIMEOUT"]
     },
     "prompts": {prompt_id: prompt for prompt_id, _, prompt in prompt_rows},
     "prompt_workload_classes": {
@@ -209,10 +219,10 @@ for gpus in $MULTI_GPU_COUNTS; do
         for i in "${VERIFY_INDICES[@]}"; do
             EXPECTED_VERIFY_RUNS=$(( EXPECTED_VERIFY_RUNS + 1 ))
             prompt_id="${PROMPT_IDS[$i]}"
-            run "$OUT_DIR/verify_${prompt_id}_g${gpus}_${scheduler}.json" \
+            run "$OUT_DIR/verify_${prompt_id}_g${gpus}_${scheduler}${RUN_TAG}.json" \
                 "${MULTI_GPU[@]}" --nproc_per_node="$gpus" -m eval.pd_generate "${COMMON_ARGS[@]}" \
                 --distributed --scheduler "$scheduler" --max_active_chunks "$MAX_ACTIVE_CHUNKS" \
-                --verify_distributed --prompt "${PROMPTS[$i]}"
+                ${DIST_ARGS[@]+"${DIST_ARGS[@]}"} --verify_distributed --prompt "${PROMPTS[$i]}"
         done
     done
 done
@@ -273,10 +283,10 @@ for (( repeat = 1; repeat <= REPEATS; repeat++ )); do
         for scheduler in $SCHEDULERS; do
             for i in "${!PROMPTS[@]}"; do
                 prompt_id="${PROMPT_IDS[$i]}"
-                run "$OUT_DIR/dist_${prompt_id}_g${gpus}_${scheduler}_r${repeat}.json" \
+                run "$OUT_DIR/dist_${prompt_id}_g${gpus}_${scheduler}${RUN_TAG}_r${repeat}.json" \
                     "${MULTI_GPU[@]}" --nproc_per_node="$gpus" -m eval.pd_generate "${COMMON_ARGS[@]}" \
                     --distributed --scheduler "$scheduler" --max_active_chunks "$MAX_ACTIVE_CHUNKS" \
-                    --prompt "${PROMPTS[$i]}"
+                    ${DIST_ARGS[@]+"${DIST_ARGS[@]}"} --prompt "${PROMPTS[$i]}"
             done
         done
     done

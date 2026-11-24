@@ -44,6 +44,7 @@ def main():
     parser.add_argument("--distributed", action="store_true", help="Spread each stage's chunks across GPUs; launch with torchrun.")
     parser.add_argument("--scheduler", type=str, default="lpt", choices=["lpt", "round_robin", "dynamic"], help="Chunk placement policy for --distributed; dynamic lets free GPUs claim the next chunk.")
     parser.add_argument("--max_active_chunks", type=int, default=2, help="With --scheduler dynamic: chunks a GPU diffuses at once (1 = strictly one at a time).")
+    parser.add_argument("--prefix_cache", action="store_true", help="With --distributed: each GPU runs a stage's prefix once and reuses its keys and values on every diffusion step.")
     parser.add_argument("--verify_distributed", action="store_true", help="Also run each stage combined on rank 0 and count token mismatches (use --temperature 0; slows the run).")
     args = parser.parse_args()
 
@@ -58,6 +59,9 @@ def main():
 
     if args.max_active_chunks < 1:
         parser.error("--max_active_chunks must be at least 1")
+
+    if args.prefix_cache and not args.distributed:
+        parser.error("--prefix_cache needs --distributed; for a 1-GPU comparison run torchrun --nproc_per_node=1 with --distributed")
     
     # set random seed
     torch.manual_seed(args.random_seed)
@@ -136,6 +140,7 @@ def main():
             policy=args.scheduler,
             verify=args.verify_distributed,
             max_active_chunks=args.max_active_chunks,
+            prefix_cache=args.prefix_cache,
         )
         if args.distributed
         else None
@@ -228,6 +233,7 @@ def main():
             "world_size": stage_executor.world_size,
             "scheduler": args.scheduler,
             "max_active_chunks": args.max_active_chunks if args.scheduler == "dynamic" else None,
+            "prefix_cache": args.prefix_cache,
             "verify": args.verify_distributed,
             "stages": stage_executor.stage_records,
         }

@@ -261,13 +261,13 @@ def run_rank(rank, world_size, init_file, result_file, max_active_chunks, slow_r
         if rank == failing_rank:
             diff_sample_dynamic = model._diff_sample_dynamic
 
-            def fail_after_first_claim(stage, claim_next_chunk, on_chunk_done, *args):
+            def fail_after_first_claim(stage, claim_next_chunk, on_chunk_done, *args, **kwargs):
                 def claim_then_fail():
                     if claim_next_chunk() is not None:
                         raise ValueError("injected failure")
                     return None
 
-                return diff_sample_dynamic(stage, claim_then_fail, on_chunk_done, *args)
+                return diff_sample_dynamic(stage, claim_then_fail, on_chunk_done, *args, **kwargs)
 
             model._diff_sample_dynamic = fail_after_first_claim
 
